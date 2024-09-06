@@ -1,16 +1,31 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'bg-main': "url('/main/main.jpg')",
+      },
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        'custom-blue': {
+          1000: '#00309C',
+          900: '#1442A1',
+          800: '#2353B6',
+          700: '#5276D6',
+          600: '#5A7EDC',
+          500: '#D1DBFF',
+        },
+        'custome-white': { 50: '#F5F5F5' },
+        'custome-orange': { 1: '#F27E39', 2: '#F79638' },
+        ballons: '#ffffe1',
+      },
+      fontFamily: {
+        gulim: ['굴림', 'Gulim', 'sans-serif'],
       },
     },
   },
