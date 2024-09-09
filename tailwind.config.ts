@@ -23,9 +23,12 @@ const config: Config = {
         'custome-white': { 50: '#F5F5F5' },
         'custome-orange': { 1: '#F27E39', 2: '#F79638' },
         ballons: '#ffffe1',
+        'footer-blue': { 1: '#215ADE', 2: '#4A9CEF' },
       },
       fontFamily: {
         gulim: ['굴림', 'Gulim', 'sans-serif'],
+
+        tahoma: ['Tahoma', 'sans-serif'],
       },
     },
   },
