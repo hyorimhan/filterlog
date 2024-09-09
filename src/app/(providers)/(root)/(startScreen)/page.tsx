@@ -1,3 +1,4 @@
+import Logo from '@/components/common/Logo';
 import Question from '@/components/startScreen/Question';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -15,13 +16,7 @@ const StartScreen = () => {
           <div className="flex flex-col items-end  justify-center relative h-full">
             <div className="absolute top-0 right-0 bottom-0  w-px bg-gradient-to-b from-transparent via-white to-transparent"></div>
 
-            <Image
-              src={'/logo/filterlog.svg'}
-              alt="filterloglogo"
-              width={70}
-              height={70}
-              className="mr-10"
-            />
+            <Logo w={50} h={50} style="mr-10" />
             <div className="mr-8">
               <div className="flex justify-end">
                 <div className="text-5xl text-custome-white-50 text-left">
@@ -57,14 +52,12 @@ const StartScreen = () => {
             </span>
             <span className="flex gap-1 ml-5 ">
               <Link href={'/main'}>
-                <span>
-                  <Image
-                    src={'/startScreen/Go.png'}
-                    alt="profile"
-                    width={30}
-                    height={30}
-                  />
-                </span>
+                <Image
+                  src={'/startScreen/Go.png'}
+                  alt="profile"
+                  width={30}
+                  height={30}
+                />
               </Link>
               <Question />
             </span>
