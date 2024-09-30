@@ -1,51 +1,73 @@
-import useWindowStore from '@/zustand/useWindowStore';
-import dynamic from 'next/dynamic';
-// import { useRouter } from 'next/navigation';
+import useWindowStore, { windowType } from '@/zustand/useWindowStore';
+// import dynamic from 'next/dynamic';
+import Link from 'next/link';
+import React, { memo, useRef } from 'react';
 import Draggable from 'react-draggable';
 import 'xp.css/dist/XP.css';
 
 function IEContent({
-  id,
-  title,
   initialPath,
+  position,
+  title,
+  id,
   width,
   height,
-  position,
-  isFocused,
-}) {
-  // const router = useRouter();
-  // const focusWindow = useWindowStore((state) => state.focusWindow);
-  const DynamicComponent = dynamic(
-    () => import(`../../app/(providers)/(root)${initialPath}/page`),
-    {
-      ssr: false,
-      loading: () => <p>loading</p>,
-    }
-  );
+}: windowType) {
+  // const DynamicContent = dynamic(
+  //   () => import(`../../app/(providers)/(root)${initialPath}/page`)
+  // );
+  const nodeRef = useRef(null);
+
+  // Zustand 상태에서 addWindow와 focusWindow 가져오기
+  const focusWindow = useWindowStore((state) => state.focusWindow);
+  // const isFocused = useWindowStore((state) => state.windows[id]?.isFocused);
+  const zIndex = useWindowStore((state) => state.windows[id]?.zIndex || 1); // 기본 z-index 1
+  const deleteWindow = useWindowStore((state) => state.deleteWindow);
+
   return (
     <Draggable
       defaultPosition={position}
       bounds="body"
-      // onMouseDown={() => focusWindow(id)}
+      nodeRef={nodeRef}
+      cancel=".title-bar-controls, .window-body"
+      onStart={() => focusWindow(id)} // 창 클릭 시 focusWindow 호출
     >
       <div
-        style={{ width, height, zIndex: isFocused ? 10 : 1 }}
-        className={`window ${isFocused ? 'focused' : ''}`}
+        ref={nodeRef}
+        className={`window`}
+        style={{
+          width,
+          height,
+          zIndex,
+          position: 'relative', // z-index가 적용되도록 position 설정
+        }}
       >
-        <div className="title-bar">
-          <div className="title-bar-text"> {title}</div>
+        <div className="title-bar" onMouseDown={() => focusWindow(id)}>
+          <div className="title-bar-text">{title}</div>
           <div className="title-bar-controls">
-            <button aria-label="Minimize" />
-            <button aria-label="Maximize" />
-            <button aria-label="Close" />
+            {/* <button aria-label="Minimize" />
+            <button aria-label="Maximize" /> */}
+            <button aria-label="Close" onClick={() => deleteWindow(id)} />
           </div>
         </div>
-        <div>
-          <DynamicComponent id={id} />
+        <div className="flex justify-center mt-20 font-dotum text-sm ">
+          Filter Log
         </div>
+        <Link
+          href={initialPath}
+          className="flex justify-center font-dotum text-xs mt-2"
+        >
+          <div className="hover:text-blue-600">&gt; 접속</div>
+        </Link>
+        <Link
+          href={initialPath}
+          className="flex justify-center font-dotum text-xs mt-2"
+        >
+          <div className="hover:text-blue-600">&gt; 회원가입 / 로그인</div>
+        </Link>
       </div>
     </Draggable>
   );
 }
 
-export default IEContent;
+export default memo(IEContent);

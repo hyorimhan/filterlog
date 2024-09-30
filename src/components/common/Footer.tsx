@@ -5,7 +5,7 @@ import Logo from './Logo';
 function Footer() {
   // return <footer className="h-[30px] bg-footer-blue-1">Footer</footer>;
   return (
-    <footer className="h-[30px] bg-[linear-gradient(rgb(31,47,134)_0px,rgb(49,101,196)_3%,rgb(54,130,229)_6%,rgb(68,144,230)_10%,rgb(56,131,229)_12%,rgb(43,113,224)_15%,rgb(38,99,218)_18%,rgb(35,91,214)_20%,rgb(34,88,213)_23%,rgb(33,87,214)_38%,rgb(36,93,219)_54%,rgb(37,98,223)_86%,rgb(36,95,220)_89%,rgb(33,88,212)_92%,rgb(29,78,192)_95%,rgb(25,65,165)_98%)] absolute bottom-0 right-0 left-0 flex">
+    <footer className="z-20 h-[30px] bg-[linear-gradient(rgb(31,47,134)_0px,rgb(49,101,196)_3%,rgb(54,130,229)_6%,rgb(68,144,230)_10%,rgb(56,131,229)_12%,rgb(43,113,224)_15%,rgb(38,99,218)_18%,rgb(35,91,214)_20%,rgb(34,88,213)_23%,rgb(33,87,214)_38%,rgb(36,93,219)_54%,rgb(37,98,223)_86%,rgb(36,95,220)_89%,rgb(33,88,212)_92%,rgb(29,78,192)_95%,rgb(25,65,165)_98%)] absolute bottom-0 right-0 left-0 flex">
       <div className="flex-1 overflow-hidden flex items-center">
         {/* <div className="footer-start mr-2.5 relative hover:brightness-105 active:brightness-85"></div>
         <div className="footer-window flex-1 max-w-[150px] text-white rounded px-2 h-[22px] text-xs bg-[#3c81f3] relative flex items-center">
