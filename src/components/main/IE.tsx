@@ -1,6 +1,7 @@
 'use client';
 import useWindowStore from '@/zustand/useWindowStore';
 import Image from 'next/image';
+import { memo } from 'react';
 
 function IE() {
   const addWindow = useWindowStore((state) => state.addWindow);
@@ -9,9 +10,10 @@ function IE() {
     addWindow({
       title: 'Internet Explorer',
       initialPath: '/IE',
-      width: 800,
-      height: 600,
+      width: 300,
+      height: 300,
       position: { x: 50, y: 50 },
+      zIndex: 1,
     });
   };
   return (
@@ -30,4 +32,4 @@ function IE() {
   );
 }
 
-export default IE;
+export default memo(IE);

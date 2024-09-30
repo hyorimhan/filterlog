@@ -17,6 +17,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-draggable": "^4.4.6",
+    "react-hook-form": "^7.53.0",
     "xp.css": "^0.2.6",
     "zustand": "^4.5.5"
   },

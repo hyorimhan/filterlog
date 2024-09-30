@@ -20,6 +20,9 @@ const config: Config = {
           600: '#5A7EDC',
           500: '#D1DBFF',
         },
+        'custom-green': {
+          500: '#9EE54E',
+        },
         'custome-white': { 50: '#F5F5F5' },
         'custome-orange': { 1: '#F27E39', 2: '#F79638' },
         ballons: '#ffffe1',
@@ -27,7 +30,7 @@ const config: Config = {
       },
       fontFamily: {
         gulim: ['굴림', 'Gulim', 'sans-serif'],
-
+        dotum: ['Dotum', '돋움'],
         tahoma: ['Tahoma', 'sans-serif'],
       },
     },
