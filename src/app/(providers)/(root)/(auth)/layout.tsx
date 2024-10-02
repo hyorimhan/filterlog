@@ -4,7 +4,7 @@ function layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Header />
-      <main className="border w-[1280px] border-y-custom-green-700">
+      <main className=" w-[1280px] border-x-2 h-screen border-x-custom-green-700 mx-auto">
         {children}
       </main>
     </div>
