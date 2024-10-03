@@ -36,40 +36,57 @@ function SignUp() {
     }
   };
   return (
-    <form onSubmit={handleSubmit(signUpSubmit, handleError)}>
-      <div>
-        <label htmlFor="email">이메일</label>
+    <form
+      onSubmit={handleSubmit(signUpSubmit, handleError)}
+      className="flex flex-col items-center"
+    >
+      <div className="flex flex-col items-center">
+        <label htmlFor="email" className="text-sm font-dotum">
+          이메일
+        </label>
         <input
           type="email"
           id="email"
           {...register('email', emailValidate())}
+          className="w-52 my-2 ml-2 text-sm"
         />
       </div>
-      <div>
-        <label htmlFor="password">비밀번호</label>
+      <div className="flex flex-col items-center mt-5">
+        <label htmlFor="password" className="text-sm font-dotum">
+          비밀번호
+        </label>
         <input
           type="password"
           id="password"
           {...register('password', passwordValidate())}
+          className="w-52 ml-2 text-sm"
         />
       </div>
-      <div>
-        <label htmlFor="passwordConfirm">비밀번호 확인</label>
+      <div className="flex flex-col items-center mt-5">
+        <label htmlFor="passwordConfirm" className="text-sm font-dotum">
+          비밀번호 확인
+        </label>
         <input
           type="password"
           id="passwordConfirm"
           {...register('passwordConfirm', passwordConfirmValidate(password))}
+          className="w-52 my-2 ml-2 text-sm"
         />
       </div>
-      <div>
-        <label htmlFor="nickname">닉네임</label>
+      <div className="flex flex-col items-center mt-5">
+        <label htmlFor="nickname" className="text-sm font-dotum">
+          닉네임
+        </label>
         <input
           type="text"
           id="nickname"
           {...register('nickname', nicknameValidate())}
+          className="w-52 ml-2 text-sm font-dotum"
         />
       </div>
-      <button type="submit">회원가입</button>
+      <button type="submit" className="my-2 mt-5 h-10">
+        회원가입
+      </button>
     </form>
   );
 }

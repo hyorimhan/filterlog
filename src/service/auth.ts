@@ -1,38 +1,29 @@
 import { createClient } from '@/supabase/client';
 import { Database } from '@/types/supabase';
+import { loginType } from '@/types/userForm';
 import axios from 'axios';
+
+const supabase = createClient();
 
 export const sIgnUp = async ({
   email,
   password,
   nickname,
 }: Database['public']['Tables']['users']['Insert'] & { password: string }) => {
-  // const response = await axios.post('/api/auth/signup', {
-  //   email,
-  //   password,
-  //   nickname,
-  // });
-  // return response.data;
-  try {
-    const response = await axios.post('/api/auth/signup', {
-      email,
-      password,
-      nickname,
-    });
-    return response.data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Axios 에러:', error.response?.data || error.message);
-    } else {
-      console.error('알 수 없는 에러:', error);
-    }
-    throw error;
-  }
+  const response = await axios.post('/api/auth/signup', {
+    email,
+    password,
+    nickname,
+  });
+  return response.data;
 };
 
-export const nicknameConfirm = async () => {
-  const supabase = createClient();
+export const login = async ({ email, password }: loginType) => {
+  const response = await axios.post('/api/auth/login', { email, password });
+  return response.data;
+};
 
-  const { data: nickname } = await supabase.from('users').select('*');
-  return nickname;
+export const userInfo = async () => {
+  const { data: user } = await supabase.auth.getUser();
+  return user.user;
 };

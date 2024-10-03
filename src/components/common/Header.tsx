@@ -13,13 +13,14 @@ function Header() {
   };
   return (
     <>
-      <div className="title-bar">
+      <div className="title-bar ">
         <div className="title-bar-text">filter log</div>
         <div className="title-bar-controls">
           <button aria-label="Close" onClick={closeWindow}></button>
         </div>
       </div>
-      <div className="font-tahoma flex px-3 text-xs  bg-header w-full h-[27px] border border-r-2 border-l-2 border-r-border-blue border-l-border-blue border-b-2 border-b-border-beige">
+
+      <div className="font-tahoma flex px-3 text-xs  bg-header w-full h-[27px] border border-r-2 border-l-2   border-b-2 border-b-border-beige ">
         <span className="my-auto">Address</span>
         <div className="w-full h-[25px] text-xs flex ml-3   bg-white border border-url-border">
           <Image

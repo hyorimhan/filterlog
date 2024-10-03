@@ -45,8 +45,6 @@ function IEContent({
         <div className="title-bar" onMouseDown={() => focusWindow(id)}>
           <div className="title-bar-text">{title}</div>
           <div className="title-bar-controls">
-            {/* <button aria-label="Minimize" />
-            <button aria-label="Maximize" /> */}
             <button aria-label="Close" onClick={() => deleteWindow(id)} />
           </div>
         </div>
@@ -60,10 +58,10 @@ function IEContent({
           <div className="hover:text-blue-600">&gt; 접속</div>
         </Link>
         <Link
-          href={initialPath}
+          href={'/signup'}
           className="flex justify-center font-dotum text-xs mt-2"
         >
-          <div className="hover:text-blue-600">&gt; 회원가입 / 로그인</div>
+          <div className="hover:text-blue-600">&gt; 회원가입</div>
         </Link>
       </div>
     </Draggable>
