@@ -6,7 +6,7 @@ import Image from 'next/image';
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const url = `${window.location.origin}${pathname}`;
+  const url = `${pathname}`;
 
   const closeWindow = () => {
     router.replace('/main');

@@ -1,23 +1,20 @@
-import { sIgnUp } from '@/app/service/auth';
-import { createClient } from '@/supabase/client';
 import { signUpType } from '@/types/userForm';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { nicknameConfirm } from '../../service/auth';
+import { sIgnUp } from '../../service/auth';
+import {
+  emailValidate,
+  nicknameValidate,
+  passwordConfirmValidate,
+  passwordValidate,
+} from './AuthValidate';
 
-const supabase = createClient();
+function SignUp() {
+  const { register, handleSubmit, watch } = useForm<signUpType>();
 
-async function SignUp() {
   const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    control,
-    setValue,
-    formState: { errors, isValid },
-  } = useForm<signUpType>();
-
+  const password = watch('password');
   const signUpSubmit = async (data: signUpType) => {
     const response = await sIgnUp(data);
 
@@ -35,17 +32,17 @@ async function SignUp() {
       alert(errors.password.message);
     }
     if (errors.passwordConfirm?.message) {
-      alert(errors.passwordConfim?.message);
+      alert(errors.passwordConfirm?.message);
     }
   };
   return (
-    <form>
+    <form onSubmit={handleSubmit(signUpSubmit, handleError)}>
       <div>
         <label htmlFor="email">이메일</label>
         <input
-          type="text"
+          type="email"
           id="email"
-          className="border-2 rounded-md border-custom-green-600"
+          {...register('email', emailValidate())}
         />
       </div>
       <div>
@@ -53,7 +50,7 @@ async function SignUp() {
         <input
           type="password"
           id="password"
-          className="border-2 rounded-md border-custom-green-600"
+          {...register('password', passwordValidate())}
         />
       </div>
       <div>
@@ -61,7 +58,7 @@ async function SignUp() {
         <input
           type="password"
           id="passwordConfirm"
-          className="border-2 rounded-md border-custom-green-600"
+          {...register('passwordConfirm', passwordConfirmValidate(password))}
         />
       </div>
       <div>
@@ -69,7 +66,7 @@ async function SignUp() {
         <input
           type="text"
           id="nickname"
-          className="border-2 rounded-md border-custom-green-600"
+          {...register('nickname', nicknameValidate())}
         />
       </div>
       <button type="submit">회원가입</button>
