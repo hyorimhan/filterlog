@@ -1,5 +1,6 @@
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
+import 'xp.css/dist/XP.css';
 
 function layout({ children }: { children: React.ReactNode }) {
   return (

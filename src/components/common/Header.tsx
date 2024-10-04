@@ -1,16 +1,28 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Image from 'next/image';
+import useUserInfo from '@/zustand/useUserInfo';
+import { userInfo } from '@/service/auth';
 
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const url = `${pathname}`;
+  const saveUser = useUserInfo((state) => state.saveUser);
 
+  useEffect(() => {
+    const loginInfo = async () => {
+      const user = await userInfo();
+      saveUser(user);
+      console.log(user);
+    };
+    loginInfo();
+  }, []);
   const closeWindow = () => {
     router.replace('/main');
   };
+
   return (
     <>
       <div className="title-bar ">
