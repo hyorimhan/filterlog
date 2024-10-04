@@ -4,19 +4,31 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import { emailValidate, passwordValidate } from './AuthValidate';
 import { login } from '@/service/auth';
 import { loginType } from '@/types/userForm';
+import useUserInfo from '@/zustand/useUserInfo';
+import { usePathname, useRouter } from 'next/navigation';
 
 function Login() {
+  const router = useRouter();
+  const pathname = usePathname();
   const { register, handleSubmit, reset } = useForm<loginType>();
+  const saveUser = useUserInfo((state) => state.saveUser);
   const loginForm = async (data: loginType) => {
-    const response = await login(data);
-    if (response.error) {
-      alert(response.error);
-      reset();
-      return;
-    }
-    if (response.user) {
-      alert('로그인 되었습니다');
-    } else {
+    try {
+      const response = await login(data);
+
+      if (response.error) {
+        alert(response.error);
+        reset();
+        return;
+      }
+      if (response.user) {
+        alert('로그인 되었습니다');
+        saveUser(response.user);
+        router.replace(pathname);
+      } else {
+        alert('아이디, 비밀번호를 다시 확인해주세요');
+      }
+    } catch (error) {
       alert('오류가 발생했습니다');
     }
   };

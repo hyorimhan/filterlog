@@ -1,10 +1,10 @@
 import { User } from '@supabase/supabase-js';
 
 export type signUpType = {
-  email: string;
+  email: string | null;
   password: string;
   passwordConfirm: string;
-  nickname: string;
+  nickname: string | null;
 };
 
 export type userInfoType = {
@@ -13,3 +13,8 @@ export type userInfoType = {
 };
 
 export type loginType = Omit<signUpType, 'passwordConfirm' | 'nickname'>;
+
+export type profileType = Omit<
+  signUpType,
+  'passwordConfirm' | 'password'
+> | null;
