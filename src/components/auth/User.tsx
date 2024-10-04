@@ -1,4 +1,4 @@
-import { logout, profile } from '@/service/auth';
+import { profile } from '@/service/auth';
 import { profileType } from '@/types/userForm';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
