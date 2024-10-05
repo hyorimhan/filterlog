@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import React from 'react';
 import Logout from './Logout';
+import Link from 'next/link';
 
 function User({ email }: { email: string }) {
   const { data: userProfile, isLoading } = useQuery<profileType | null>({
@@ -31,7 +32,9 @@ function User({ email }: { email: string }) {
         <div> {userProfile?.nickname}님 행복한 하루 보내세요!</div>
         <div className="mt-3 space-x-2">
           <button>마이페이지</button>
-          <button>마이블로그</button>
+          <Link href={'/Blog'}>
+            <button className="text-black">마이블로그</button>
+          </Link>
         </div>
         <div className="pb-3">
           <Logout />
