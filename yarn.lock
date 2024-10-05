@@ -2839,7 +2839,7 @@ sucrase@^3.32.0:
 
 supabase@^1.200.3:
   version "1.200.3"
-  resolved "https://registry.npmjs.org/supabase/-/supabase-1.200.3.tgz"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.200.3.tgz#52cd53fd0bcd46af0748c8ffa61fac05e21a0a23"
   integrity sha512-3NdhqBkfPVlm+rAhWQoVcyr54kykuAlHav/GWaAoQEHBDbbYI1lhbDzugk8ryQg92vSLwr3pWz0s4Hjdte8WyQ==
   dependencies:
     bin-links "^4.0.3"

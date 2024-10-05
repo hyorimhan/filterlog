@@ -41,7 +41,7 @@ const StartScreen = () => {
                     self-center ml-10"
           >
             <Image
-              src={'profile/profile.jpg'}
+              src={'/profile/profile.jpg'}
               alt="profile"
               width={70}
               height={70}

@@ -1,24 +1,12 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
 import Image from 'next/image';
-import useUserInfo from '@/zustand/useUserInfo';
-import { userInfo } from '@/service/auth';
 
 function Header() {
   const router = useRouter();
   const pathname = usePathname();
-  const url = `${pathname}`;
-  const saveUser = useUserInfo((state) => state.saveUser);
+  const url = `filterlog.kro.kr/${pathname}`;
 
-  useEffect(() => {
-    const loginInfo = async () => {
-      const user = await userInfo();
-      saveUser(user);
-      console.log(user);
-    };
-    loginInfo();
-  }, []);
   const closeWindow = () => {
     router.replace('/main');
   };
@@ -58,6 +46,15 @@ function Header() {
           width={180}
           height={20}
           className=" object-cover h-full ml-3 "
+        />
+      </div>
+      <div className="h-[150px] w-[1280px] mx-auto border-b-0 border-t-0 bg-custom-green-300 border-2 border-x-custom-green-700">
+        <Image
+          src={'/logo/filTextLogo1.svg'}
+          alt="filterlogLogo"
+          width={500}
+          height={500}
+          className="w-[380px] h-[150px] mx-auto border-0 pb-3 my-auto bg-custom-green-300 object-cover "
         />
       </div>
     </>

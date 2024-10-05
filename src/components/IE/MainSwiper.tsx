@@ -11,7 +11,6 @@ function MainSwiper() {
   return (
     <Swiper
       loop={true}
-      spaceBetween={30}
       pagination={{
         clickable: true,
         type: 'bullets',
