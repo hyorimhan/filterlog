@@ -4,9 +4,9 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   const supabase = createClient();
   const response = await request.json();
-  const { title, description } = response;
+  const { blog_name, description } = response;
 
-  if (!title || !description) {
+  if (!blog_name || !description) {
     return NextResponse.json({ error: '제목, 내용을 모두 입력해주세요' });
   }
 
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     const { data, error } = await supabase
       .from('blog')
-      .insert([{ title, description }]);
+      .insert([{ blog_name, description }]);
 
     if (error) {
       throw error;

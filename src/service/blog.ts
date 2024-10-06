@@ -4,8 +4,11 @@ import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 
 const supabase = createClient();
-export const createBlog = async ({ title, description }: createBlogType) => {
-  const response = await axios.post('/api/blog', { title, description });
+export const createBlog = async ({
+  blog_name,
+  description,
+}: createBlogType) => {
+  const response = await axios.post('/api/blog', { blog_name, description });
   return response.data;
 };
 

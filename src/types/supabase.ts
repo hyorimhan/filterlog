@@ -11,24 +11,24 @@ export type Database = {
     Tables: {
       blog: {
         Row: {
+          blog_name: string | null
           description: string | null
           id: string
           nickname: string | null
-          title: string | null
           user_id: string | null
         }
         Insert: {
+          blog_name?: string | null
           description?: string | null
           id?: string
           nickname?: string | null
-          title?: string | null
           user_id?: string | null
         }
         Update: {
+          blog_name?: string | null
           description?: string | null
           id?: string
           nickname?: string | null
-          title?: string | null
           user_id?: string | null
         }
         Relationships: [

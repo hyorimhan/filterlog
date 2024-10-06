@@ -1,4 +1,4 @@
 export type createBlogType = {
-  title: string;
+  blog_name: string;
   description: string;
 };
