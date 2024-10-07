@@ -6,18 +6,29 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { blogDescription, blogName } from './createBlogValidate';
+import useUserInfo from '@/zustand/useUserInfo';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
+
+  const { user_id, nickname } = useUserInfo((state) => ({
+    user_id: state.user?.id,
+    nickname: state.user?.user_metadata.display_name,
+  }));
   const router = useRouter();
 
   const create = async (data: createBlogType) => {
-    const response = await createBlog(data);
+    if (!user_id) {
+      alert('오류가 발생했습니다');
+      return;
+    }
+    const blogData = { ...data, user_id, nickname };
+
+    const response = await createBlog(blogData);
+
     if (response) {
       alert('블로그가 생성되었습니다');
-      router.replace('');
-    } else {
-      alert('블로그가 생성되지 못했습니다');
+      router.replace(`/Blog/${response.id}`);
     }
 
     if (response.error) {

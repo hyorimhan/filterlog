@@ -4,11 +4,20 @@ import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 
 const supabase = createClient();
+
+// 블로그 생성
 export const createBlog = async ({
   blog_name,
   description,
+  user_id,
+  nickname,
 }: createBlogType) => {
-  const response = await axios.post('/api/blog', { blog_name, description });
+  const response = await axios.post('/api/post/blog', {
+    blog_name,
+    description,
+    user_id,
+    nickname,
+  });
   return response.data;
 };
 
@@ -18,7 +27,7 @@ export const existingBlog = async (user: User | null) => {
   }
   const { data: existing, error: existingError } = await supabase
     .from('blog')
-    .select('*')
+    .select('id')
     .eq('user_id', user?.id)
     .single();
 
