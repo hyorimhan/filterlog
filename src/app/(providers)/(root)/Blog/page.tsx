@@ -20,7 +20,7 @@ const BlogPage = () => {
   }
 
   if (!user) {
-    alert('다시 로그인해주세요');
+    console.log('로그인 필요');
     router.replace('/IE');
   }
 
