@@ -1,16 +1,16 @@
+'use client';
 import { logout } from '@/service/auth';
 import useUserInfo from '@/zustand/useUserInfo';
-import React from 'react';
 
 function Logout() {
   const saveUser = useUserInfo((state) => state.saveUser);
   const user = useUserInfo((state) => state.user);
 
-  if (!user) {
-    alert('이미 로그아웃 상태입니다');
-    return;
-  }
   const logoutFunc = async () => {
+    if (!user) {
+      alert('이미 로그아웃 상태입니다');
+      return null;
+    }
     try {
       const response = await logout();
       saveUser(null);

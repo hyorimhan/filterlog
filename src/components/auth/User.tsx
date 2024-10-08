@@ -6,10 +6,10 @@ import React from 'react';
 import Logout from './Logout';
 import Link from 'next/link';
 
-function User({ email }: { email: string }) {
+function User({ email }: { email?: string }) {
   const { data: userProfile, isLoading } = useQuery<profileType | null>({
     queryKey: ['userProfile', email],
-    queryFn: () => profile(email),
+    queryFn: () => (email ? profile(email) : null),
     enabled: !!email,
   });
   if (isLoading) {
