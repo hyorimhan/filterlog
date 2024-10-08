@@ -1,20 +1,35 @@
-import React from 'react';
+'use client';
+import Header from '@/components/common/Header';
 import { existingBlog } from '../../../../service/blog';
-import { userInfo } from '@/service/auth';
 import Create from '@/components/blog/Create';
-import { redirect } from 'next/navigation';
+import useUserInfo from '@/zustand/useUserInfo';
+import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
-const BlogPage = async () => {
-  const user = await userInfo();
-  console.log('User:', user);
-  const existing = user ? await existingBlog(user) : null;
-  console.log('Existing Blog:', existing);
+const BlogPage = () => {
+  const user = useUserInfo((state) => state.user);
+  const router = useRouter();
 
-  if (existing) {
-    redirect(`/Blog/${existing.id}`);
+  const { data: existingData, isLoading } = useQuery({
+    queryKey: ['existingData', user?.id],
+    queryFn: () => existingBlog(user),
+  });
+
+  if (existingData) {
+    router.replace(`/Blog/${existingData.id}`);
+  }
+
+  if (!user) {
+    console.log('로그인 필요');
+    router.replace('/IE');
+  }
+
+  if (isLoading) {
+    ('로딩중');
   }
   return (
     <div>
+      <Header />
       <Create />
     </div>
   );

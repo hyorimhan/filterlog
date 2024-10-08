@@ -9,7 +9,9 @@ export type signUpType = {
 
 export type userInfoType = {
   user: User | null;
+  nickname: string | null;
   saveUser: (info: User | null) => void;
+  saveNickname: (nick: string | null) => void;
 };
 
 export type loginType = Omit<signUpType, 'passwordConfirm' | 'nickname'>;

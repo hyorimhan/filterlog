@@ -1,8 +1,8 @@
-import { blogParams } from '@/types/userBlog';
+import Default from '@/components/blog/myBlog/Default';
 import React from 'react';
 
-const BlogDetailPage = ({ params }: blogParams) => {
-  return <div>{params.id}</div>;
+const BlogDetailPage = () => {
+  return <Default />;
 };
 
 export default BlogDetailPage;
