@@ -10,19 +10,33 @@ function AuthProvider({ children }: PropsWithChildren) {
   const saveNickname = useUserInfo((state) => state.saveNickname);
 
   useEffect(() => {
-    if (!email) {
-      console.log('이메일 정보가 없습니다');
-      return;
-    }
     const loginInfo = async () => {
-      const user = await userInfo();
-      const profileData = await profile(email);
-      saveUser(user);
-      if (profileData) {
-        saveNickname(profileData?.nickname);
+      try {
+        const user = await userInfo();
+        saveUser(user);
+      } catch (error) {
+        console.error('로그인 정보 불러오기 오류:', error);
       }
     };
     loginInfo();
+  }, [email]);
+
+  useEffect(() => {
+    const userNickname = async () => {
+      try {
+        if (!email) {
+          console.log('이메일 오류');
+          return;
+        }
+        const profileData = await profile(email);
+        if (profileData) {
+          saveNickname(profileData?.nickname);
+        }
+      } catch (error) {
+        console.log('이메일 정보가 없습니다');
+      }
+    };
+    userNickname();
   }, []);
 
   return <div>{children}</div>;
