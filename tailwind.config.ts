@@ -40,6 +40,7 @@ const config: Config = {
         gulim: ['굴림', 'Gulim', 'sans-serif'],
         dotum: ['Dotum', '돋움'],
         tahoma: ['Tahoma', 'sans-serif'],
+        galmuri: ['Galmuri11', 'sans-serif'],
       },
     },
   },

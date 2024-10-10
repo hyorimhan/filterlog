@@ -97,48 +97,84 @@ export type Database = {
           },
         ]
       }
+      emotion: {
+        Row: {
+          blog_id: string | null
+          created_at: string
+          id: string
+          user_id: string | null
+        }
+        Insert: {
+          blog_id?: string | null
+          created_at?: string
+          id?: string
+          user_id?: string | null
+        }
+        Update: {
+          blog_id?: string | null
+          created_at?: string
+          id?: string
+          user_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "emotion_blog_id_fkey"
+            columns: ["blog_id"]
+            isOneToOne: false
+            referencedRelation: "blog"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "emotion_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       post: {
         Row: {
+          blog_id: string | null
           content: string | null
           created_at: string
           id: string
           img_url: string | null
           nickname: string | null
           title: string | null
-          user_id: string | null
         }
         Insert: {
+          blog_id?: string | null
           content?: string | null
           created_at?: string
           id?: string
           img_url?: string | null
           nickname?: string | null
           title?: string | null
-          user_id?: string | null
         }
         Update: {
+          blog_id?: string | null
           content?: string | null
           created_at?: string
           id?: string
           img_url?: string | null
           nickname?: string | null
           title?: string | null
-          user_id?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "post_blog_id_fkey"
+            columns: ["blog_id"]
+            isOneToOne: false
+            referencedRelation: "blog"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "post_nickname_fkey"
             columns: ["nickname"]
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["nickname"]
-          },
-          {
-            foreignKeyName: "post_user_id_fkey"
-            columns: ["user_id"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
           },
         ]
       }

@@ -14,3 +14,11 @@ export type blogParams = {
     id: string;
   };
 };
+
+export type blogPostType = {
+  post: string;
+  title: string;
+  content: string;
+  nickname: string;
+  blog_id: string;
+};
