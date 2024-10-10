@@ -37,7 +37,7 @@ function AuthProvider({ children }: PropsWithChildren) {
       }
     };
     userNickname();
-  }, []);
+  }, [email]);
 
   return <div>{children}</div>;
 }

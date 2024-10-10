@@ -25,7 +25,7 @@ const BlogPage = () => {
   }
 
   if (isLoading) {
-    ('로딩중');
+    return '로딩중';
   }
   return (
     <div>
