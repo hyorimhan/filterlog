@@ -13,7 +13,7 @@ function User({ email }: { email?: string }) {
     enabled: !!email,
   });
   if (isLoading) {
-    ('로딩중');
+    return '로딩중';
   }
 
   return (

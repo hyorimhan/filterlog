@@ -3,9 +3,9 @@ import Header from '@/components/common/Header';
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full border-2  border-x-border-blue h-full">
+    <div className="w-full h-screen  ">
       <Header />
-      <main className="border-2 h-full w-[1280px] mx-auto border-x-custom-green-700">
+      <main className="border-2 min-h-screen w-[1280px] mx-auto border-y-custom-green-700 border-x-custom-green-700">
         {children}
       </main>
       <Footer />
