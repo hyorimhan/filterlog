@@ -1,5 +1,5 @@
 import { createClient } from '@/supabase/client';
-import { blogPostType, createBlogType } from '@/types/userBlog';
+import { blogPostType, createBlogType, postListType } from '@/types/userBlog';
 import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 
@@ -55,4 +55,19 @@ export const blogPost = async ({
     blog_id,
   });
   return response.data;
+};
+
+// 내가 작성한 글 리스트
+export const myPostList = async (
+  blog_id: string
+): Promise<postListType[] | null> => {
+  const { data: postList, error } = await supabase
+    .from('post')
+    .select('title, content, created_at, id')
+    .eq('blog_id', blog_id);
+
+  if (error) {
+    console.log(error.message);
+  }
+  return postList;
 };

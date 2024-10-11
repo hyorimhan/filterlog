@@ -24,3 +24,10 @@ export type blogPostType = {
 };
 
 export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
+
+export type postListType = {
+  title: string | null;
+  content: string | null;
+  created_at: string;
+  id: string;
+};
