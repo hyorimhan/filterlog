@@ -41,16 +41,18 @@ export const existingBlog = async (user: User | null) => {
 
 // 글 작성
 export const blogPost = async ({
-  blog_id,
+  blog_name,
   nickname,
   content,
   title,
+  blog_id,
 }: blogPostType) => {
   const response = await axios.post('/api/post/write', {
-    blog_id,
+    blog_name,
     nickname,
     content,
     title,
+    blog_id,
   });
   return response.data;
 };

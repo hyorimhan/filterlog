@@ -136,6 +136,7 @@ export type Database = {
       post: {
         Row: {
           blog_id: string | null
+          blog_name: string | null
           content: string | null
           created_at: string
           id: string
@@ -145,6 +146,7 @@ export type Database = {
         }
         Insert: {
           blog_id?: string | null
+          blog_name?: string | null
           content?: string | null
           created_at?: string
           id?: string
@@ -154,6 +156,7 @@ export type Database = {
         }
         Update: {
           blog_id?: string | null
+          blog_name?: string | null
           content?: string | null
           created_at?: string
           id?: string
@@ -168,6 +171,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "blog"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "post_blog_name_fkey"
+            columns: ["blog_name"]
+            isOneToOne: false
+            referencedRelation: "blog"
+            referencedColumns: ["blog_name"]
           },
           {
             foreignKeyName: "post_nickname_fkey"

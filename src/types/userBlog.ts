@@ -16,9 +16,11 @@ export type blogParams = {
 };
 
 export type blogPostType = {
-  post: string;
   title: string;
   content: string;
   nickname: string;
+  blog_name: string;
   blog_id: string;
 };
+
+export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
