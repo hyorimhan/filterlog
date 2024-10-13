@@ -1,5 +1,4 @@
 'use client';
-import Header from '@/components/common/Header';
 import { existingBlog } from '../../../../service/blog';
 import Create from '@/components/blog/Create';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -34,7 +33,6 @@ const BlogPage = () => {
 
   return (
     <div>
-      <Header />
       <Create />
     </div>
   );

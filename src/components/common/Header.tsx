@@ -35,9 +35,9 @@ function Header() {
           <Image
             src={'/header/urlBtn.png'}
             alt="urlBtn"
-            width={15}
-            height={15}
-            className="w-[15px] h-[15px] my-auto ml-auto mr-1 hover:brightness-110 hover:cursor-pointer"
+            width={19}
+            height={19}
+            className="w-[19px] h-[19px] my-auto ml-auto mr-1 hover:brightness-110 hover:cursor-pointer"
           />
         </div>
         <Image
