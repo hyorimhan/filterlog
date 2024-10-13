@@ -1,7 +1,7 @@
-// import React from 'react';
+import React from 'react';
 
-// function Emotion() {
-//   return <div>Emotion</div>;
-// }
+function Emotion() {
+  return <div>{'hi'}</div>;
+}
 
-// export default Emotion;
+export default Emotion;
