@@ -5,6 +5,7 @@ import { postListType } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import PostList from './PostList';
 
 function Default({ blog_id }: { blog_id: string }) {
   const user = useUserInfo((state) => state.user);
@@ -19,21 +20,15 @@ function Default({ blog_id }: { blog_id: string }) {
   console.log(blog_id);
   return (
     <div className="flex ">
-      <div>
-        <div className="w-[200px] h-[290px] border-2 border-y-custom-green-700 border-r-custom-green-700">
-          <User email={user?.email} />
-        </div>
-        <div className="w-[275px] h-[290px]"></div>
+      <div className="w-[250px] h-[290px] border-2 border-y-custom-green-700 border-r-custom-green-700">
+        <User email={user?.email} />
       </div>
-      <div className="font-galmuri">오늘 기분은 어떠세요?</div>
-      <div>
-        {!postList && (
-          <Link href={'/Blog/write'}>글이 아직 없어요! 첫 글을 써보세요</Link>
-        )}
+      <div className=" w-full mx-3  ">
         <div>
-          {postList?.map((post) => (
-            <div key={post.id}>{post.title}</div>
-          ))}
+          {!postList && (
+            <Link href={'/Blog/write'}>글이 아직 없어요! 첫 글을 써보세요</Link>
+          )}
+          <div>{postList && <PostList postList={postList} />}</div>
         </div>
       </div>
     </div>
