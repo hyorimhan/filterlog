@@ -3,11 +3,11 @@ import Link from 'next/link';
 
 function PostList({ postList }: { postList: postListType[] }) {
   return (
-    <div className="grid grid-cols-2 gap-3">
+    <div className="grid grid-cols-3 gap-3 ">
       {postList.map((post) => (
         <div
           key={post.id}
-          className="border-2 h-[290px] border-custom-green-400 rounded-lg shadow"
+          className="border-2 h-[290px]  border-custom-green-400 rounded-lg shadow"
         >
           <Link href={`/Blog/post/${post.id}`}>
             <div className="text-right mt-2 mr-3 text-black">

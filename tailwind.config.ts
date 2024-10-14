@@ -10,7 +10,9 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'bg-main': "url('/main/main.jpg')",
+        'bg-blog': "url('/background.svg')",
       },
+
       colors: {
         'custom-blue': {
           1000: '#00309C',
