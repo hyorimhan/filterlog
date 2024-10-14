@@ -1,5 +1,10 @@
 import { createClient } from '@/supabase/client';
-import { blogPostType, createBlogType, postListType } from '@/types/userBlog';
+import {
+  blogPostType,
+  createBlogType,
+  postListType,
+  userEmotionType,
+} from '@/types/userBlog';
 import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 
@@ -67,4 +72,42 @@ export const myPostList = async (
     console.log(error.message);
   }
   return postList;
+};
+
+//내 기분 등록
+export const myEmotion = async ({
+  user_id,
+  blog_id,
+  emotion,
+}: userEmotionType) => {
+  const response = await axios.post('/api/emotion', {
+    user_id,
+    blog_id,
+    emotion,
+  });
+  return response.data;
+};
+
+// 등록된 감정
+export const existingMyEmotion = async ({
+  user_id,
+  blog_id,
+}: {
+  user_id: string;
+  blog_id: string;
+}) => {
+  const today = new Date().toISOString().split('T')[0];
+  const { data: existingEmotion, error: existingError } = await supabase
+    .from('emotion')
+    .select('*')
+    .eq('user_id', user_id)
+    .eq('blog_id', blog_id)
+    .gte('created_at', `${today}T00:00:00.000Z`)
+    .lte('created_at', `${today}T23:59:59.999Z`);
+
+  if (existingEmotion) {
+    return existingEmotion[0];
+  }
+
+  return null;
 };

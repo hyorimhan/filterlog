@@ -31,3 +31,9 @@ export type postListType = {
   created_at: string;
   id: string;
 };
+
+export type userEmotionType = {
+  user_id: string;
+  blog_id: string;
+  emotion: string;
+};
