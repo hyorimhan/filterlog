@@ -96,18 +96,17 @@ export const existingMyEmotion = async ({
   user_id: string;
   blog_id: string;
 }) => {
-  const today = new Date().toISOString().split('T')[0];
-  const { data: existingEmotion, error: existingError } = await supabase
+  const response = await axios.get('/api/emotion', {
+    params: { user_id, blog_id },
+  });
+  return response.data;
+};
+
+// 총 감정
+export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
+  const { data, error } = await supabase
     .from('emotion')
-    .select('*')
+    .select('emotion, count: emotion', { count: 'exact' })
     .eq('user_id', user_id)
-    .eq('blog_id', blog_id)
-    .gte('created_at', `${today}T00:00:00.000Z`)
-    .lte('created_at', `${today}T23:59:59.999Z`);
-
-  if (existingEmotion) {
-    return existingEmotion[0];
-  }
-
-  return null;
+    .in('emotion', ['happy', 'smile', 'soso', 'sad', 'angry']);
 };

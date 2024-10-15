@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 function PostList({ postList }: { postList: postListType[] }) {
   return (
-    <div className="grid grid-cols-3 gap-3 ">
+    <div className="grid grid-cols-2 gap-2 ">
       {postList.map((post) => (
         <div
           key={post.id}
