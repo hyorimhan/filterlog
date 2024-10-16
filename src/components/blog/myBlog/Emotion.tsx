@@ -6,17 +6,17 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-function Emotion({ blog_id }: { blog_id: string }) {
+function Emotion({ blog_id, isOwner }: { blog_id: string; isOwner: boolean }) {
   const user = useUserInfo((state) => state.user);
   const user_id = user?.id;
   const [selected, setSelected] = useState<string>();
   const { register } = useForm();
   const queryClient = useQueryClient();
 
-  // 이미 등록된 감정이 있는지
+  // 블로그 계정주 감정 데이터 조회
   const { data: emotionData, isLoading } = useQuery({
     queryKey: ['emotionData', user_id],
-    queryFn: () => existingMyEmotion({ user_id: user_id as string, blog_id }),
+    queryFn: () => existingMyEmotion({ user_id: user_id!, blog_id }),
     enabled: !!user_id,
   });
 
@@ -60,9 +60,8 @@ function Emotion({ blog_id }: { blog_id: string }) {
           />
           <div className="mt-3">{emotionData.emotion}</div>
         </>
-      ) : (
-        <form className="border-2 flex-col w-full h-[300px] flex justify-center items-center ">
-          <div className="text-lg">내 오늘 기분은?</div>
+      ) : isOwner && user ? (
+        <form className="flex-col w-full h-[300px] flex justify-center items-center ">
           <div className="flex gap-5 mt-10">
             {['sad', 'angry', 'soso', 'smile', 'happy'].map((emotion) => (
               <div key={emotion}>
@@ -92,6 +91,8 @@ function Emotion({ blog_id }: { blog_id: string }) {
             선택
           </button>
         </form>
+      ) : (
+        <div>블로그 주인이 아직 감정을 선택하지 않았습니다</div>
       )}
     </div>
   );

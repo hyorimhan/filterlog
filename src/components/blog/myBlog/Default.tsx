@@ -8,7 +8,15 @@ import Link from 'next/link';
 import PostList from './PostList';
 import Emotion from './Emotion';
 
-function Default({ blog_id }: { blog_id: string }) {
+function Default({
+  blog_id,
+  isOwner,
+  owner,
+}: {
+  blog_id: string;
+  isOwner: boolean;
+  owner: string;
+}) {
   const user = useUserInfo((state) => state.user);
 
   const { data: postList, isLoading } = useQuery<postListType[] | null>({
@@ -29,11 +37,12 @@ function Default({ blog_id }: { blog_id: string }) {
     <>
       <div className="grid grid-cols-[1fr_5fr]">
         <div className="h-[300px] border-2 border-y-custom-green-700 border-r-custom-green-700">
-          <User email={user?.email} />
+          {isOwner ? <User email={user?.email} /> : owner}
         </div>
 
         <div className=" grid grid-cols-2 h-[300px] gap-2 mx-1">
-          <Emotion blog_id={blog_id} />
+          <Emotion blog_id={blog_id} isOwner={isOwner} />
+          {/* <TotalEmotion blog_id={blog_id} /> */}
         </div>
       </div>
 
