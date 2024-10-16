@@ -29,7 +29,7 @@ export const createBlog = async ({
 // 이미 생성된 블로그가 있는지 확인
 export const existingBlog = async (user: User | null) => {
   if (!user || !user.id) {
-    throw new Error('로그인 정보가 없습니다');
+    return null;
   }
   const { data: existing } = await supabase
     .from('blog')
@@ -38,6 +38,21 @@ export const existingBlog = async (user: User | null) => {
     .single();
 
   return existing;
+};
+
+// 블로그 id로 특정 블로그 정보 가져오기
+export const getBlogId = async (blog_id: string) => {
+  const { data, error } = await supabase
+    .from('blog')
+    .select('*')
+    .eq('id', blog_id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data;
 };
 
 // 글 작성
@@ -102,11 +117,8 @@ export const existingMyEmotion = async ({
   return response.data;
 };
 
-// 총 감정
-export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
-  const { data, error } = await supabase
-    .from('emotion')
-    .select('emotion, count: emotion', { count: 'exact' })
-    .eq('user_id', user_id)
-    .in('emotion', ['happy', 'smile', 'soso', 'sad', 'angry']);
-};
+// // 총 감정
+// export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
+//   const response = await axios.get('/api/emotion', { user_id });
+//   return response.data;
+// };
