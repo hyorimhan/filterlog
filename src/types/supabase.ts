@@ -101,6 +101,7 @@ export type Database = {
         Row: {
           blog_id: string | null
           created_at: string
+          date: string | null
           emotion: string | null
           id: string
           user_id: string | null
@@ -108,6 +109,7 @@ export type Database = {
         Insert: {
           blog_id?: string | null
           created_at?: string
+          date?: string | null
           emotion?: string | null
           id?: string
           user_id?: string | null
@@ -115,6 +117,7 @@ export type Database = {
         Update: {
           blog_id?: string | null
           created_at?: string
+          date?: string | null
           emotion?: string | null
           id?: string
           user_id?: string | null
@@ -214,15 +217,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      get_emotion_counts: {
-        Args: {
-          p_user_id: string
-        }
-        Returns: {
-          emotion: string
-          count: string
-        }[]
-      }
+      [_ in never]: never
     }
     Enums: {
       [_ in never]: never
