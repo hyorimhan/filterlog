@@ -107,12 +107,14 @@ export const myEmotion = async ({
 export const existingMyEmotion = async ({
   user_id,
   blog_id,
+  date,
 }: {
   user_id: string;
   blog_id: string;
+  date: string;
 }) => {
   const response = await axios.get('/api/emotion', {
-    params: { user_id, blog_id },
+    params: { user_id, blog_id, date },
   });
   return response.data;
 };
