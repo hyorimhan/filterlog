@@ -8,6 +8,30 @@ export async function GET(request: NextRequest) {
   const blog_id = searchParams.get('blog_id');
   const date =
     searchParams.get('date') || new Date().toISOString().split('T')[0];
+  const action = searchParams.get('action');
+  if (action === 'getTotalEmotions') {
+    const {
+      data,
+      error: totalError,
+      count,
+    } = await supabase
+      .from('emotion')
+      .select('*', { count: 'exact' })
+      .eq('user_id', user_id);
+
+    if (totalError) {
+      return NextResponse.json({ error: totalError.message });
+    }
+
+    const emotionCounts = data.reduce((acc, item) => {
+      acc[item.emotion] = (acc[item.emotion] || 0) + 1;
+      return acc;
+    }, {});
+
+    return NextResponse.json({ totalCount: count, emotionCounts });
+  }
+
+  // 오늘 감정 조회
   const { data, error } = await supabase
     .from('emotion')
     .select('*')

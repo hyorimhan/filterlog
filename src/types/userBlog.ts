@@ -37,3 +37,8 @@ export type userEmotionType = {
   blog_id: string;
   emotion: string;
 };
+
+export type totalEmotionType = {
+  totalCount: number;
+  emotionCounts: { [key: string]: number };
+};
