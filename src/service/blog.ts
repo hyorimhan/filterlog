@@ -119,8 +119,10 @@ export const existingMyEmotion = async ({
   return response.data;
 };
 
-// // 총 감정
-// export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
-//   const response = await axios.get('/api/emotion', { user_id });
-//   return response.data;
-// };
+// 총 감정
+export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
+  const response = await axios.get('/api/emotion', {
+    params: { user_id, action: 'getTotalEmotions' },
+  });
+  return response.data;
+};

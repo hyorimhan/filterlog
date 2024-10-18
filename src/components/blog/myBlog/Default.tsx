@@ -7,15 +7,18 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import PostList from './PostList';
 import Emotion from './Emotion';
+import TotalEmotion from './TotalEmotion';
 
 function Default({
   blog_id,
   isOwner,
   owner,
+  ownerId,
 }: {
   blog_id: string;
   isOwner: boolean;
   owner: string;
+  ownerId: string;
 }) {
   const user = useUserInfo((state) => state.user);
 
@@ -41,8 +44,8 @@ function Default({
         </div>
 
         <div className=" grid grid-cols-2 h-[300px] gap-2 mx-1">
-          <Emotion blog_id={blog_id} isOwner={isOwner} />
-          {/* <TotalEmotion blog_id={blog_id} /> */}
+          <Emotion blog_id={blog_id} isOwner={isOwner} ownerId={ownerId} />
+          <TotalEmotion user_id={ownerId} />
         </div>
       </div>
 

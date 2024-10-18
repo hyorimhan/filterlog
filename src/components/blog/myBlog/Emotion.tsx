@@ -6,29 +6,39 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-function Emotion({ blog_id, isOwner }: { blog_id: string; isOwner: boolean }) {
+function Emotion({
+  blog_id,
+  isOwner,
+  ownerId,
+}: {
+  blog_id: string;
+  isOwner: boolean;
+  ownerId: string;
+}) {
   const user = useUserInfo((state) => state.user);
   const user_id = user?.id;
   const [selected, setSelected] = useState<string>();
   const { register } = useForm();
   const queryClient = useQueryClient();
   const today = new Date().toISOString().split('T')[0];
+
   // 블로그 계정주 감정 데이터 조회
   const { data: emotionData, isLoading } = useQuery({
-    queryKey: ['emotionData', user_id, blog_id, today],
+    queryKey: ['emotionData', ownerId, blog_id, today],
     queryFn: () =>
-      existingMyEmotion({ user_id: user_id!, blog_id, date: today }),
-    enabled: !!user_id && !!blog_id,
+      existingMyEmotion({ user_id: ownerId!, blog_id, date: today }),
+    enabled: !!ownerId && !!blog_id,
   });
 
   const mutation = useMutation({
     mutationFn: (emotion: string) =>
       myEmotion({ user_id: user_id as string, blog_id, emotion }),
     onSuccess: (data) => {
-      queryClient.setQueryData(
-        ['emotionData', user_id, blog_id, today],
-        data.emotion
-      );
+      if (user_id && blog_id) {
+        queryClient.invalidateQueries({
+          queryKey: ['emotionData', user_id, blog_id, today],
+        });
+      }
       alert(data.message);
     },
   });
