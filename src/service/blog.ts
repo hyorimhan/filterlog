@@ -2,7 +2,6 @@ import { createClient } from '@/supabase/client';
 import {
   blogPostType,
   createBlogType,
-  postListType,
   userEmotionType,
 } from '@/types/userBlog';
 import { User } from '@supabase/supabase-js';
@@ -74,19 +73,34 @@ export const blogPost = async ({
 };
 
 // 내가 작성한 글 리스트
-export const myPostList = async (
-  blog_id: string
-): Promise<postListType[] | null> => {
-  const { data: postList, error } = await supabase
-    .from('post')
-    .select('title, content, created_at, id')
-    .eq('blog_id', blog_id)
-    .order('created_at', { ascending: false });
+// export const myPostList = async (
+// //   blog_id: string
+// // ): Promise<postListType[] | null> => {
+//   // const { data: postList, error } = await supabase
+//   //   .from('post')
+//   //   .select('title, content, created_at, id')
+//   //   .eq('blog_id', blog_id)
+//   //   .order('created_at', { ascending: false });
 
-  if (error) {
-    console.log(error.message);
-  }
-  return postList;
+//   // if (error) {
+//   //   console.log(error.message);
+//   // }
+//   // return postList;
+// };
+
+export const myPostList = async ({
+  user_id,
+  page,
+  limit,
+}: {
+  user_id: string;
+  page: number;
+  limit: number;
+}) => {
+  const response = await axios.get('/api/post', {
+    params: { user_id, page, limit },
+  });
+  return response.data;
 };
 
 //내 기분 등록
