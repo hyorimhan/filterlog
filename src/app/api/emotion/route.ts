@@ -10,11 +10,7 @@ export async function GET(request: NextRequest) {
     searchParams.get('date') || new Date().toISOString().split('T')[0];
   const action = searchParams.get('action');
   if (action === 'getTotalEmotions') {
-    const {
-      data,
-      error: totalError,
-      count,
-    } = await supabase
+    const { data, error: totalError } = await supabase
       .from('emotion')
       .select('*', { count: 'exact' })
       .eq('user_id', user_id);
@@ -28,7 +24,7 @@ export async function GET(request: NextRequest) {
       return acc;
     }, {});
 
-    return NextResponse.json({ totalCount: count, emotionCounts });
+    return NextResponse.json({ emotionCounts });
   }
 
   // 오늘 감정 조회
