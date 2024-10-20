@@ -5,8 +5,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
-function PostList({ ownerId }: { ownerId: string }) {
-  const [currentPage, setCurrentPage] = useState<number>(1);
+function PostList({ blog_id }: { blog_id: string }) {
+  const [currentPage, setCurrentPage] = useState<number>(0);
   const pagePost = 10;
   const { data: postList, isLoading } = useQuery<{
     data: postListType[];
@@ -14,27 +14,24 @@ function PostList({ ownerId }: { ownerId: string }) {
     limit: number;
     page: number;
   } | null>({
-    queryKey: ['postList', ownerId, currentPage],
+    queryKey: ['postList', blog_id, currentPage],
     queryFn: () =>
-      myPostList({ user_id: ownerId, page: currentPage, limit: pagePost }),
-    enabled: !!ownerId,
+      myPostList({ blog_id, page: currentPage + 1, limit: pagePost }),
+    enabled: !!blog_id,
+    staleTime: 5000,
   });
-  // const { data: emotionData, isLoading: Loading } = useQuery({
-  //   queryKey: ['emotionData', user_id],
-  //   queryFn: () => existingMyEmotion({ user_id: user_id as string, blog_id }),
-  //   enabled: !!user_id,
-  // });
+
   if (isLoading) {
     return '로딩중';
   }
   const handlePageClick = (selectedPage: { selected: number }) => {
-    setCurrentPage(selectedPage.selected + 1);
+    setCurrentPage(selectedPage.selected);
   };
-
+  console.log(postList);
   const pageCount = Math.ceil((postList?.total || 0) / pagePost);
   return (
     <>
-      {!postList?.data || postList.data.length === 0 ? (
+      {!postList?.data ? (
         <Link href={'/Blog/write'}>글이 아직 없어요! 첫 글을 써보세요</Link>
       ) : (
         <div className="grid grid-cols-2 gap-2 ">
@@ -53,8 +50,8 @@ function PostList({ ownerId }: { ownerId: string }) {
                 <div className="truncate mt-10 text-black">
                   <span className="text-sm  text-custom-green-700 ml-3 border-b-2 border-b-custom-green-300">
                     Title:
-                  </span>{' '}
-                  {post.title}
+                  </span>
+                  <span className="text-[16px]"> {post.title}</span>
                 </div>
                 <div className=" text-sm mx-5 tracking-widest mt-20 text-black line-clamp-5  ">
                   {post.content}
@@ -70,18 +67,16 @@ function PostList({ ownerId }: { ownerId: string }) {
           nextLabel={'다음'}
           breakLabel={'...'}
           pageCount={pageCount}
+          forcePage={currentPage}
           onPageChange={handlePageClick}
-          containerClassName={'pagination'}
-          activeClassName={'active'}
-          disabledClassName={'disabled'}
-          previousClassName={'page-item'}
-          nextClassName={'page-item'}
-          pageClassName={'page-item'}
-          breakClassName={'page-item'}
-          previousLinkClassName={'page-link'}
-          nextLinkClassName={'page-link'}
-          pageLinkClassName={'page-link'}
+          containerClassName={'flex justify-center space-x-3 text-sm mt-10'}
+          previousLinkClassName={'text-black focus:outline-none'}
+          nextLinkClassName={'text-black   focus:outline-none '}
+          pageLinkClassName={
+            'text-black   focus:outline-none focus:text-custom-green-700'
+          }
           breakLinkClassName={'page-link'}
+          disabledLinkClassName={'focus:text-gray cursor-not-allowed'}
         />
       )}
     </>
