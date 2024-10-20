@@ -35,7 +35,7 @@ function Default({
         <div className=" h-[300px]"></div>
         <div className="mx-1  ">
           <div>
-            <PostList ownerId={ownerId} />
+            <PostList blog_id={blog_id} />
           </div>
         </div>
       </div>

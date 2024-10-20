@@ -25,7 +25,7 @@ function TotalEmotion({ user_id }: { user_id: string }) {
           const count = total?.emotionCounts[emotion] || 0;
           const barWidth = Math.min((count / maxWidth) * 400, 400);
           return (
-            <div key={emotion} className="flex items-center">
+            <div key={emotion} className="flex items-center group">
               <Image
                 src={`/emotion/${emotion}.svg`}
                 alt={emotion}
@@ -40,7 +40,9 @@ function TotalEmotion({ user_id }: { user_id: string }) {
                   style={{ width: `${barWidth}%` }}
                 ></div>
               </div>
-              <div className="ml-2">{count}</div>
+              <div className="ml-2 opacity-0 group-hover:opacity-100  duration-300">
+                {count}
+              </div>
             </div>
           );
         })}
