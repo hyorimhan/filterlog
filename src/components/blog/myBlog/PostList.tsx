@@ -18,7 +18,6 @@ function PostList({ blog_id }: { blog_id: string }) {
     queryFn: () =>
       myPostList({ blog_id, page: currentPage + 1, limit: pagePost }),
     enabled: !!blog_id,
-    staleTime: 5000,
   });
 
   if (isLoading) {
@@ -27,7 +26,7 @@ function PostList({ blog_id }: { blog_id: string }) {
   const handlePageClick = (selectedPage: { selected: number }) => {
     setCurrentPage(selectedPage.selected);
   };
-  console.log(postList);
+
   const pageCount = Math.ceil((postList?.total || 0) / pagePost);
   return (
     <>

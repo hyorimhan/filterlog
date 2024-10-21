@@ -72,22 +72,6 @@ export const blogPost = async ({
   return response.data;
 };
 
-// 내가 작성한 글 리스트
-// export const myPostList = async (
-// //   blog_id: string
-// // ): Promise<postListType[] | null> => {
-//   // const { data: postList, error } = await supabase
-//   //   .from('post')
-//   //   .select('title, content, created_at, id')
-//   //   .eq('blog_id', blog_id)
-//   //   .order('created_at', { ascending: false });
-
-//   // if (error) {
-//   //   console.log(error.message);
-//   // }
-//   // return postList;
-// };
-
 export const myPostList = async ({
   blog_id,
   page,
@@ -103,6 +87,10 @@ export const myPostList = async ({
   return response.data;
 };
 
+export const myPostDetail = async (id: string) => {
+  const response = await axios.get(`/api/post/${id}`, { params: { id } });
+  return response.data;
+};
 //내 기분 등록
 export const myEmotion = async ({
   user_id,

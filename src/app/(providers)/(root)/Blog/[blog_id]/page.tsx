@@ -21,13 +21,12 @@ const BlogDetailPage = () => {
   if (isLoading) {
     return '로딩중';
   }
-  console.log(blog?.user_id);
 
   const isOwner = user?.id === blog?.user_id;
   return (
     <>
       {blog?.description && <BlogHeader description={blog.description} />}
-      {blog?.id && blog.nickname && blog.user_id && (
+      {blog?.id && blog.nickname && blog.user_id && blog.description && (
         <Default
           blog_id={blog.id}
           isOwner={isOwner}
