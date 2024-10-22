@@ -17,3 +17,7 @@
 .text-galmuri {
   font-family: 'Galmuri11', sans-serif;
 }
+
+.ql-editor img {
+  @apply w-[35%] mx-auto h-auto;
+}
