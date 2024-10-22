@@ -28,7 +28,7 @@ function Create() {
 
     if (response) {
       alert('블로그가 생성되었습니다');
-      router.replace(`/Blog/${response.id}`);
+      router.replace(`/blog/${response.id}`);
     }
 
     if (response.error) {

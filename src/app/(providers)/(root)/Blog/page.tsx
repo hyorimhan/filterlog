@@ -23,7 +23,7 @@ const BlogPage = () => {
     }
 
     if (existingData) {
-      router.replace(`/Blog/${existingData.id}`);
+      router.replace(`/blog/${existingData.id}`);
     }
   }, [user, existingData, router]);
 

@@ -16,7 +16,7 @@ export const createBlog = async ({
   user_id,
   nickname,
 }: createBlogType) => {
-  const response = await axios.post('/api/post/blog', {
+  const response = await axios.post('/api/blog/create', {
     blog_name,
     description,
     user_id,
@@ -62,7 +62,7 @@ export const blogPost = async ({
   title,
   blog_id,
 }: blogPostType) => {
-  const response = await axios.post('/api/post/write', {
+  const response = await axios.post('/api/blog/write', {
     blog_name,
     nickname,
     content,
@@ -81,14 +81,14 @@ export const myPostList = async ({
   page: number;
   limit: number;
 }) => {
-  const response = await axios.get('/api/post', {
+  const response = await axios.get('/api/blog/post', {
     params: { blog_id, page, limit },
   });
   return response.data;
 };
 
 export const myPostDetail = async (id: string) => {
-  const response = await axios.get(`/api/post/${id}`, { params: { id } });
+  const response = await axios.get(`/api/blog/post/${id}`, { params: { id } });
   return response.data;
 };
 //내 기분 등록
