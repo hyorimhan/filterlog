@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
-
+import { CiImageOn } from 'react-icons/ci';
 function PostList({ blog_id }: { blog_id: string }) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const pagePost = 10;
@@ -46,11 +46,18 @@ function PostList({ blog_id }: { blog_id: string }) {
                   </span>{' '}
                   {post.created_at.slice(0, 10)}
                 </div>
-                <div className="truncate mt-10 text-black">
-                  <span className="text-sm  text-custom-green-700 ml-3 border-b-2 border-b-custom-green-300">
+                <div className="truncate mt-10 text-black flex items-center">
+                  <span className="text-sm flex text-custom-green-700 ml-3 border-b-2 border-b-custom-green-300">
                     Title:
                   </span>
-                  <span className="text-[16px]"> {post.title}</span>
+                  <span className="text-[16px] flex ml-2  items-center">
+                    {post.title}{' '}
+                    <span className="ml-2 flex items-center">
+                      {post.img_url && (
+                        <CiImageOn className="w-7 h-7 text-custom-green-700" />
+                      )}
+                    </span>
+                  </span>
                 </div>
                 <div className=" text-sm mx-5 tracking-widest mt-20 text-black line-clamp-5  ">
                   {post.content}

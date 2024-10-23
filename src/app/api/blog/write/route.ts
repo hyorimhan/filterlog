@@ -4,13 +4,20 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   const supabase = createClient();
   const response = await request.json();
-  const { title, content, nickname, blog_name, blog_id } = response;
+  const { title, content, nickname, blog_name, blog_id, img_url } = response;
 
   try {
     const { data, error } = await supabase
       .from('post')
       .insert([
-        { title: title, content: content, nickname, blog_name, blog_id },
+        {
+          title: title,
+          content: content,
+          nickname,
+          blog_name,
+          blog_id,
+          img_url,
+        },
       ]);
 
     if (error) {

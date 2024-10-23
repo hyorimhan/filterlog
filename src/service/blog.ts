@@ -61,6 +61,7 @@ export const blogPost = async ({
   content,
   title,
   blog_id,
+  img_url,
 }: blogPostType) => {
   const response = await axios.post('/api/blog/write', {
     blog_name,
@@ -68,6 +69,7 @@ export const blogPost = async ({
     content,
     title,
     blog_id,
+    img_url,
   });
   return response.data;
 };

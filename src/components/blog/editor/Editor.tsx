@@ -84,6 +84,7 @@ function Editor() {
   // base64 이미지 찾아 처리
   const handleImageUpload = async (rawContent: string) => {
     let processedContent = rawContent;
+    const imageUrls = [];
 
     const dataURITags = rawContent.match(/data:(?!image\/)[^;]+;base64,[^"]+/g);
     if (dataURITags) {
@@ -119,10 +120,8 @@ function Editor() {
             });
 
             if (response.data.url) {
-              processedContent = processedContent.replace(
-                imgTag,
-                response.data.url
-              );
+              imageUrls.push(response.data.url);
+              processedContent = processedContent.replace(imgTag, '');
             }
           } catch (error) {
             console.error('이미지 업로드 실패:', error);
@@ -132,13 +131,19 @@ function Editor() {
         }
       }
     }
-    return { processedContent };
+    return { processedContent, imageUrls };
   };
 
   // 에디터 내용 클린징
   const editorForm = async () => {
     const cleanContent = DOMPurify.sanitize(content);
-    const { processedContent } = await handleImageUpload(cleanContent);
+    const { processedContent, imageUrls = [] } = await handleImageUpload(
+      cleanContent
+    );
+
+    const cleanProcessedContent = processedContent
+      .replace(/<p><br><\/p>/g, '')
+      .trim();
     const blog_name = blog?.blog_name;
     const blog_id = blog?.id;
 
@@ -151,11 +156,12 @@ function Editor() {
       return;
     }
     const response = await blogPost({
-      content: processedContent,
+      content: cleanProcessedContent,
       title,
       nickname,
       blog_name,
       blog_id,
+      img_url: imageUrls.length > 0 ? imageUrls : null,
     });
 
     if (response) {
@@ -167,7 +173,7 @@ function Editor() {
   };
 
   const onChangeEditor = (value: string) => {
-    setContent(value === '<p><br></p>' ? '' : value);
+    setContent(value.trim() === '<p><br></p>' ? '' : value);
   };
 
   return (
