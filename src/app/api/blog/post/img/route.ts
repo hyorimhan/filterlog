@@ -19,22 +19,17 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: ' 파일이 업로드되지 않았습니다' });
   }
 
-  // 허용되는 파일 타입과 확장자 정의
-  // const allowedTypes = [
-  //   'image/jpeg',
-  //   'image/png',
-  //   'image/gif',
-  //   'image/webp',
-  //   'image/jpg',
-  // ];
-  const allowedExtensions = ['.jpg', '.jpeg', '.png', '.gif', '.webp'];
+  //허용되는 파일 타입과 확장자 정의
+  const allowedTypes = [
+    'image/jpeg',
+    'image/png',
+    'image/gif',
+    'image/webp',
+    'image/jpg',
+  ];
 
   // 파일 확장자 추출 및 검증
-  const mimeType = file.type;
-  const fileExtension = allowedExtensions.find((ext) =>
-    mimeType.includes(ext.replace('.', ''))
-  );
-  if (!fileExtension) {
+  if (!allowedTypes.includes(file.type)) {
     return NextResponse.json({ error: '허용되지 않은 파일 확장자입니다' });
   }
 
@@ -47,7 +42,8 @@ export async function POST(request: NextRequest) {
   }
 
   //고유 파일명
-  const fileName = `${randomUUID()}${fileExtension}`;
+  const fileExtension = file.type.split('/')[1];
+  const fileName = `${randomUUID()}.${fileExtension}`;
   try {
     // 파일을 버퍼로 변환
     const buffer = Buffer.from(await file.arrayBuffer());
