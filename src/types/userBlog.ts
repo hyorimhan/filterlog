@@ -21,6 +21,7 @@ export type blogPostType = {
   nickname: string;
   blog_name: string;
   blog_id: string;
+  img_url: string[] | null;
 };
 
 export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
@@ -30,6 +31,7 @@ export type postListType = {
   content: string | null;
   created_at: string;
   id: string;
+  img_url: string[] | null;
 };
 
 export type userEmotionType = {
