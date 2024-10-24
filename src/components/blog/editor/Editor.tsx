@@ -5,7 +5,7 @@ import DOMPurify from 'dompurify';
 import { blogPost, existingBlog } from '@/service/blog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 
@@ -17,7 +17,7 @@ const ReactQuill = dynamic(() => import('react-quill'), {
   loading: () => <p>에디터 로딩 중...</p>,
 });
 
-function Editor({ owner }: { owner: boolean }) {
+function Editor() {
   const nickname = useUserInfo((state) => state.nickname);
   const user = useUserInfo((state) => state.user);
   const router = useRouter();
@@ -25,7 +25,10 @@ function Editor({ owner }: { owner: boolean }) {
   // const [preview, setPreview] = useState<string | null>(null);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const searchParams = useSearchParams();
+  const ownerId = searchParams.get('ownerId');
 
+  const owner = user?.id === ownerId;
   const { data: blog } = useQuery({
     queryKey: ['blog'],
     queryFn: () => existingBlog(user),
@@ -36,24 +39,6 @@ function Editor({ owner }: { owner: boolean }) {
     router.replace('/IE');
     return;
   }
-
-  // const formats = [
-  //   'header',
-  //   'bold',
-  //   'italic',
-  //   'underline',
-  //   'strike',
-  //   'blockquote',
-  //   'list',
-  //   'bullet',
-  //   'indent',
-  //   'link',
-  //   'image',
-  //   'color',
-  //   'background',
-  //   'align',
-  //   'video',
-  // ];
 
   const modules = {
     toolbar: {
