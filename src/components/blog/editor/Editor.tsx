@@ -4,8 +4,8 @@ import DOMPurify from 'dompurify';
 
 import { blogPost, existingBlog } from '@/service/blog';
 import useUserInfo from '@/zustand/useUserInfo';
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter, useSearchParams } from 'next/navigation';
 import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 
@@ -21,32 +21,24 @@ function Editor() {
   const nickname = useUserInfo((state) => state.nickname);
   const user = useUserInfo((state) => state.user);
   const router = useRouter();
+  const queryClient = useQueryClient();
   // const [preview, setPreview] = useState<string | null>(null);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const searchParams = useSearchParams();
+  const ownerId = searchParams.get('ownerId');
 
+  const owner = user?.id === ownerId;
   const { data: blog } = useQuery({
     queryKey: ['blog'],
     queryFn: () => existingBlog(user),
   });
 
-  // const formats = [
-  //   'header',
-  //   'bold',
-  //   'italic',
-  //   'underline',
-  //   'strike',
-  //   'blockquote',
-  //   'list',
-  //   'bullet',
-  //   'indent',
-  //   'link',
-  //   'image',
-  //   'color',
-  //   'background',
-  //   'align',
-  //   'video',
-  // ];
+  if (!owner) {
+    alert('계정주가 아닙니다');
+    router.replace('/IE');
+    return;
+  }
 
   const modules = {
     toolbar: {
@@ -64,7 +56,14 @@ function Editor() {
   // 폼 제출
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await editorForm();
+    if (!user?.id) {
+      console.log(null);
+      return;
+    }
+    const success = await editorForm(user?.id);
+    if (success) {
+      queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
+    }
   };
 
   const base64ToBlob = (base64Data: string) => {
@@ -135,8 +134,8 @@ function Editor() {
   };
 
   // 에디터 내용 클린징
-  const editorForm = async () => {
-    const cleanContent = DOMPurify.sanitize(content);
+  const editorForm = async (user_id: string) => {
+    const cleanContent = content ? DOMPurify.sanitize(content) : '';
     const { processedContent, imageUrls = [] } = await handleImageUpload(
       cleanContent
     );
@@ -162,6 +161,7 @@ function Editor() {
       blog_name,
       blog_id,
       img_url: imageUrls.length > 0 ? imageUrls : null,
+      user_id,
     });
 
     if (response) {

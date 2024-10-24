@@ -22,16 +22,17 @@ export type blogPostType = {
   blog_name: string;
   blog_id: string;
   img_url: string[] | null;
+  user_id: string;
 };
 
-export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
+// export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
 
 export type postListType = {
   title: string | null;
   content: string | null;
   created_at: string;
   id: string;
-  img_url: string[] | null;
+  img_url: string[] | string | null;
 };
 
 export type userEmotionType = {

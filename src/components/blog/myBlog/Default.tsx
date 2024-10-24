@@ -4,7 +4,6 @@ import useUserInfo from '@/zustand/useUserInfo';
 import PostList from './PostList';
 import Emotion from './Emotion';
 import TotalEmotion from './TotalEmotion';
-import Link from 'next/link';
 
 function Default({
   blog_id,
@@ -35,10 +34,7 @@ function Default({
       <div className="grid grid-cols-[1fr_5fr] mt-1">
         <div className=" h-[300px]"></div>
         <div className="mx-1  ">
-          <div>
-            <PostList blog_id={blog_id} />
-            <Link href={'/blog/write'}>글쓰기</Link>
-          </div>
+          <PostList blog_id={blog_id} ownerId={ownerId} />
         </div>
       </div>
     </>

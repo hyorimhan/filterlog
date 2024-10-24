@@ -149,6 +149,7 @@ export type Database = {
           img_url: string | null
           nickname: string | null
           title: string | null
+          user_id: string
         }
         Insert: {
           blog_id?: string | null
@@ -159,6 +160,7 @@ export type Database = {
           img_url?: string | null
           nickname?: string | null
           title?: string | null
+          user_id: string
         }
         Update: {
           blog_id?: string | null
@@ -169,6 +171,7 @@ export type Database = {
           img_url?: string | null
           nickname?: string | null
           title?: string | null
+          user_id?: string
         }
         Relationships: [
           {
@@ -191,6 +194,13 @@ export type Database = {
             isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["nickname"]
+          },
+          {
+            foreignKeyName: "post_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
           },
         ]
       }

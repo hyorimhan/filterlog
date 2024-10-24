@@ -10,11 +10,11 @@ function Detail({ id }: { id: string }) {
     queryKey: ['postDetail', id],
     queryFn: () => myPostDetail(id),
   });
-  console.log(id);
+
   if (isLoading) {
     return '로딩중';
   }
-
+  console.log(deatilPost);
   return (
     <>
       <BlogHeader description={deatilPost.blog_name} />
