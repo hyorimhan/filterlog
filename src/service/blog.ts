@@ -62,6 +62,7 @@ export const blogPost = async ({
   title,
   blog_id,
   img_url,
+  user_id,
 }: blogPostType) => {
   const response = await axios.post('/api/blog/write', {
     blog_name,
@@ -70,6 +71,7 @@ export const blogPost = async ({
     title,
     blog_id,
     img_url,
+    user_id,
   });
   return response.data;
 };
@@ -127,6 +129,13 @@ export const existingMyEmotion = async ({
 export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
   const response = await axios.get('/api/emotion', {
     params: { user_id, action: 'getTotalEmotions' },
+  });
+  return response.data;
+};
+
+export const deletePost = async (id: string) => {
+  const response = await axios.delete(`/api/blog/post/${id}`, {
+    params: { id },
   });
   return response.data;
 };

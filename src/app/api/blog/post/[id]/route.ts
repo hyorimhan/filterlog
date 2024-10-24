@@ -1,10 +1,8 @@
 import { createClient } from '@/supabase/server';
+import { blogParams } from '@/types/userBlog';
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function GET(
-  request: NextRequest,
-  { params }: { params: { id: string } }
-) {
+export async function GET(request: NextRequest, { params }: blogParams) {
   const supabase = createClient();
   const id = params.id;
 
@@ -20,5 +18,16 @@ export async function GET(
 
   if (postDetailError) {
     return NextResponse.json({ error: '상세 글을 불러올 수 없습니다' });
+  }
+}
+
+export async function DELETE(request: NextRequest, { params }: blogParams) {
+  const supabase = createClient();
+  const id = params.id;
+
+  const { error } = await supabase.from('post').delete().eq('id', id);
+
+  if (error) {
+    return NextResponse.json({ error: '글을 삭제할 수 없습니다' });
   }
 }
