@@ -25,6 +25,7 @@ function Editor() {
   // const [preview, setPreview] = useState<string | null>(null);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
+  const [disabled, setDisabled] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const ownerId = searchParams.get('ownerId');
 
@@ -35,8 +36,9 @@ function Editor() {
   });
 
   if (!owner) {
-    alert('계정주가 아닙니다');
     router.replace('/IE');
+    alert('계정주가 아닙니다');
+
     return;
   }
 
@@ -60,6 +62,7 @@ function Editor() {
       console.log(null);
       return;
     }
+    setDisabled(true);
     const success = await editorForm(user?.id);
     if (success) {
       queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
@@ -202,7 +205,12 @@ function Editor() {
         />
       </form>
       <div className="flex justify-center mt-12">
-        <button type="submit" form="editorForm" className="py-3 px-4 rounded">
+        <button
+          type="submit"
+          form="editorForm"
+          disabled={disabled}
+          className="py-3 px-4 rounded"
+        >
           작성
         </button>
       </div>

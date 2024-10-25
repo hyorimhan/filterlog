@@ -1,32 +1,27 @@
 import { existingMyEmotion, myEmotion } from '@/service/blog';
 import Confirm from '@/utils/Confirm';
+import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-function Emotion({
-  blog_id,
-  isOwner,
-  ownerId,
-}: {
-  blog_id: string;
-  isOwner: boolean;
-  ownerId: string;
-}) {
+function Emotion({ blog_id }: { blog_id: string }) {
   const user = useUserInfo((state) => state.user);
   const user_id = user?.id;
   const [selected, setSelected] = useState<string>();
   const { register } = useForm();
   const queryClient = useQueryClient();
   const today = new Date().toISOString().split('T')[0];
+  const ownerId = useBlogInfo((state) => state.ownerId);
+  const isOwner = user?.id === ownerId;
 
   // 블로그 계정주 감정 데이터 조회
   const { data: emotionData, isLoading } = useQuery({
     queryKey: ['emotionData', ownerId, blog_id, today],
     queryFn: () =>
-      existingMyEmotion({ user_id: ownerId!, blog_id, date: today }),
+      existingMyEmotion({ ownerId: ownerId!, blog_id, date: today }),
     enabled: !!ownerId && !!blog_id,
   });
 

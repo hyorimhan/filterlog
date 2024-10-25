@@ -1,20 +1,29 @@
 'use client';
 import User from '@/components/auth/User';
-import { myPostDetail } from '@/service/blog';
+import { deletePost, myPostDetail } from '@/service/blog';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import BlogHeader from './BlogHeader';
+import useBlogInfo from '@/zustand/useBlogInfo';
+import useUserInfo from '@/zustand/useUserInfo';
+import Confirm from '@/utils/Confirm';
+import { useRouter } from 'next/navigation';
 
-function Detail({ id }: { id: string }) {
+function Detail({ post_id }: { post_id: string }) {
+  const ownerId = useBlogInfo((state) => state.ownerId);
+  const router = useRouter();
+  const user = useUserInfo((state) => state.user);
   const { data: deatilPost, isLoading } = useQuery({
-    queryKey: ['postDetail', id],
-    queryFn: () => myPostDetail(id),
+    queryKey: ['postDetail', post_id],
+    queryFn: () => myPostDetail(post_id),
   });
 
   if (isLoading) {
     return '로딩중';
   }
-  console.log(deatilPost);
+
+  const isOwner = user?.id === ownerId;
+
   return (
     <>
       <BlogHeader description={deatilPost.blog_name} />
@@ -36,14 +45,33 @@ function Detail({ id }: { id: string }) {
               {deatilPost.content}
             </div>
           </div>
-          <div className="flex justify-center gap-10 mt-5">
-            <div className=" text-sm  bg-custom-green-300 p-2 rounded-lg">
-              수정
+          {isOwner && (
+            <div className="flex justify-center gap-10 mt-5">
+              <div className=" text-sm  bg-custom-green-300 p-2 rounded-lg">
+                수정
+              </div>
+              <div
+                className="text-sm bg-custom-green-300 p-2 rounded-lg cursor-pointer "
+                onClick={() => {
+                  Confirm({
+                    title: '삭제',
+                    message: '정말 글을 삭제하시겠습니까?',
+                    onClick: async () => {
+                      try {
+                        await deletePost(post_id);
+                        alert('글이 삭제되었습니다.');
+                        router.replace(`/blog/${deatilPost.blog_id}`);
+                      } catch (error) {
+                        alert('글을 삭제하는 중 오류가 발생했습니다.');
+                      }
+                    },
+                  });
+                }}
+              >
+                삭제
+              </div>
             </div>
-            <div className="text-sm bg-custom-green-300 p-2 rounded-lg ">
-              삭제
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </>

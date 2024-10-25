@@ -1,17 +1,20 @@
 import { totalMyEmotion } from '@/service/blog';
 import { totalEmotionType } from '@/types/userBlog';
+import useBlogInfo from '@/zustand/useBlogInfo';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import React from 'react';
 
-function TotalEmotion({ user_id }: { user_id: string }) {
+function TotalEmotion() {
+  const ownerId = useBlogInfo((state) => state.ownerId);
+
   const { data: total, isLoading } = useQuery<totalEmotionType>({
-    queryKey: ['total', user_id],
-    queryFn: () => totalMyEmotion({ user_id }),
-    enabled: !!user_id,
+    queryKey: ['total', ownerId],
+    queryFn: () => totalMyEmotion({ ownerId: ownerId! }),
+    enabled: !!ownerId,
   });
 
-  if (isLoading) {
+  if (isLoading || !total?.emotionCounts) {
     return '로딩중';
   }
 
