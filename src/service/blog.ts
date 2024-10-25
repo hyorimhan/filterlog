@@ -91,8 +91,10 @@ export const myPostList = async ({
   return response.data;
 };
 
-export const myPostDetail = async (id: string) => {
-  const response = await axios.get(`/api/blog/post/${id}`, { params: { id } });
+export const myPostDetail = async (post_id: string) => {
+  const response = await axios.get(`/api/blog/post/${post_id}`, {
+    params: { post_id },
+  });
   return response.data;
 };
 //내 기분 등록
@@ -111,31 +113,30 @@ export const myEmotion = async ({
 
 // 등록된 감정
 export const existingMyEmotion = async ({
-  user_id,
+  ownerId,
   blog_id,
   date,
 }: {
-  user_id: string;
+  ownerId: string;
   blog_id: string;
   date: string;
 }) => {
   const response = await axios.get('/api/emotion', {
-    params: { user_id, blog_id, date },
+    params: { ownerId, blog_id, date },
   });
   return response.data;
 };
 
 // 총 감정
-export const totalMyEmotion = async ({ user_id }: { user_id: string }) => {
+export const totalMyEmotion = async ({ ownerId }: { ownerId: string }) => {
   const response = await axios.get('/api/emotion', {
-    params: { user_id, action: 'getTotalEmotions' },
+    params: { ownerId, action: 'getTotalEmotions' },
   });
   return response.data;
 };
 
+// 글 삭제 (URL 경로 전달 -parmas)
 export const deletePost = async (id: string) => {
-  const response = await axios.delete(`/api/blog/post/${id}`, {
-    params: { id },
-  });
+  const response = await axios.delete(`/api/blog/post/${id}`);
   return response.data;
 };

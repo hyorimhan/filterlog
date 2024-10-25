@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
-  const user_id = searchParams.get('user_id');
+  const ownerId = searchParams.get('ownerId');
   const blog_id = searchParams.get('blog_id');
   const date =
     searchParams.get('date') || new Date().toISOString().split('T')[0];
@@ -13,7 +13,7 @@ export async function GET(request: NextRequest) {
     const { data, error: totalError } = await supabase
       .from('emotion')
       .select('*', { count: 'exact' })
-      .eq('user_id', user_id);
+      .eq('user_id', ownerId);
 
     if (totalError) {
       return NextResponse.json({ error: totalError.message });
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
     .from('emotion')
     .select('*')
     .eq('blog_id', blog_id)
-    .eq('user_id', user_id)
+    .eq('user_id', ownerId)
     .eq('date', date);
 
   if (error) {

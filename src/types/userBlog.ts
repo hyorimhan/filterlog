@@ -45,3 +45,8 @@ export type totalEmotionType = {
   totalCount: number;
   emotionCounts: { [key: string]: number };
 };
+
+export type useBlogOwnerId = {
+  ownerId: string | null;
+  saveOwnerId: (info: string | null) => void;
+};

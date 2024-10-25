@@ -4,7 +4,7 @@ import { blogParams } from '@/types/userBlog';
 const PostDetailPage = ({ params }: blogParams) => {
   return (
     <div>
-      <Detail id={params.id} />
+      <Detail post_id={params.id} />
     </div>
   );
 };

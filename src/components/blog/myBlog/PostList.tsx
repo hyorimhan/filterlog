@@ -8,9 +8,12 @@ import { CiImageOn } from 'react-icons/ci';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
-function PostList({ blog_id, ownerId }: { blog_id: string; ownerId: string }) {
+import useBlogInfo from '@/zustand/useBlogInfo';
+
+function PostList({ blog_id }: { blog_id: string }) {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const user = useUserInfo((state) => state.user);
+  const ownerId = useBlogInfo((state) => state.ownerId);
   const pagePost = 10;
   const { data: postList, isLoading } = useQuery<{
     data: postListType[];
@@ -22,6 +25,7 @@ function PostList({ blog_id, ownerId }: { blog_id: string; ownerId: string }) {
     queryFn: () =>
       myPostList({ blog_id, page: currentPage + 1, limit: pagePost }),
     enabled: !!blog_id,
+    staleTime: 0,
   });
 
   if (isLoading) {
@@ -39,7 +43,7 @@ function PostList({ blog_id, ownerId }: { blog_id: string; ownerId: string }) {
         owner ? (
           <Link
             href={`/blog/write?ownerId=${ownerId}`}
-            className="flex flex-col text-sm focus:outline-none items-center justify-center h-full"
+            className="flex flex-col text-sm border-2 border-custom-green-700 focus:outline-none items-center justify-center h-full"
           >
             글이 아직 없어요! 첫 글을 써보세요
           </Link>
@@ -86,8 +90,9 @@ function PostList({ blog_id, ownerId }: { blog_id: string; ownerId: string }) {
                               : post.img_url.replace(/[\[\]"]/g, '')
                           }
                           alt="img"
-                          width={100}
-                          height={100}
+                          width={200}
+                          height={200}
+                          className="w-52 h-36 object-cover pr-2 "
                         ></Image>
                       </span>
                     )}
@@ -95,18 +100,21 @@ function PostList({ blog_id, ownerId }: { blog_id: string; ownerId: string }) {
                   <span
                     className=" tracking-widest w-full  line-clamp-5"
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(post.content || ''),
+                      __html: DOMPurify.sanitize(post.content || '')
+                        .replace(
+                          /<img /g,
+                          '<div class="flex items-center"><img class="w-52  h-36 object-cover mr-2"  '
+                        )
+                        .replace(
+                          /<\/img>/g,
+                          '</img></div>' // div 닫기 추가
+                        ),
                     }}
                   ></span>
                 </div>
               </Link>
             </div>
           ))}
-          {owner ? (
-            <Link href={`/blog/write?ownerId=${ownerId}`}>글쓰기</Link>
-          ) : (
-            ''
-          )}
         </div>
       )}
       {postList && postList.data && postList.data.length > 0 && (
