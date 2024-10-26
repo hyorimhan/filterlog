@@ -50,3 +50,11 @@ export type useBlogOwnerId = {
   ownerId: string | null;
   saveOwnerId: (info: string | null) => void;
 };
+
+export interface editorProps {
+  isUpdate: boolean;
+  defaultTitle: string;
+  defaultContent: string;
+  post_id: string;
+  cancelBtn: () => void;
+}

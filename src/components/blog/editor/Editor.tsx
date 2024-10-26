@@ -2,7 +2,7 @@
 
 import DOMPurify from 'dompurify';
 
-import { blogPost, existingBlog } from '@/service/blog';
+import { blogPost, existingBlog, updatePost } from '@/service/blog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -10,14 +10,21 @@ import axios from 'axios';
 import 'react-quill/dist/quill.snow.css';
 
 import dynamic from 'next/dynamic';
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
+import { editorProps } from '@/types/userBlog';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
   loading: () => <p>에디터 로딩 중...</p>,
 });
 
-function Editor() {
+function Editor({
+  isUpdate,
+  defaultTitle,
+  defaultContent,
+  post_id,
+  cancelBtn,
+}: editorProps) {
   const nickname = useUserInfo((state) => state.nickname);
   const user = useUserInfo((state) => state.user);
   const router = useRouter();
@@ -28,6 +35,11 @@ function Editor() {
   const [disabled, setDisabled] = useState<boolean>(false);
   const searchParams = useSearchParams();
   const ownerId = searchParams.get('ownerId');
+
+  useEffect(() => {
+    setTitle(defaultTitle);
+    setContent(defaultContent);
+  }, [defaultContent, defaultTitle]);
 
   const owner = user?.id === ownerId;
   const { data: blog } = useQuery({
@@ -63,9 +75,32 @@ function Editor() {
       return;
     }
     setDisabled(true);
-    const success = await editorForm(user?.id);
-    if (success) {
-      queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
+    // const success = await editorForm(user?.id);
+    // if (success) {
+    //   queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
+    // }
+    try {
+      if (isUpdate && post_id) {
+        const cleanContent = content ? DOMPurify.sanitize(content) : '';
+        const response = await updatePost({
+          post_id,
+          title,
+          content: cleanContent,
+        });
+        if (response) {
+          alert('글이 수정되었습니다');
+          queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
+        }
+      } else {
+        const success = await editorForm(user?.id);
+        if (success) {
+          queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
+        }
+      }
+    } catch (error) {
+      alert(isUpdate ? '글 수정에 실패했습니다' : '글 등록에 실패했습니다');
+    } finally {
+      setDisabled(false);
     }
   };
 
@@ -211,8 +246,9 @@ function Editor() {
           disabled={disabled}
           className="py-3 px-4 rounded"
         >
-          작성
+          {isUpdate ? '수정' : '작성'}
         </button>
+        {isUpdate && cancelBtn && <button onClick={cancelBtn}>취소</button>}
       </div>
     </>
   );

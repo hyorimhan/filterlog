@@ -140,3 +140,20 @@ export const deletePost = async (id: string) => {
   const response = await axios.delete(`/api/blog/post/${id}`);
   return response.data;
 };
+
+export const updatePost = async ({
+  post_id,
+  title,
+  content,
+}: {
+  post_id: string;
+  title: string;
+  content: string;
+}) => {
+  const response = await axios.patch('/api/blog/post', {
+    title,
+    content,
+    post_id,
+  });
+  return response.data;
+};

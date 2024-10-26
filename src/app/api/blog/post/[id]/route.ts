@@ -36,3 +36,26 @@ export async function DELETE(
   }
   return NextResponse.json({ message: '글이 삭제되었습니다' });
 }
+
+export async function PATCH(request: NextRequest) {
+  const supabase = createClient();
+  const response = await request.json();
+  const { title, content, post_id } = response;
+
+  const { data, error } = await supabase
+    .from('post')
+    .update({ title, content })
+    .eq('id', post_id)
+    .select();
+
+  try {
+    if (data) {
+      return NextResponse.json({ message: '업데이트 되었습니다' });
+    }
+    if (error) {
+      return NextResponse.json({ error: '업데이트에 실패했습니다' });
+    }
+  } catch (error) {
+    throw new Error();
+  }
+}
