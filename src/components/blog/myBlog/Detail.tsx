@@ -2,17 +2,19 @@
 import User from '@/components/auth/User';
 import { deletePost, myPostDetail } from '@/service/blog';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import BlogHeader from './BlogHeader';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import Confirm from '@/utils/Confirm';
 import { useRouter } from 'next/navigation';
+import Editor from '../editor/Editor';
 
 function Detail({ post_id }: { post_id: string }) {
   const ownerId = useBlogInfo((state) => state.ownerId);
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
+  const [update, setUpdate] = useState<boolean>(false);
   const { data: deatilPost, isLoading } = useQuery({
     queryKey: ['postDetail', post_id],
     queryFn: () => myPostDetail(post_id),
@@ -37,17 +39,31 @@ function Detail({ post_id }: { post_id: string }) {
               <span className="mr-2">Date: </span>
               {deatilPost.created_at.slice(0, 10)}
             </div>
-
-            <div className="w-[500px] mx-auto   flex justify-center text-lg mt-5 border-b-2 border-b-custom-green-400">
-              {deatilPost.title}
-            </div>
-            <div className="flex justify-center my-10">
-              {deatilPost.content}
-            </div>
+            {update ? (
+              <Editor
+                isUpdate={true}
+                defaultTitle={deatilPost.title}
+                defaultContent={deatilPost.content}
+                post_id={post_id}
+                cancelBtn={() => setUpdate(false)}
+              />
+            ) : (
+              <>
+                <div className="w-[500px] mx-auto   flex justify-center text-lg mt-5 border-b-2 border-b-custom-green-400">
+                  {deatilPost.title}
+                </div>
+                <div className="flex justify-center my-10">
+                  {deatilPost.content}
+                </div>
+              </>
+            )}
           </div>
-          {isOwner && (
+          {isOwner && !update && (
             <div className="flex justify-center gap-10 mt-5">
-              <div className=" text-sm  bg-custom-green-300 p-2 rounded-lg">
+              <div
+                className=" text-sm  bg-custom-green-300 p-2 rounded-lg"
+                onClick={() => setUpdate(true)}
+              >
                 수정
               </div>
               <div
