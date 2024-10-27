@@ -145,15 +145,18 @@ export const updatePost = async ({
   post_id,
   title,
   content,
+  img_url,
 }: {
   post_id: string;
   title: string;
   content: string;
+  img_url: string[] | string | null;
 }) => {
-  const response = await axios.patch('/api/blog/post', {
+  const response = await axios.patch(`/api/blog/post/${post_id}`, {
     title,
     content,
     post_id,
+    img_url,
   });
   return response.data;
 };

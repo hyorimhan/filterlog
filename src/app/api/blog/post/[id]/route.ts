@@ -40,11 +40,11 @@ export async function DELETE(
 export async function PATCH(request: NextRequest) {
   const supabase = createClient();
   const response = await request.json();
-  const { title, content, post_id } = response;
+  const { title, content, post_id, img_url } = response;
 
   const { data, error } = await supabase
     .from('post')
-    .update({ title, content })
+    .update({ title, content, img_url })
     .eq('id', post_id)
     .select();
 

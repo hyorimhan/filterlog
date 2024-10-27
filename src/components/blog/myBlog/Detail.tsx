@@ -9,6 +9,7 @@ import useUserInfo from '@/zustand/useUserInfo';
 import Confirm from '@/utils/Confirm';
 import { useRouter } from 'next/navigation';
 import Editor from '../editor/Editor';
+import Image from 'next/image';
 
 function Detail({ post_id }: { post_id: string }) {
   const ownerId = useBlogInfo((state) => state.ownerId);
@@ -53,7 +54,23 @@ function Detail({ post_id }: { post_id: string }) {
                   {deatilPost.title}
                 </div>
                 <div className="flex justify-center my-10">
-                  {deatilPost.content}
+                  <div>
+                    {(Array.isArray(deatilPost.img_url)
+                      ? deatilPost.img_url
+                      : [deatilPost.img_url]
+                    ).map((img: string, index: number) => (
+                      <Image
+                        key={index}
+                        src={img.replace(/[\[\]"]/g, '')}
+                        alt={`Post image ${index + 1}`}
+                        width={500}
+                        height={500}
+                      />
+                    ))}
+                  </div>
+                  <div
+                    dangerouslySetInnerHTML={{ __html: deatilPost.content }}
+                  />
                 </div>
               </>
             )}
