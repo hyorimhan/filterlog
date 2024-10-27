@@ -1,17 +1,16 @@
 'use client';
 
-import DOMPurify from 'dompurify';
-
-import { blogPost, existingBlog, updatePost } from '@/service/blog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter, useSearchParams } from 'next/navigation';
-import axios from 'axios';
+import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 
 import dynamic from 'next/dynamic';
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { editorProps } from '@/types/userBlog';
+import useBlogInfo from '@/zustand/useBlogInfo';
+import handleSubmit from './SubmitForm';
+import { existingBlog } from '@/service/blog';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
@@ -29,12 +28,10 @@ function Editor({
   const user = useUserInfo((state) => state.user);
   const router = useRouter();
   const queryClient = useQueryClient();
-  // const [preview, setPreview] = useState<string | null>(null);
   const [title, setTitle] = useState<string>('');
   const [content, setContent] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
-  const searchParams = useSearchParams();
-  const ownerId = searchParams.get('ownerId');
+  const ownerId = useBlogInfo((state) => state.ownerId);
 
   useEffect(() => {
     setTitle(defaultTitle);
@@ -50,7 +47,6 @@ function Editor({
   if (!owner) {
     router.replace('/IE');
     alert('계정주가 아닙니다');
-
     return;
   }
 
@@ -67,156 +63,37 @@ function Editor({
     },
   };
 
-  // 폼 제출
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!user?.id) {
-      console.log(null);
-      return;
-    }
-    setDisabled(true);
-    // const success = await editorForm(user?.id);
-    // if (success) {
-    //   queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
-    // }
-    try {
-      if (isUpdate && post_id) {
-        const cleanContent = content ? DOMPurify.sanitize(content) : '';
-        const response = await updatePost({
-          post_id,
-          title,
-          content: cleanContent,
-        });
-        if (response) {
-          alert('글이 수정되었습니다');
-          queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
-        }
-      } else {
-        const success = await editorForm(user?.id);
-        if (success) {
-          queryClient.invalidateQueries({ queryKey: ['postList', blog?.id] });
-        }
-      }
-    } catch (error) {
-      alert(isUpdate ? '글 수정에 실패했습니다' : '글 등록에 실패했습니다');
-    } finally {
-      setDisabled(false);
-    }
-  };
-
-  const base64ToBlob = (base64Data: string) => {
-    const byteString = atob(base64Data.split(',')[1]);
-    const mimeString = base64Data.split(',')[0].split(':')[1].split(';')[0];
-
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    return new Blob([ab], { type: mimeString });
-  };
-
-  // base64 이미지 찾아 처리
-  const handleImageUpload = async (rawContent: string) => {
-    let processedContent = rawContent;
-    const imageUrls = [];
-
-    const dataURITags = rawContent.match(/data:(?!image\/)[^;]+;base64,[^"]+/g);
-    if (dataURITags) {
-      alert('이미지 외의 파일 형식은 업로드할 수 없습니다.');
-      return { processedContent: rawContent };
-    }
-    const imageTag = rawContent.match(/<img[^>]+src="([^">]+)"/g);
-    if (imageTag) {
-      for (const imgTag of imageTag) {
-        const base64Src = imgTag.match(/src="([^"]+)"/)?.[1];
-
-        if (base64Src && base64Src.startsWith('data:image/')) {
-          try {
-            const mimeType = base64Src.split(':')[1]?.split(';')[0];
-
-            const allowedTypes = [
-              'image/jpeg',
-              'image/png',
-              'image/gif',
-              'image/webp',
-              'image/jpg',
-            ];
-            if (!allowedTypes.includes(mimeType)) {
-              alert('이미지 파일만 업로드 가능합니다. (jpg, png, gif, webp)');
-              throw new Error('Invalid image type');
-            }
-
-            const formData = new FormData();
-            formData.append('image', base64ToBlob(base64Src));
-
-            const response = await axios.post('/api/blog/post/img', formData, {
-              headers: { 'Content-Type': 'multipart/form-data' },
-            });
-
-            if (response.data.url) {
-              imageUrls.push(response.data.url);
-              processedContent = processedContent.replace(imgTag, '');
-            }
-          } catch (error) {
-            console.error('이미지 업로드 실패:', error);
-            alert('이미지 업로드에 실패했습니다.');
-            throw error;
-          }
-        }
-      }
-    }
-    return { processedContent, imageUrls };
-  };
-
-  // 에디터 내용 클린징
-  const editorForm = async (user_id: string) => {
-    const cleanContent = content ? DOMPurify.sanitize(content) : '';
-    const { processedContent, imageUrls = [] } = await handleImageUpload(
-      cleanContent
-    );
-
-    const cleanProcessedContent = processedContent
-      .replace(/<p><br><\/p>/g, '')
-      .trim();
-    const blog_name = blog?.blog_name;
-    const blog_id = blog?.id;
-
-    if (!nickname || !blog_name || !blog_id) {
-      return null;
-    }
-
-    if (!title || content.length === 0) {
-      alert('제목, 내용을 입력해주세요');
-      return;
-    }
-    const response = await blogPost({
-      content: cleanProcessedContent,
-      title,
-      nickname,
-      blog_name,
-      blog_id,
-      img_url: imageUrls.length > 0 ? imageUrls : null,
-      user_id,
-    });
-
-    if (response) {
-      alert('글이 등록되었습니다');
-      router.replace(`/blog/${blog.id}`);
-    } else {
-      alert('글 등록에 실패했습니다');
-    }
-  };
-
   const onChangeEditor = (value: string) => {
     setContent(value.trim() === '<p><br></p>' ? '' : value);
   };
 
+  if (!blog?.blog_name || !blog?.id) {
+    return <div>블로그 정보를 불러오는 중...</div>;
+  }
+  const user_id = user.id;
   return (
     <>
-      <form onSubmit={handleSubmit} id="editorForm">
+      <form
+        onSubmit={(e) =>
+          handleSubmit(
+            e,
+            nickname!,
+            isUpdate,
+            post_id,
+            user_id,
+            title,
+            content,
+            router,
+            queryClient,
+            {
+              blog_name: blog.blog_name!,
+              id: blog.id,
+            },
+            setDisabled
+          )
+        }
+        id="editorForm"
+      >
         <div className="flex justify-center">
           <input
             type="text"

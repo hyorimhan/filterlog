@@ -21,7 +21,7 @@ export type blogPostType = {
   nickname: string;
   blog_name: string;
   blog_id: string;
-  img_url: string[] | null;
+  img_url: string[] | string | null;
   user_id: string;
 };
 
