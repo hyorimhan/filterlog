@@ -45,6 +45,11 @@ function Detail({ post_id }: { post_id: string }) {
                 isUpdate={true}
                 defaultTitle={deatilPost.title}
                 defaultContent={deatilPost.content}
+                defaultImg={
+                  Array.isArray(deatilPost.img_url)
+                    ? deatilPost.img_url
+                    : [deatilPost.img_url]
+                }
                 post_id={post_id}
                 cancelBtn={() => setUpdate(false)}
               />
@@ -63,13 +68,15 @@ function Detail({ post_id }: { post_id: string }) {
                         key={index}
                         src={img.replace(/[\[\]"]/g, '')}
                         alt={`Post image ${index + 1}`}
-                        width={500}
-                        height={500}
+                        width={300}
+                        height={300}
                       />
                     ))}
                   </div>
                   <div
-                    dangerouslySetInnerHTML={{ __html: deatilPost.content }}
+                    dangerouslySetInnerHTML={{
+                      __html: deatilPost.content.replace(/<p>><\/p>/g, ''),
+                    }}
                   />
                 </div>
               </>
@@ -78,7 +85,7 @@ function Detail({ post_id }: { post_id: string }) {
           {isOwner && !update && (
             <div className="flex justify-center gap-10 mt-5">
               <div
-                className=" text-sm  bg-custom-green-300 p-2 rounded-lg"
+                className=" text-sm  bg-custom-green-300 p-2 rounded-lg cursor-pointer"
                 onClick={() => setUpdate(true)}
               >
                 수정

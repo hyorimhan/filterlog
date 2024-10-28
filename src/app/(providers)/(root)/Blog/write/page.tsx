@@ -16,9 +16,10 @@ const WritePage = () => {
   return (
     <Editor
       isUpdate={false}
-      defaultTitle="" // 새로운 글이므로 빈 문자열을 기본 제목으로 설정
-      defaultContent="" // 새로운 글이므로 빈 문자열을 기본 내용으로 설정
-      post_id={''} // post_id는 새 글인 경우 필요하지 않으므로 빈 문자열
+      defaultTitle=""
+      defaultContent=""
+      defaultImg={[]}
+      post_id={''}
       cancelBtn={() => {}}
     />
   );

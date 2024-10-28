@@ -100,15 +100,14 @@ function PostList({ blog_id }: { blog_id: string }) {
                   <span
                     className=" tracking-widest w-full  line-clamp-5"
                     dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(post.content || '')
+                      __html: DOMPurify.sanitize(
+                        post.content?.replace(/<p>><\/p>/g, '') || ''
+                      )
                         .replace(
                           /<img /g,
                           '<div class="flex items-center"><img class="w-52  h-36 object-cover mr-2"  '
                         )
-                        .replace(
-                          /<\/img>/g,
-                          '</img></div>' // div 닫기 추가
-                        ),
+                        .replace(/<\/img>/g, '</img></div>'),
                     }}
                   ></span>
                 </div>

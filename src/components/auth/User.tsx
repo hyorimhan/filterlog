@@ -31,7 +31,10 @@ function User({ email }: { email?: string }) {
       <div className="justify-center flex flex-col items-center mt-3 pt-3 bg-yellow-200">
         <div> {userProfile?.nickname}님 행복한 하루 보내세요!</div>
         <div className="mt-3 space-x-2">
-          <button>마이페이지</button>
+          <Link href={'/blog/myPage'}>
+            <button>마이페이지</button>
+          </Link>
+
           <Link href={'/blog'}>
             <button className="text-black">마이블로그</button>
           </Link>
