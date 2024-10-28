@@ -19,7 +19,7 @@ function AuthProvider({ children }: PropsWithChildren) {
       }
     };
     loginInfo();
-  }, [email]);
+  }, [email, saveUser]);
 
   useEffect(() => {
     const userNickname = async () => {
@@ -37,7 +37,7 @@ function AuthProvider({ children }: PropsWithChildren) {
       }
     };
     userNickname();
-  }, [email]);
+  }, [email, saveNickname]);
 
   return <div>{children}</div>;
 }

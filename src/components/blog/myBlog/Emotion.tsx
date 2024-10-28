@@ -7,15 +7,16 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
-function Emotion({ blog_id }: { blog_id: string }) {
+function Emotion() {
   const user = useUserInfo((state) => state.user);
   const user_id = user?.id;
   const [selected, setSelected] = useState<string>();
   const { register } = useForm();
   const queryClient = useQueryClient();
   const today = new Date().toISOString().split('T')[0];
-  const ownerId = useBlogInfo((state) => state.ownerId);
+  const { ownerId, blogInfo } = useBlogInfo();
   const isOwner = user?.id === ownerId;
+  const blog_id = blogInfo?.id ?? '';
 
   // 블로그 계정주 감정 데이터 조회
   const { data: emotionData, isLoading } = useQuery({

@@ -39,12 +39,12 @@ export const existingBlog = async (user: User | null) => {
   return existing;
 };
 
-// 블로그 id로 특정 블로그 정보 가져오기
-export const getBlogId = async (blog_id: string) => {
+// 유저 id로 특정 블로그 정보 가져오기
+export const getBlogId = async (user_id: string) => {
   const { data, error } = await supabase
     .from('blog')
     .select('*')
-    .eq('id', blog_id)
+    .eq('user_id', user_id)
     .single();
 
   if (error) {

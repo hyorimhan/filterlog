@@ -21,24 +21,34 @@ function Editor({
   isUpdate,
   defaultTitle,
   defaultContent,
+  defaultImg = [],
   post_id,
   cancelBtn,
 }: editorProps) {
-  const nickname = useUserInfo((state) => state.nickname);
-  const user = useUserInfo((state) => state.user);
+  const { nickname, user } = useUserInfo();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const [title, setTitle] = useState<string>('');
-  const [content, setContent] = useState<string>('');
+  const [title, setTitle] = useState<string>(defaultTitle);
+  const [content, setContent] = useState<string>(defaultContent);
   const [disabled, setDisabled] = useState<boolean>(false);
   const ownerId = useBlogInfo((state) => state.ownerId);
 
-  useEffect(() => {
-    setTitle(defaultTitle);
-    setContent(defaultContent);
-  }, [defaultContent, defaultTitle]);
-
   const owner = user?.id === ownerId;
+
+  useEffect(() => {
+    let initialContent = defaultContent || '';
+
+    const imgHtml = defaultImg
+      .map((img) => {
+        const cleanUrl = img.replace(/[\[\]"]/g, '');
+        return `<Image src="${cleanUrl}" alt="blog_img" width={300} height={300}/>`;
+      })
+      .join('');
+
+    initialContent += imgHtml;
+    setContent(initialContent);
+  }, [defaultContent, defaultImg]);
+
   const { data: blog } = useQuery({
     queryKey: ['blog'],
     queryFn: () => existingBlog(user),
@@ -112,7 +122,7 @@ function Editor({
           theme="snow"
           modules={modules}
           // formats={formats}
-          className="h-96"
+          className="h-3/5"
           onChange={onChangeEditor}
         />
       </form>
