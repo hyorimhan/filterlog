@@ -7,25 +7,19 @@ import TotalEmotion from './TotalEmotion';
 import Link from 'next/link';
 import useBlogInfo from '@/zustand/useBlogInfo';
 
-function Default({
-  blog_id,
-  ownerNick,
-}: {
-  blog_id: string;
-  ownerNick: string;
-}) {
+function Default() {
   const user = useUserInfo((state) => state.user);
-  const ownerId = useBlogInfo((state) => state.ownerId);
+  const { ownerId, blogInfo } = useBlogInfo();
   const isOwner = user?.id === ownerId;
   return (
     <>
       <div className="grid grid-cols-[1fr_5fr]">
         <div className="h-[300px] border-2 border-y-custom-green-700 border-r-custom-green-700">
-          {isOwner ? <User email={user?.email} /> : ownerNick}
+          {isOwner ? <User email={user?.email} /> : blogInfo?.nickname}
         </div>
 
         <div className=" grid grid-cols-2 h-[300px] gap-2 mx-1">
-          <Emotion blog_id={blog_id} />
+          <Emotion />
           <TotalEmotion />
         </div>
       </div>
@@ -51,7 +45,7 @@ function Default({
           </Link>
         </div>
         <div className="mx-1  ">
-          <PostList blog_id={blog_id} />
+          <PostList />
         </div>
       </div>
     </>

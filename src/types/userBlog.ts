@@ -46,9 +46,11 @@ export type totalEmotionType = {
   emotionCounts: { [key: string]: number };
 };
 
-export type useBlogOwnerId = {
+export type useBlogType = {
   ownerId: string | null;
   saveOwnerId: (info: string | null) => void;
+  blogInfo: blogInfoType | null;
+  saveBlogInfo: (info: blogInfoType | null) => void;
 };
 
 export interface editorProps {
@@ -59,3 +61,11 @@ export interface editorProps {
   post_id: string;
   cancelBtn: () => void;
 }
+
+export type blogInfoType = {
+  nickname: string | null;
+  description: string | null;
+  blog_name: string | null;
+  user_id: string | null;
+  id: string;
+};

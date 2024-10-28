@@ -10,11 +10,12 @@ import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
 import useBlogInfo from '@/zustand/useBlogInfo';
 
-function PostList({ blog_id }: { blog_id: string }) {
+function PostList() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const user = useUserInfo((state) => state.user);
-  const ownerId = useBlogInfo((state) => state.ownerId);
   const pagePost = 10;
+  const { ownerId, blogInfo } = useBlogInfo();
+  const blog_id = blogInfo?.id ?? '';
   const { data: postList, isLoading } = useQuery<{
     data: postListType[];
     total: number;
