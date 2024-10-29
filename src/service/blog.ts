@@ -1,5 +1,6 @@
 import { createClient } from '@/supabase/client';
 import {
+  blogInfoUpdateType,
   blogPostType,
   createBlogType,
   userEmotionType,
@@ -157,6 +158,19 @@ export const updatePost = async ({
     content,
     post_id,
     img_url,
+  });
+  return response.data;
+};
+
+export const updateBlogInfo = async ({
+  nickname,
+  blog_name,
+  description,
+}: blogInfoUpdateType) => {
+  const response = await axios.patch('/api/auth/profile', {
+    nickname,
+    blog_name,
+    description,
   });
   return response.data;
 };

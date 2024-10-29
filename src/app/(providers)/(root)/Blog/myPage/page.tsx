@@ -1,10 +1,12 @@
 'use client';
-import useBlogInfo from '@/zustand/useBlogInfo';
+import Default from '@/components/myPage/Default';
 
 const MyPage = () => {
-  const blogInfo = useBlogInfo((state) => state.blogInfo);
-  console.log(blogInfo);
-  return <div>page</div>;
+  return (
+    <div>
+      <Default />
+    </div>
+  );
 };
 
 export default MyPage;
