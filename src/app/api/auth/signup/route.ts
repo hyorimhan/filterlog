@@ -32,3 +32,24 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ message: '네트워크 오류가 발생했습니다' });
   }
 }
+
+export async function PATCH(request: NextRequest) {
+  const supabase = createClient();
+
+  const { data, error } = await supabase
+    .from('users')
+    .update({ nickname: 'nickname' })
+    .eq('nickname', 'nickname')
+    .select();
+
+  try {
+    if (data) {
+      return NextResponse.json({ message: '닉네임이 업데이트 되었습니다' });
+    }
+    if (error) {
+      return NextResponse.json({ error: '업데이트에 실패했습니다' });
+    }
+  } catch (error) {
+    throw new Error();
+  }
+}

@@ -1,5 +1,6 @@
 import { createClient } from '@/supabase/client';
 import { Database } from '@/types/supabase';
+import { userProfileType } from '@/types/userBlog';
 import { loginType } from '@/types/userForm';
 import axios from 'axios';
 
@@ -47,5 +48,18 @@ export const profile = async (email: string) => {
 //로그아웃
 export const logout = async () => {
   const response = await axios.delete('/api/auth/logout');
+  return response.data;
+};
+
+export const updateProfile = async ({
+  nickname,
+  blog_name,
+  description,
+}: userProfileType) => {
+  const response = await axios.patch('/api/auth/profile', {
+    nickname,
+    description,
+    blog_name,
+  });
   return response.data;
 };

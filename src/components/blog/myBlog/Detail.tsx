@@ -29,7 +29,7 @@ function Detail({ post_id }: { post_id: string }) {
 
   return (
     <>
-      <BlogHeader description={deatilPost.blog_name} />
+      <BlogHeader />
       <div className="grid grid-cols-[1fr_5fr] gap-1 mr-1">
         <div className="w-full">
           <User />

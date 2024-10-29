@@ -25,6 +25,7 @@ export type blogPostType = {
   user_id: string;
 };
 
+export type userProfileType = Omit<createBlogType, 'user_id'>;
 // export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
 
 export type postListType = {
@@ -69,3 +70,5 @@ export type blogInfoType = {
   user_id: string | null;
   id: string;
 };
+
+export type blogInfoUpdateType = Omit<blogInfoType, 'user_id' | 'id'>;

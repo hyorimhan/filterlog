@@ -8,9 +8,7 @@ const BlogDetailPage = () => {
 
   return (
     <>
-      {blogInfo?.description && (
-        <BlogHeader description={blogInfo?.description} />
-      )}
+      {blogInfo?.description && <BlogHeader />}
       {blogInfo && <Default />}
     </>
   );
