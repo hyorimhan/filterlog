@@ -1,5 +1,7 @@
 'use client';
-import { profile, userInfo } from '@/service/auth';
+import { userInfo } from '@/service/auth';
+import { getBlogId } from '@/service/blog';
+import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import React, { PropsWithChildren, useEffect } from 'react';
 
@@ -7,7 +9,7 @@ function AuthProvider({ children }: PropsWithChildren) {
   const saveUser = useUserInfo((state) => state.saveUser);
   const user = useUserInfo((state) => state.user);
   const email = user?.email;
-  const saveNickname = useUserInfo((state) => state.saveNickname);
+  const saveBlogInfo = useBlogInfo((state) => state.saveBlogInfo);
 
   useEffect(() => {
     const loginInfo = async () => {
@@ -22,22 +24,30 @@ function AuthProvider({ children }: PropsWithChildren) {
   }, [email, saveUser]);
 
   useEffect(() => {
-    const userNickname = async () => {
-      try {
-        if (!email) {
-          console.log('이메일 오류');
-          return;
-        }
-        const profileData = await profile(email);
-        if (profileData) {
-          saveNickname(profileData?.nickname);
-        }
-      } catch (error) {
-        console.log('이메일 정보가 없습니다');
-      }
+    const blog = async () => {
+      const response = await getBlogId(user?.id ?? '');
+      saveBlogInfo(response);
     };
-    userNickname();
-  }, [email, saveNickname]);
+    blog();
+  }, [saveBlogInfo, user?.id]);
+
+  // useEffect(() => {
+  //   const userNickname = async () => {
+  //     try {
+  //       if (!email) {
+  //         console.log('이메일 오류');
+  //         return;
+  //       }
+  //       const profileData = await profile(email);
+  //       if (profileData) {
+  //         saveNickname(profileData?.nickname);
+  //       }
+  //     } catch (error) {
+  //       console.log('이메일 정보가 없습니다');
+  //     }
+  //   };
+  //   userNickname();
+  // }, [email, saveNickname]);
 
   return <div>{children}</div>;
 }

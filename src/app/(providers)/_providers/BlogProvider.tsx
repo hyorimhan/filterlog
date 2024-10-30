@@ -1,20 +1,22 @@
 'use client';
 import { getBlogId } from '@/service/blog';
 import useBlogInfo from '@/zustand/useBlogInfo';
-import useUserInfo from '@/zustand/useUserInfo';
+import { usePathname } from 'next/navigation';
 import { PropsWithChildren, useEffect } from 'react';
 
 function BlogProvider({ children }: PropsWithChildren) {
-  const user = useUserInfo((state) => state.user);
   const { saveOwnerId, saveBlogInfo } = useBlogInfo();
+  const pathname = usePathname();
+  const blog_id = pathname.split('/').pop();
+
   useEffect(() => {
     const blog = async () => {
-      const response = await getBlogId(user?.id ?? '');
+      const response = await getBlogId(blog_id!);
       saveBlogInfo(response);
       saveOwnerId(response?.user_id ?? '');
     };
     blog();
-  }, [saveBlogInfo, user?.id, saveOwnerId]);
+  }, [saveBlogInfo, blog_id, saveOwnerId]);
   return <div>{children}</div>;
 }
 
