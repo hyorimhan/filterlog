@@ -12,7 +12,7 @@ const HomePage = () => {
     <>
       <div className="flex mt-1">
         <section className=" h-[280px] w-[275px]  border-r-custom-green-700 border-2 border-y-custom-green-700">
-          {user && user.email ? <User email={user.email} /> : <Login />}
+          {user && user.email ? <User /> : <Login />}
         </section>
         <section className="w-[720px] h-[280px] ">
           <MainSwiper />

@@ -40,7 +40,7 @@ export const existingBlog = async (user: User | null) => {
   return existing;
 };
 
-// 블로그 id로 특정 블로그 정보 가져오기
+//블로그 id로 특정 블로그 정보 가져오기
 export const getBlogId = async (blog_id: string) => {
   const { data, error } = await supabase
     .from('blog')
@@ -52,6 +52,7 @@ export const getBlogId = async (blog_id: string) => {
     console.log(error);
     return null;
   }
+
   return data;
 };
 
@@ -166,11 +167,13 @@ export const updateBlogInfo = async ({
   nickname,
   blog_name,
   description,
+  user_id,
 }: blogInfoUpdateType) => {
   const response = await axios.patch('/api/auth/profile', {
     nickname,
     blog_name,
     description,
+    user_id,
   });
   return response.data;
 };
