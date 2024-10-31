@@ -71,4 +71,4 @@ export type blogInfoType = {
   id: string;
 };
 
-export type blogInfoUpdateType = Omit<blogInfoType, 'user_id' | 'id'>;
+export type blogInfoUpdateType = Omit<blogInfoType, 'id'>;

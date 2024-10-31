@@ -34,15 +34,19 @@ export const userInfo = async () => {
   return user;
 };
 
-//로그인한 유저 닉네임 가져오기
-export const profile = async (email: string) => {
-  const { data: profile } = await supabase
-    .from('users')
+//로그인한 유저 블로그 정보 가져오기
+export const getBlogProfile = async (user_id: string) => {
+  if (!user_id) return null;
+  const { data, error } = await supabase
+    .from('blog')
     .select('*')
-    .eq('email', email)
+    .eq('user_id', user_id)
     .single();
-
-  return profile;
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data;
 };
 
 //로그아웃

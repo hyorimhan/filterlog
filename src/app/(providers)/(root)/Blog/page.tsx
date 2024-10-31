@@ -1,5 +1,4 @@
 'use client';
-import useBlogInfo from '@/zustand/useBlogInfo';
 import { existingBlog } from '../../../../service/blog';
 import Create from '@/components/blog/Create';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -9,7 +8,6 @@ import { useEffect } from 'react';
 
 const BlogPage = () => {
   const user = useUserInfo((state) => state.user);
-  const { blogInfo } = useBlogInfo();
   const router = useRouter();
 
   const { data: existingData, isLoading } = useQuery({
@@ -33,7 +31,7 @@ const BlogPage = () => {
     return '로딩중';
   }
 
-  return <div>{!blogInfo && <Create />}</div>;
+  return <div>{!existingData && <Create />}</div>;
 };
 
 export default BlogPage;
