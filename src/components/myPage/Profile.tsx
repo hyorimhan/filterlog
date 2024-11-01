@@ -46,7 +46,7 @@ function Profile() {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center mt-[10%]  mr-48  mx-auto">
+    <div className="flex flex-col items-center justify-center mt-5  mx-auto">
       <Image
         src="/profile/profile.svg"
         alt="profileimg"
@@ -58,25 +58,49 @@ function Profile() {
         className=" flex flex-col mt-5"
         onSubmit={handleSubmit(updateProfile)}
       >
-        <input
-          type="text"
-          id="nickname"
-          {...register('nickname')}
-          defaultValue={getProfile?.nickname ?? ''}
-        />
-        <input
-          type="text"
-          id="blog_name"
-          {...register('blog_name')}
-          defaultValue={getProfile?.blog_name ?? ''}
-        />
-        <input
-          type="text"
-          id="description"
-          {...register('description')}
-          defaultValue={getProfile?.description ?? ''}
-        />
-        <button>수정</button>
+        <div className="flex flex-col my-3 ">
+          <label htmlFor="nickname" id="nickname" className="text-sm">
+            닉네임
+          </label>
+          <input
+            type="text"
+            id="nickname"
+            {...register('nickname')}
+            defaultValue={getProfile?.nickname ?? ''}
+            className="text-sm w-52"
+          />
+          <div>*최소 3자 ~ 최대 13자</div>
+        </div>
+
+        <div className="flex flex-col my-3">
+          <label htmlFor="blog_name" id="blog_name" className="text-sm">
+            블로그 이름
+          </label>
+          <input
+            type="text"
+            id="blog_name"
+            {...register('blog_name')}
+            defaultValue={getProfile?.blog_name ?? ''}
+            className="text-sm"
+          />
+          <div>*최소 3자 ~ 최대 13자</div>
+        </div>
+
+        <div className="flex flex-col my-3">
+          <label htmlFor="description" id="description" className="text-sm">
+            블로그 설명
+          </label>
+          <input
+            type="text"
+            id="description"
+            {...register('description')}
+            defaultValue={getProfile?.description ?? ''}
+            className="text-sm"
+          />
+          <div>*최소 3자 ~ 최대 13자</div>
+        </div>
+
+        <button className="my-5">수정</button>
       </form>
     </div>
   );

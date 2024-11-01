@@ -43,6 +43,9 @@ function Default() {
               방명록
             </div>
           </Link>
+          <div className="rounded-lg w-full text-center p-2 border-2 border-custom-green-400 shadow-sm mt-1 hover:brightness-105 ">
+            <input type="text" className="border-none w-full text-black" />
+          </div>
         </div>
         <div className="mx-1  ">
           <PostList />
