@@ -2,20 +2,24 @@ import { myPostList } from '@/service/blog';
 import { postListType } from '@/types/userBlog';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { CiImageOn } from 'react-icons/ci';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
 import useBlogInfo from '@/zustand/useBlogInfo';
+// import Fuse from 'fuse.js';
 
 function PostList() {
   const [currentPage, setCurrentPage] = useState<number>(0);
+  // const [search, setSearch] = useState<string>('');
+
   const user = useUserInfo((state) => state.user);
   const pagePost = 10;
   const { ownerId, blogInfo } = useBlogInfo();
   const blog_id = blogInfo?.id ?? '';
+
   const { data: postList, isLoading } = useQuery<{
     data: postListType[];
     total: number;
@@ -29,14 +33,37 @@ function PostList() {
     staleTime: 0,
   });
 
+  // const fuseOptions = {
+  //   keys: ['title', 'content'],
+  //   threshold: 0.4,
+  //   includeScore: true,
+  // };
+
+  // const searchResults = useMemo(() => {
+  //   if (!postList?.data || search === '') return '검색 결과가 없습니다';
+
+  //   const fuse = new Fuse(postList.data, fuseOptions);
+  //   const results = fuse.search(search);
+  //   return results.map((result) => result.item);
+  // }, [postList?.data, search]);
+
   if (isLoading) {
     return '로딩중';
   }
+
+  //클릭한 페이지
   const handlePageClick = (selectedPage: { selected: number }) => {
     setCurrentPage(selectedPage.selected);
   };
 
-  const pageCount = Math.ceil((postList?.total || 0) / pagePost);
+  // // 검색어 변경
+  // const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
+  //   setSearch(e.target.value);
+  //   setCurrentPage(0);
+  // };
+
+  // const displayPosts = searchResults || [];
+  const pageCount = Math.ceil((postList?.total || 0) / pagePost); // 페이지 수 계산
   const owner = ownerId === user?.id;
   return (
     <>

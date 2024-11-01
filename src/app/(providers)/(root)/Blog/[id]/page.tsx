@@ -2,14 +2,14 @@
 import BlogHeader from '@/components/blog/myBlog/BlogHeader';
 import Default from '@/components/blog/myBlog/Default';
 import { getBlogId } from '@/service/blog';
+import { blogParams } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
-import { useParams } from 'next/navigation';
 import { useEffect } from 'react';
 
-const BlogDetailPage = () => {
+const BlogDetailPage = ({ params }: blogParams) => {
   const { blogInfo, saveOwnerId, saveBlogInfo } = useBlogInfo();
-  const params = useParams();
-  const blog_id = params.id as string;
+
+  const blog_id = params.id;
   console.log(blog_id);
 
   useEffect(() => {
