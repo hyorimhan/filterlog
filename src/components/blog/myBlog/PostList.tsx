@@ -2,18 +2,17 @@ import { myPostList } from '@/service/blog';
 import { postListType } from '@/types/userBlog';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { CiImageOn } from 'react-icons/ci';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
 import useBlogInfo from '@/zustand/useBlogInfo';
-// import Fuse from 'fuse.js';
+import Fuse from 'fuse.js';
 
-function PostList() {
+function PostList({ searchWord }: { searchWord: string }) {
   const [currentPage, setCurrentPage] = useState<number>(0);
-  // const [search, setSearch] = useState<string>('');
 
   const user = useUserInfo((state) => state.user);
   const pagePost = 10;
@@ -33,19 +32,20 @@ function PostList() {
     staleTime: 0,
   });
 
-  // const fuseOptions = {
-  //   keys: ['title', 'content'],
-  //   threshold: 0.4,
-  //   includeScore: true,
-  // };
+  const fuseOptions = {
+    keys: ['title', 'content'],
+    threshold: 0.2,
+    includeScore: true,
+  };
 
-  // const searchResults = useMemo(() => {
-  //   if (!postList?.data || search === '') return '검색 결과가 없습니다';
+  const searchResults = useMemo(() => {
+    if (!postList?.data) return [];
+    if (searchWord === '') return postList.data;
 
-  //   const fuse = new Fuse(postList.data, fuseOptions);
-  //   const results = fuse.search(search);
-  //   return results.map((result) => result.item);
-  // }, [postList?.data, search]);
+    const fuse = new Fuse(postList.data, fuseOptions);
+    const results = fuse.search(searchWord);
+    return results.map((result) => result.item);
+  }, [postList?.data, searchWord]);
 
   if (isLoading) {
     return '로딩중';
@@ -56,95 +56,107 @@ function PostList() {
     setCurrentPage(selectedPage.selected);
   };
 
-  // // 검색어 변경
-  // const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-  //   setSearch(e.target.value);
-  //   setCurrentPage(0);
-  // };
-
-  // const displayPosts = searchResults || [];
+  const displayPosts = searchResults;
   const pageCount = Math.ceil((postList?.total || 0) / pagePost); // 페이지 수 계산
   const owner = ownerId === user?.id;
+
+  const NoPostMessage = () => {
+    const hasNoPosts = postList?.data.length === 0;
+    const defaultResults = searchWord !== '';
+    if (owner && hasNoPosts && !defaultResults) {
+      return (
+        <Link
+          href={`/blog/write?ownerId=${ownerId}`}
+          className="flex flex-col text-sm border-2 border-custom-green-700 focus:outline-none items-center justify-center h-full"
+        >
+          글이 아직 없어요! 첫 글을 써보세요
+        </Link>
+      );
+    }
+    if (defaultResults) {
+      return <span>검색 결과가 없습니다</span>;
+    }
+
+    if (hasNoPosts && !defaultResults) {
+      return (
+        <span className="text-sm flex flex-col justify-center items-center h-full">
+          작성된 글이 없습니다
+        </span>
+      );
+    }
+  };
   return (
-    <>
-      {postList?.data.length === 0 ? (
-        owner ? (
-          <Link
-            href={`/blog/write?ownerId=${ownerId}`}
-            className="flex flex-col text-sm border-2 border-custom-green-700 focus:outline-none items-center justify-center h-full"
-          >
-            글이 아직 없어요! 첫 글을 써보세요
-          </Link>
+    <div>
+      <div className="grid grid-cols-2 gap-2 ">
+        {displayPosts.length === 0 ? (
+          <NoPostMessage />
         ) : (
-          <span className="text-sm flex flex-col justify-center items-center h-full">
-            작성된 글이 없습니다
-          </span>
-        )
-      ) : (
-        <div className="grid grid-cols-2 gap-2 ">
-          {postList?.data.map((post) => (
-            <div
-              key={post.id}
-              className="border-2 h-[290px]  border-custom-green-400 rounded-lg shadow"
-            >
-              <Link href={`/blog/post/${post.id}`}>
-                <div className="text-right mt-2 mr-3 text-black">
-                  <span className="text-sm  border-b-2 text-custom-green-700 border-b-custom-green-300">
-                    Date:
-                  </span>{' '}
-                  {post.created_at.slice(0, 10)}
-                </div>
-                <div className="truncate mt-10 text-black flex items-center">
-                  <span className="text-sm flex text-custom-green-700 ml-3 border-b-2 border-b-custom-green-300">
-                    Title:
-                  </span>
-                  <span className="text-[16px] flex ml-2 truncate  items-center">
-                    <span className="truncate">{post.title}</span>
-                    <span className="ml-2 flex items-center">
+          displayPosts
+            ?.slice(currentPage * pagePost, (currentPage + 1) * pagePost)
+            .map((post) => (
+              <div
+                key={post.id}
+                className="border-2 h-[290px]  border-custom-green-400 rounded-lg shadow"
+              >
+                <Link href={`/blog/post/${post.id}`}>
+                  <div className="text-right mt-2 mr-3 text-black">
+                    <span className="text-sm  border-b-2 text-custom-green-700 border-b-custom-green-300">
+                      Date:
+                    </span>{' '}
+                    {post.created_at.slice(0, 10)}
+                  </div>
+                  <div className="truncate mt-10 text-black flex items-center">
+                    <span className="text-sm flex text-custom-green-700 ml-3 border-b-2 border-b-custom-green-300">
+                      Title:
+                    </span>
+                    <span className="text-[16px] flex ml-2 truncate  items-center">
+                      <span className="truncate">{post.title}</span>
+                      <span className="ml-2 flex items-center">
+                        {post.img_url && (
+                          <CiImageOn className="w-7 h-7 mr-5 text-custom-green-700" />
+                        )}
+                      </span>
+                    </span>
+                  </div>
+                  <div className=" text-sm  flex items-start  justify-evenly mx-5 mt-10 text-black  ">
+                    <span>
                       {post.img_url && (
-                        <CiImageOn className="w-7 h-7 mr-5 text-custom-green-700" />
+                        <span>
+                          <Image
+                            src={
+                              Array.isArray(post.img_url)
+                                ? post.img_url[0].replace(/[\[\]"]/g, '')
+                                : post.img_url.replace(/[\[\]"]/g, '')
+                            }
+                            alt="img"
+                            width={200}
+                            height={200}
+                            className="w-52 h-36 object-cover pr-2 "
+                          ></Image>
+                        </span>
                       )}
                     </span>
-                  </span>
-                </div>
-                <div className=" text-sm  flex items-start  justify-evenly mx-5 mt-10 text-black  ">
-                  <span>
-                    {post.img_url && (
-                      <span>
-                        <Image
-                          src={
-                            Array.isArray(post.img_url)
-                              ? post.img_url[0].replace(/[\[\]"]/g, '')
-                              : post.img_url.replace(/[\[\]"]/g, '')
-                          }
-                          alt="img"
-                          width={200}
-                          height={200}
-                          className="w-52 h-36 object-cover pr-2 "
-                        ></Image>
-                      </span>
-                    )}
-                  </span>
-                  <span
-                    className=" tracking-widest w-full  line-clamp-5"
-                    dangerouslySetInnerHTML={{
-                      __html: DOMPurify.sanitize(
-                        post.content?.replace(/<p>><\/p>/g, '') || ''
-                      )
-                        .replace(
-                          /<img /g,
-                          '<div class="flex items-center"><img class="w-52  h-36 object-cover mr-2"  '
+                    <span
+                      className=" tracking-widest w-full  line-clamp-5"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(
+                          post.content?.replace(/<p>><\/p>/g, '') || ''
                         )
-                        .replace(/<\/img>/g, '</img></div>'),
-                    }}
-                  ></span>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-      )}
-      {postList && postList.data && postList.data.length > 0 && (
+                          .replace(
+                            /<img /g,
+                            '<div class="flex items-center"><img class="w-52  h-36 object-cover mr-2"  '
+                          )
+                          .replace(/<\/img>/g, '</img></div>'),
+                      }}
+                    ></span>
+                  </div>
+                </Link>
+              </div>
+            ))
+        )}
+      </div>
+
+      {displayPosts.length > 0 && (
         <ReactPaginate
           previousLabel={'이전'}
           nextLabel={'다음'}
@@ -162,7 +174,7 @@ function PostList() {
           disabledLinkClassName={'focus:text-gray cursor-not-allowed'}
         />
       )}
-    </>
+    </div>
   );
 }
 export default PostList;

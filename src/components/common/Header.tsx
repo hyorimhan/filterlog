@@ -48,7 +48,7 @@ function Header() {
           className=" object-cover h-full ml-3 "
         />
       </div>
-      <div className="h-[150px] w-[1280px] mx-auto border-b-0 border-t-0 bg-custom-green-300 border-2 border-x-custom-green-700">
+      <div className="h-[150px] w-[1280px] mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-x-custom-green-700">
         <Image
           src={'/logo/filTextLogo1.svg'}
           alt="filterlogLogo"
