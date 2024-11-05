@@ -15,7 +15,7 @@ function Default() {
       <BlogHeader />
       <div className="grid grid-cols-[1fr_5fr]">
         <div className="h-[300px] border-2 border-y-custom-green-700 border-r-custom-green-700">
-          {<User />}
+          <User />
         </div>
 
         <div className="  h-full gap-2 mx-1 border-2 border-custom-green-400">
