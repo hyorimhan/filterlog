@@ -3,6 +3,7 @@ import Login from '@/components/auth/Login';
 import User from '@/components/auth/User';
 import Ad from '@/components/common/Ad';
 import MainSwiper from '@/components/IE/MainSwiper';
+import TodayBlogger from '@/components/IE/TodayBlogger';
 import useUserInfo from '@/zustand/useUserInfo';
 
 const HomePage = () => {
@@ -18,7 +19,7 @@ const HomePage = () => {
           <MainSwiper />
         </section>
         <section className="border-gray-300 h-[280px]  w-[275px] text-black ">
-          {user?.email}
+          <TodayBlogger />
         </section>
       </div>
       <div className="flex mt-1">

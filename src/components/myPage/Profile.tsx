@@ -6,12 +6,16 @@ import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 // import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { porfileImg } from '../../service/auth';
 
 function Profile() {
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
+  const [imgPreview, setImgPreview] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm<blogInfoUpdateType>();
 
@@ -27,6 +31,31 @@ function Profile() {
   if (isLoading) {
     return '로딩중';
   }
+
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !user?.id) return;
+
+    if (file.size > 5 * 1024 * 1024 || !file.type.startsWith('image/')) {
+      alert('5mb 이하의 이미지 파일만 업로드 가능합니다');
+      return;
+    }
+    const previewUrl = URL.createObjectURL(file);
+    setImgPreview(previewUrl);
+
+    const formData = new FormData();
+    formData.append('image', file);
+    formData.append('userId', user?.id);
+
+    setIsUploading(true);
+    try {
+      await porfileImg(formData);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsUploading(false);
+    }
+  };
 
   const updateProfile = async (data: blogInfoUpdateType) => {
     try {
@@ -48,12 +77,19 @@ function Profile() {
   return (
     <div className="flex flex-col items-center justify-center mt-5  mx-auto">
       <Image
-        src="/profile/profile.svg"
+        src={imgPreview || '/profile/profile.svg'}
         alt="profileimg"
         width={100}
         height={100}
         className="rounded-full border-2  border-custom-green-600"
       />
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        disabled={isUploading}
+      />
+      {isUploading && '업로드 중'}
       <form
         className=" flex flex-col mt-5"
         onSubmit={handleSubmit(updateProfile)}

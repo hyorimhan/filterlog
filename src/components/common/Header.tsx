@@ -6,7 +6,6 @@ function Header() {
   const router = useRouter();
   const pathname = usePathname();
   const url = `filterlog.kro.kr${pathname}`;
-
   const closeWindow = () => {
     router.replace('/main');
   };
@@ -46,15 +45,6 @@ function Header() {
           width={180}
           height={20}
           className=" object-cover h-full ml-3 "
-        />
-      </div>
-      <div className="h-[150px] w-[1280px] mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-x-custom-green-700">
-        <Image
-          src={'/logo/filTextLogo1.svg'}
-          alt="filterlogLogo"
-          width={500}
-          height={500}
-          className="w-[380px] h-[150px] mx-auto border-0 pb-3 my-auto bg-custom-green-300 object-cover "
         />
       </div>
     </>

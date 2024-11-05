@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { emailValidate, passwordValidate } from './AuthValidate';
-import { getBlogProfile, login } from '@/service/auth';
+import { login } from '@/service/auth';
 import { loginType } from '@/types/userForm';
 import useUserInfo from '@/zustand/useUserInfo';
 import { usePathname, useRouter } from 'next/navigation';
@@ -11,7 +11,7 @@ function Login() {
   const router = useRouter();
   const pathname = usePathname();
   const { register, handleSubmit, reset } = useForm<loginType>();
-  const { saveUser, saveNickname } = useUserInfo();
+  const { saveUser } = useUserInfo();
   const loginForm = async (data: loginType) => {
     try {
       const response = await login(data);
@@ -23,22 +23,7 @@ function Login() {
       }
       if (response.user) {
         saveUser(response.user);
-
-        try {
-          const profileData = await getBlogProfile(response.user.id);
-          console.log('Profile Data:', profileData);
-          if (profileData?.nickname) {
-            saveNickname(profileData.nickname);
-            alert('로그인 되었습니다');
-
-            router.replace(pathname);
-          } else {
-            alert('프로필 정보를 가져오지 못했습니다');
-            router.replace(pathname);
-          }
-        } catch (error) {
-          console.log(error);
-        }
+        router.replace(pathname);
       } else {
         alert('아이디, 비밀번호를 다시 확인해주세요');
       }

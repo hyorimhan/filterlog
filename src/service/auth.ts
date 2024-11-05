@@ -67,3 +67,10 @@ export const updateProfile = async ({
   });
   return response.data;
 };
+
+export const porfileImg = async (formData: FormData) => {
+  const resposne = await axios.post('/api/auth/profile', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return resposne.data;
+};
