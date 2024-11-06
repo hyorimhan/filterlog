@@ -3,17 +3,32 @@ import React from 'react';
 import Logout from './Logout';
 import Link from 'next/link';
 import useUserInfo from '@/zustand/useUserInfo';
+import { useQuery } from '@tanstack/react-query';
+import { userProfileImg } from '@/service/auth';
 
 function User() {
   const user = useUserInfo((state) => state.user);
 
   const nickname = useUserInfo((state) => state.nickname);
-  console.log(nickname);
+
+  const { data: profileImg, isLoading: profileLoading } = useQuery({
+    queryKey: ['profileImg'],
+    queryFn: () => {
+      if (!user?.id) return null;
+      return userProfileImg(user?.id);
+    },
+    enabled: !!user?.id,
+  });
+
+  if (profileLoading) {
+    return '로딩중';
+  }
+
   return (
     <>
       <div className="flex flex-col items-center justify-center mt-[20%] ">
         <Image
-          src="/profile/profile.svg"
+          src={profileImg || '/profile/profile.svg'}
           alt="profileimg"
           width={80}
           height={80}
