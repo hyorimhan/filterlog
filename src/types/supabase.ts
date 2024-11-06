@@ -15,6 +15,7 @@ export type Database = {
           description: string | null
           id: string
           nickname: string | null
+          profile_img: string | null
           user_id: string | null
         }
         Insert: {
@@ -22,6 +23,7 @@ export type Database = {
           description?: string | null
           id?: string
           nickname?: string | null
+          profile_img?: string | null
           user_id?: string | null
         }
         Update: {
@@ -29,6 +31,7 @@ export type Database = {
           description?: string | null
           id?: string
           nickname?: string | null
+          profile_img?: string | null
           user_id?: string | null
         }
         Relationships: [
@@ -209,16 +212,19 @@ export type Database = {
           email: string | null
           id: string
           nickname: string | null
+          profile_img: string | null
         }
         Insert: {
           email?: string | null
           id?: string
           nickname?: string | null
+          profile_img?: string | null
         }
         Update: {
           email?: string | null
           id?: string
           nickname?: string | null
+          profile_img?: string | null
         }
         Relationships: []
       }

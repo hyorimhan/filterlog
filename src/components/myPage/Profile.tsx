@@ -1,5 +1,9 @@
 'use clinet';
-import { getBlogProfile } from '@/service/auth';
+import {
+  getBlogProfile,
+  profileImgUpload,
+  userProfileImg,
+} from '@/service/auth';
 import { updateBlogInfo } from '@/service/blog';
 import { blogInfoType, blogInfoUpdateType } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -9,13 +13,21 @@ import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 // import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { porfileImg } from '../../service/auth';
 
 function Profile() {
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+
+  const { data: profileImg, isLoading: profileLoading } = useQuery({
+    queryKey: ['profileImg'],
+    queryFn: () => {
+      if (!user?.id) return null;
+      return userProfileImg(user?.id);
+    },
+    enabled: !!user?.id,
+  });
 
   const { register, handleSubmit } = useForm<blogInfoUpdateType>();
 
@@ -28,7 +40,7 @@ function Profile() {
     enabled: !!user?.id,
   });
 
-  if (isLoading) {
+  if (isLoading || profileLoading) {
     return '로딩중';
   }
 
@@ -49,7 +61,7 @@ function Profile() {
 
     setIsUploading(true);
     try {
-      await porfileImg(formData);
+      await profileImgUpload(formData);
     } catch (error) {
       console.log(error);
     } finally {
@@ -76,19 +88,25 @@ function Profile() {
   };
   return (
     <div className="flex flex-col items-center justify-center mt-5  mx-auto">
-      <Image
-        src={imgPreview || '/profile/profile.svg'}
-        alt="profileimg"
-        width={100}
-        height={100}
-        className="rounded-full border-2  border-custom-green-600"
-      />
-      <input
-        type="file"
-        accept="image/*"
-        onChange={handleImageChange}
-        disabled={isUploading}
-      />
+      <label htmlFor="profile-upload" className="cursor-pointer ">
+        <Image
+          src={imgPreview ? imgPreview : profileImg || '/profile/profile.svg'}
+          alt="profileimg"
+          width={100}
+          height={100}
+          className="rounded-full border-2 border-custom-green-600 hover:brightness-75"
+        />
+
+        <input
+          id="profile-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleImageChange}
+          disabled={isUploading}
+          className="hidden"
+        />
+      </label>
+
       {isUploading && '업로드 중'}
       <form
         className=" flex flex-col mt-5"
@@ -102,7 +120,7 @@ function Profile() {
             type="text"
             id="nickname"
             {...register('nickname')}
-            defaultValue={getProfile?.nickname ?? ''}
+            defaultValue={getProfile?.nickname as string}
             className="text-sm w-52"
           />
           <div>*최소 3자 ~ 최대 13자</div>

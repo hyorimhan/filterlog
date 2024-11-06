@@ -68,9 +68,22 @@ export const updateProfile = async ({
   return response.data;
 };
 
-export const porfileImg = async (formData: FormData) => {
+export const profileImgUpload = async (formData: FormData) => {
   const resposne = await axios.post('/api/auth/profile', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return resposne.data;
+};
+
+export const userProfileImg = async (user_id: string) => {
+  const { data, error } = await supabase
+    .from('blog')
+    .select('*')
+    .eq('user_id', user_id)
+    .single();
+
+  if (error) {
+    throw new Error();
+  }
+  return data.profile_img;
 };
