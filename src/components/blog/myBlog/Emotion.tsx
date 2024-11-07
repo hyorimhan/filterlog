@@ -57,7 +57,7 @@ function Emotion() {
 
   return (
     <div className="flex flex-col items-center rounded-lg  justify-center w-full h-[300px] bg-custom-green-300 ">
-      <div className="text-lg mb-5">내 오늘 기분은?</div>
+      <div className="text-lg pt-10">내 오늘 기분은?</div>
       {emotionData ? (
         <>
           <Image
@@ -72,7 +72,7 @@ function Emotion() {
         </>
       ) : isOwner && user ? (
         <form className="flex-col w-full h-[300px] flex justify-center items-center ">
-          <div className="flex gap-5 mt-10">
+          <div className="flex gap-5 mx-2">
             {['sad', 'angry', 'soso', 'smile', 'happy'].map((emotion) => (
               <div key={emotion}>
                 <input

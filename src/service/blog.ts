@@ -7,6 +7,7 @@ import {
 } from '@/types/userBlog';
 import { User } from '@supabase/supabase-js';
 import axios from 'axios';
+import { commentsType } from '../types/userBlog';
 
 const supabase = createClient();
 
@@ -175,5 +176,37 @@ export const updateBlogInfo = async ({
     description,
     user_id,
   });
+  return response.data;
+};
+
+export const addComment = async ({
+  user_id,
+  post_id,
+  content,
+  nickname,
+}: commentsType) => {
+  const response = await axios.post(`/api/blog/comments/${post_id}`, {
+    user_id,
+    content,
+    nickname,
+    post_id,
+  });
+  return response.data;
+};
+
+export const commentList = async (post_id: string) => {
+  const { data, error } = await supabase
+    .from('comments')
+    .select('*')
+    .eq('post_id', post_id);
+
+  if (error) {
+    alert('댓글을 불러오지 못했습니다');
+  }
+  return data;
+};
+
+export const deleteComments = async (id: string) => {
+  const response = await axios.delete(`/api/blog/comments/${id}`);
   return response.data;
 };

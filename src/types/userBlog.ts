@@ -72,3 +72,10 @@ export type blogInfoType = {
 };
 
 export type blogInfoUpdateType = Omit<blogInfoType, 'id'>;
+
+export type commentsType = {
+  user_id: string;
+  post_id: string;
+  content: string;
+  nickname: string;
+};

@@ -1,32 +1,36 @@
-'use clinet';
+'use client';
 import {
   getBlogProfile,
+  profileImgUpdate,
   profileImgUpload,
   userProfileImg,
 } from '@/service/auth';
 import { updateBlogInfo } from '@/service/blog';
 import { blogInfoType, blogInfoUpdateType } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 // import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { FaPen } from 'react-icons/fa';
 
 function Profile() {
+  const queryClient = useQueryClient();
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
   const { data: profileImg, isLoading: profileLoading } = useQuery({
-    queryKey: ['profileImg'],
+    queryKey: ['profileImg', user?.id],
     queryFn: () => {
       if (!user?.id) return null;
       return userProfileImg(user?.id);
     },
     enabled: !!user?.id,
+    staleTime: 5000,
   });
 
   const { register, handleSubmit } = useForm<blogInfoUpdateType>();
@@ -61,7 +65,14 @@ function Profile() {
 
     setIsUploading(true);
     try {
-      await profileImgUpload(formData);
+      if (!profileImg) {
+        await profileImgUpload(formData);
+      } else {
+        await profileImgUpdate(formData);
+      }
+      await queryClient.invalidateQueries({
+        queryKey: ['profileImg', user.id],
+      });
     } catch (error) {
       console.log(error);
     } finally {
@@ -79,7 +90,7 @@ function Profile() {
         user_id: user?.id,
       });
       if (response) {
-        alert('업데이트 되었습니다');
+        alert(response.message);
         router.replace(`/blog/${getProfile?.id}`);
       }
     } catch (error) {
@@ -88,14 +99,22 @@ function Profile() {
   };
   return (
     <div className="flex flex-col items-center justify-center mt-5  mx-auto">
-      <label htmlFor="profile-upload" className="cursor-pointer ">
+      <label htmlFor="profile-upload" className="cursor-pointer relative ">
         <Image
           src={imgPreview ? imgPreview : profileImg || '/profile/profile.svg'}
           alt="profileimg"
           width={100}
           height={100}
-          className="rounded-full border-2 border-custom-green-600 hover:brightness-75"
+          className="rounded-full border-2 border-custom-green-600  hover:brightness-75"
         />
+        <span className="flex">
+          <span className="absolute bottom-9 left-4 font-galmuri text-custom-green-700 font-semibold">
+            이미지 변경
+          </span>
+          <span className="absolute right-2 bottom-9.5 text-custom-green-700  ">
+            <FaPen />
+          </span>
+        </span>
 
         <input
           id="profile-upload"
@@ -154,7 +173,9 @@ function Profile() {
           <div>*최소 3자 ~ 최대 13자</div>
         </div>
 
-        <button className="my-5">수정</button>
+        <button className="my-5" disabled={isUploading}>
+          {isUploading ? '이미지 업로드 중...' : '수정'}
+        </button>
       </form>
     </div>
   );
