@@ -289,6 +289,13 @@
     "@swc/counter" "^0.1.3"
     tslib "^2.4.0"
 
+"@szhsin/react-accordion@^1.2.6":
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/@szhsin/react-accordion/-/react-accordion-1.2.6.tgz#9b8239625a282ac3ac1c48b067f4fac86f904414"
+  integrity sha512-UCrXKzNgL2BJtyXcuQu8pHduyLPjmMfj9fuYyAJX5EFX0LIYr0LXrZ/WloM49NdgEFXjJsPwAq8DI3Uj1jbbuw==
+  dependencies:
+    react-transition-state "^2.1.3"
+
 "@tanstack/query-core@5.54.1":
   version "5.54.1"
   resolved "https://registry.npmjs.org/@tanstack/query-core/-/query-core-5.54.1.tgz"
@@ -2651,6 +2658,11 @@ react-quill@^2.0.0:
     "@types/quill" "^1.3.10"
     lodash "^4.17.4"
     quill "^1.3.7"
+
+react-transition-state@^2.1.3:
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/react-transition-state/-/react-transition-state-2.1.3.tgz#5b618149d1e6557c327a3b28383afa1239e18508"
+  integrity sha512-3RyB6Qw1q3xYLhq1tU8q/l61sdAy6/qQVdz62puT7Fe7T2h4EinNyLEKuI8prI/LGKjUT7DBcVP1RTEFReUS9A==
 
 react@^18:
   version "18.3.1"

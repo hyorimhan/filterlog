@@ -18,6 +18,7 @@ function User() {
       return userProfileImg(user?.id);
     },
     enabled: !!user?.id,
+    staleTime: 5000,
   });
 
   if (profileLoading) {

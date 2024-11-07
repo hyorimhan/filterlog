@@ -28,7 +28,7 @@ export async function DELETE(
   const supabase = createClient();
 
   const id = params.id;
-  console.log(id, 'params.id');
+
   const { error } = await supabase.from('post').delete().eq('id', id);
 
   if (error) {

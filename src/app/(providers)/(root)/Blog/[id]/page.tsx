@@ -10,7 +10,6 @@ const BlogDetailPage = ({ params }: blogParams) => {
   const { blogInfo, saveOwnerId, saveBlogInfo } = useBlogInfo();
 
   const blog_id = params.id;
-  console.log(blog_id);
 
   useEffect(() => {
     const blog = async () => {

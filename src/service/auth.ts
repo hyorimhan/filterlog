@@ -69,7 +69,14 @@ export const updateProfile = async ({
 };
 
 export const profileImgUpload = async (formData: FormData) => {
-  const resposne = await axios.post('/api/auth/profile', formData, {
+  const resposne = await axios.post('/api/auth/profile/img', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+  return resposne.data;
+};
+
+export const profileImgUpdate = async (formData: FormData) => {
+  const resposne = await axios.patch('/api/auth/profile/img', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });
   return resposne.data;
