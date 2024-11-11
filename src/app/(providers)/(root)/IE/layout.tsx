@@ -1,5 +1,6 @@
 import Footer from '@/components/common/Footer';
 import Header from '@/components/common/Header';
+import IEFooter from '@/components/common/IEFooter';
 import Image from 'next/image';
 
 function layout({ children }: { children: React.ReactNode }) {
@@ -17,6 +18,7 @@ function layout({ children }: { children: React.ReactNode }) {
       </div>
       <main className="border-2 min-h-screen w-[1280px] mx-auto border-y-custom-green-700 border-x-custom-green-700">
         {children}
+        <IEFooter />
       </main>
       <Footer />
     </div>
