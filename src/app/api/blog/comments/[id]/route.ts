@@ -36,13 +36,32 @@ export async function POST(request: NextRequest, { params }: blogParams) {
 
 export async function DELETE(request: NextRequest, { params }: blogParams) {
   const supabase = createClient();
-
   const id = params.id;
 
-  const { data, error } = await supabase.from('comments').delete().eq('id', id);
+  const { error } = await supabase.from('comments').delete().eq('id', id);
 
   if (error) {
     return NextResponse.json({ message: '댓글을 삭제하지 못했습니다' });
   }
-  return NextResponse.json(data);
+  return NextResponse.json({ message: '댓글이 삭제되었습니다' });
+}
+
+export async function PATCH(request: NextRequest, { params }: blogParams) {
+  const supabase = createClient();
+  const id = params.id;
+  const response = await request.json();
+  const { content } = response;
+
+  const { data, error } = await supabase
+    .from('comments')
+    .update({ content })
+    .eq('id', id)
+    .select();
+  console.log(data);
+  console.log(id);
+  if (error) {
+    return NextResponse.json({ error: '댓글 수정에 실패했습니다' });
+  }
+
+  return NextResponse.json({ message: '댓글이 업데이트 되었습니다', data });
 }

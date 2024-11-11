@@ -210,3 +210,14 @@ export const deleteComments = async (id: string) => {
   const response = await axios.delete(`/api/blog/comments/${id}`);
   return response.data;
 };
+
+export const updateComments = async ({
+  id,
+  content,
+}: {
+  id: string;
+  content: string;
+}) => {
+  const response = await axios.patch(`/api/blog/comments/${id}`, { content });
+  return response.data;
+};
