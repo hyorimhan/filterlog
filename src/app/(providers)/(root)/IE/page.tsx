@@ -6,6 +6,8 @@ import MainSwiper from '@/components/IE/MainSwiper';
 import TodayBlogger from '@/components/IE/TodayBlogger';
 import useUserInfo from '@/zustand/useUserInfo';
 
+import YoutubePlayList from '@/components/blog/myBlog/YoutubePlayList';
+
 const HomePage = () => {
   const user = useUserInfo((state) => state.user);
 
@@ -61,7 +63,7 @@ const HomePage = () => {
           <div className="bg-slate-400">hi</div>
         </section>
         <section className="border-gray-300 h-[280px]  w-[275px] text-black ">
-          {user?.email}
+          <YoutubePlayList />
         </section>
       </div>
     </>

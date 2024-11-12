@@ -12,28 +12,49 @@ import {
 } from '@/service/blog';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Confirm from '@/utils/Confirm';
+import ReactPaginate from 'react-paginate';
 
 interface CommentFormData {
   content: string;
+  id: string;
+  created_at: string;
+  nickname: string;
+  user_id: string;
 }
 
 function Comment({ params }: blogParams) {
   const { register, handleSubmit, reset } = useForm<CommentFormData>();
   const { user, nickname } = useUserInfo();
+
   const post_id = params.id;
+  const limit = 10;
+  const [currentPage, setCurrentPage] = useState<number>(0);
+
   const [commentRegister, setCommentRegister] = useState<boolean>(false);
   const [commentId, setCommentId] = useState<string>('');
   const [commentContent, setCommentContent] = useState<string>('');
   const queryClient = useQueryClient();
 
-  const { data: comments, isLoading } = useQuery({
+  const { data: comments, isLoading } = useQuery<{
+    data: CommentFormData[];
+    count: number;
+    limit: number;
+    page: number;
+  } | null>({
     queryKey: ['comments', post_id],
-    queryFn: () => commentList(post_id),
+    queryFn: () => commentList({ post_id, limit, page: currentPage + 1 }),
+    enabled: !!post_id,
   });
 
   if (isLoading) {
     return '로딩중';
   }
+
+  const handlePageClick = (selectedPage: { selected: number }) => {
+    setCurrentPage(selectedPage.selected);
+  };
+
+  const pageCount = Math.ceil((comments?.count || 0) / limit);
 
   const registerComment = async (data: CommentFormData) => {
     if (user?.id && nickname) {
@@ -83,7 +104,7 @@ function Comment({ params }: blogParams) {
     <div className="w-full text-center min-h-screen  mt-20">
       <div className="border-b text-sm ">
         <div>
-          {comments?.map((comment) => (
+          {comments?.data?.map((comment) => (
             <div
               key={comment.id}
               className="border-y-2 h-auto mt-1 w-full  border-y-custom-green-600"
@@ -104,6 +125,15 @@ function Comment({ params }: blogParams) {
                     disabled={commentRegister}
                   >
                     수정
+                  </button>
+                  <button
+                    className="button"
+                    onClick={() => {
+                      setCommentContent('');
+                      setCommentId('');
+                    }}
+                  >
+                    수정 취소
                   </button>
                 </form>
               ) : (
@@ -185,6 +215,25 @@ function Comment({ params }: blogParams) {
           </div>
         </AccordionItem>
       </Accordion>
+
+      {comments?.data && (
+        <ReactPaginate
+          previousLabel={'이전'}
+          nextLabel={'다음'}
+          breakLabel={'...'}
+          pageCount={pageCount}
+          forcePage={currentPage}
+          onPageChange={handlePageClick}
+          containerClassName={'flex justify-center space-x-3 text-sm mt-10'}
+          previousLinkClassName={'text-black focus:outline-none'}
+          nextLinkClassName={'text-black   focus:outline-none '}
+          pageLinkClassName={
+            'text-black   focus:outline-none focus:text-custom-green-700'
+          }
+          breakLinkClassName={'page-link'}
+          disabledLinkClassName={'focus:text-gray cursor-not-allowed'}
+        />
+      )}
     </div>
   );
 }
