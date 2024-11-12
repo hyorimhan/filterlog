@@ -194,16 +194,20 @@ export const addComment = async ({
   return response.data;
 };
 
-export const commentList = async (post_id: string) => {
-  const { data, error } = await supabase
-    .from('comments')
-    .select('*')
-    .eq('post_id', post_id);
+export const commentList = async ({
+  post_id,
+  page,
+  limit,
+}: {
+  post_id: string;
+  page: number;
+  limit: number;
+}) => {
+  const response = await axios.get(`/api/blog/comments/${post_id}`, {
+    params: { post_id, page, limit },
+  });
 
-  if (error) {
-    alert('댓글을 불러오지 못했습니다');
-  }
-  return data;
+  return response.data;
 };
 
 export const deleteComments = async (id: string) => {
