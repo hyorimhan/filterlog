@@ -22,6 +22,10 @@ const config: Config = {
           600: '#5A7EDC',
           500: '#D1DBFF',
         },
+        'custom-pink': {
+          100: '#fce9e9',
+          200: '#ff99ae',
+        },
         'custom-green': {
           300: '#C5DEDA',
           400: '#92BEA9',

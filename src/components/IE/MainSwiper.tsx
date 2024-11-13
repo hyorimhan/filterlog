@@ -32,7 +32,7 @@ function MainSwiper() {
       </SwiperSlide>
       <SwiperSlide>
         <Image
-          src={'/swiper/swiper4.svg'}
+          src={'/swiper/swiper1.svg'}
           alt="swiper"
           width={1000}
           height={200}
