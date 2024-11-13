@@ -1,7 +1,7 @@
 import React from 'react';
 import toast from 'react-hot-toast';
 
-export function privacyPolicy() {
+function PrivacyPolicy() {
   return toast.custom(
     (t) => (
       <div
@@ -14,11 +14,15 @@ export function privacyPolicy() {
             <p className="text-lg font-medium text-gray-900">
               개인정보 처리방침
             </p>
-            <div className="mt-4 text-sm text-gray-500 h-80 overflow-y-auto">
-              개인정보 처리방침 [FilterLog]](이하 &quot;필터로그&quot;)는
-              사용자의 개인정보 보호를 중요하게 생각합니다. 본 방침은 사용자의
-              개인정보를 어떻게 수집하고, 이용하며, 보호하는지에 대한 내용을
-              담고 있습니다.
+            <div className="mt-4 text-sm text-gray-500 h-80 overflow-y-auto space-y-3">
+              <p>
+                {' '}
+                개인정보 처리방침 [FilterLog]](이하 &quot;필터로그&quot;)는
+                사용자의 개인정보 보호를 중요하게 생각합니다. 본 방침은 사용자의
+                개인정보를 어떻게 수집하고, 이용하며, 보호하는지에 대한 내용을
+                담고 있습니다.
+              </p>
+
               <p>
                 1. 수집하는 개인정보 회원가입 시: 이메일 주소, 닉네임, 비밀번호
                 | 게시글 작성 시: 닉네임, 이메일, 콘텐츠(제목, 본문 등) | 자동
@@ -56,3 +60,4 @@ export function privacyPolicy() {
     { duration: Infinity }
   );
 }
+export default PrivacyPolicy;

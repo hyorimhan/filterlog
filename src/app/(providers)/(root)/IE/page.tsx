@@ -7,6 +7,7 @@ import TodayBlogger from '@/components/IE/TodayBlogger';
 import useUserInfo from '@/zustand/useUserInfo';
 
 import YoutubePlayList from '@/components/blog/myBlog/YoutubePlayList';
+import Magazine from '@/components/IE/Magazine';
 
 const HomePage = () => {
   const user = useUserInfo((state) => state.user);
@@ -29,7 +30,9 @@ const HomePage = () => {
           <Ad />
         </section>
         <section className="w-[720px] h-[280px]  mx-auto">
-          <div className="bg-slate-400">hi</div>
+          <div className=" h-[560px]">
+            <Magazine />
+          </div>
         </section>
         <section className="font-galmuri text-sm text-center h-[280px] w-[275px]   border-2 border-y-custom-green-700 border-l-custom-green-700 ">
           <div className=" mt-5 text-sm border-dashed border-b-2 pb-1 border-custom-green-400 mx-3">
@@ -59,9 +62,7 @@ const HomePage = () => {
             공지
           </div>
         </section>
-        <section className="w-[720px] h-[280px]  mx-auto">
-          <div className="bg-slate-400">hi</div>
-        </section>
+        <section className="w-[720px] h-[280px]  mx-auto"></section>
         <section className="border-gray-300 h-[280px]  w-[275px] text-black ">
           <YoutubePlayList />
         </section>
