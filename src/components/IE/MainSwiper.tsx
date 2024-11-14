@@ -21,7 +21,7 @@ function MainSwiper() {
       }}
       modules={[Autoplay, Pagination]}
     >
-      <SwiperSlide>
+      {/* <SwiperSlide>
         <Image
           src={'/swiper/swiper3.svg'}
           alt="swiper"
@@ -29,7 +29,7 @@ function MainSwiper() {
           height={200}
           className="w-[720px] h-[280px]"
         />
-      </SwiperSlide>
+      </SwiperSlide> */}
       <SwiperSlide>
         <Image
           src={'/swiper/swiper1.svg'}

@@ -83,13 +83,17 @@ export const myPostList = async ({
   blog_id,
   page,
   limit,
+  year,
+  month,
 }: {
   blog_id: string;
   page: number;
   limit: number;
+  year: string;
+  month: string;
 }) => {
   const response = await axios.get('/api/blog/post', {
-    params: { blog_id, page, limit },
+    params: { blog_id, page, limit, year, month },
   });
   return response.data;
 };
