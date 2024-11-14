@@ -58,13 +58,15 @@ const HomePage = () => {
       </div>
       <div className=" grid-cols-[2fr_6fr_2fr]  grid mt-1">
         <section className="font-galmuri text-center h-[280px] w-[275px]  border-r-custom-green-700 border-2 border-y-custom-green-700">
-          <div className=" mt-2 text-sm border-dashed border-b-2 pb-1 border-custom-green-400 mx-3">
-            공지
-          </div>
+          <YoutubePlayList />
         </section>
         <section className="w-[720px] h-[280px]  mx-auto"></section>
         <section className="border-gray-300 h-[280px]  w-[275px] text-black ">
-          <YoutubePlayList />
+          <section className="font-galmuri text-center h-[280px] w-[275px]  border-custom-green-700 border-2 border-y-custom-green-700">
+            <div className=" mt-2 text-sm border-dashed border-b-2 pb-1 border-custom-green-400 mx-3">
+              공지
+            </div>
+          </section>
         </section>
       </div>
     </>

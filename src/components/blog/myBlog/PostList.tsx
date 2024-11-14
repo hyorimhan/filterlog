@@ -4,7 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React, { useMemo, useState } from 'react';
 import ReactPaginate from 'react-paginate';
-import { CiImageOn } from 'react-icons/ci';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -13,6 +12,11 @@ import Fuse from 'fuse.js';
 
 function PostList({ searchWord }: { searchWord: string }) {
   const [currentPage, setCurrentPage] = useState<number>(0);
+  const currentYear = new Date().getFullYear().toString();
+  const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
+
+  const [selectedYear, setSelectedYear] = useState<string>(currentYear);
+  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
 
   const user = useUserInfo((state) => state.user);
   const pagePost = 10;
@@ -25,9 +29,15 @@ function PostList({ searchWord }: { searchWord: string }) {
     limit: number;
     page: number;
   } | null>({
-    queryKey: ['postList', blog_id, currentPage],
+    queryKey: ['postList', blog_id, currentPage, selectedMonth, selectedYear],
     queryFn: () =>
-      myPostList({ blog_id, page: currentPage + 1, limit: pagePost }),
+      myPostList({
+        blog_id,
+        page: currentPage + 1,
+        limit: pagePost,
+        year: selectedYear,
+        month: selectedMonth,
+      }),
     enabled: !!blog_id,
     staleTime: 0,
   });
@@ -61,8 +71,9 @@ function PostList({ searchWord }: { searchWord: string }) {
   const owner = ownerId === user?.id;
 
   const NoPostMessage = () => {
-    const hasNoPosts = postList?.data.length === 0;
+    const hasNoPosts = postList?.data?.length === 0;
     const defaultResults = searchWord !== '';
+
     if (owner && hasNoPosts && !defaultResults) {
       return (
         <Link
@@ -84,10 +95,55 @@ function PostList({ searchWord }: { searchWord: string }) {
         </span>
       );
     }
+
+    if (hasNoPosts && !defaultResults) {
+      return (
+        <span className="text-sm flex flex-col justify-center items-center h-full">
+          선택된 연도와 달의 글이 없습니다
+        </span>
+      );
+    }
   };
+
+  const yearOptions = Array.from(
+    { length: Number(currentYear) - 2024 + 1 },
+    (_, i) => (2024 + i).toString()
+  );
+  const monthOptions = Array.from({ length: 12 }, (_, i) =>
+    (i + 1).toString().padStart(2, '0')
+  );
+
   return (
     <div>
       <div className="grid grid-cols-2 gap-2 ">
+        <div>
+          <select
+            value={selectedYear}
+            onChange={(e) => {
+              setSelectedYear(e.target.value);
+              setCurrentPage(0);
+            }}
+          >
+            {yearOptions.map((year) => (
+              <option key={year} value={year}>
+                {year}년
+              </option>
+            ))}
+          </select>
+          <select
+            value={selectedMonth}
+            onChange={(e) => {
+              setSelectedMonth(e.target.value);
+              setCurrentPage(0);
+            }}
+          >
+            {monthOptions.map((month) => (
+              <option key={month} value={month}>
+                {month}월
+              </option>
+            ))}
+          </select>
+        </div>
         {displayPosts.length === 0 ? (
           <NoPostMessage />
         ) : (
@@ -111,11 +167,6 @@ function PostList({ searchWord }: { searchWord: string }) {
                     </span>
                     <span className="text-[16px] flex ml-2 truncate  items-center">
                       <span className="truncate">{post.title}</span>
-                      <span className="ml-2 flex items-center">
-                        {post.img_url && (
-                          <CiImageOn className="w-7 h-7 mr-5 text-custom-green-700" />
-                        )}
-                      </span>
                     </span>
                   </div>
                   <div className=" text-sm  flex items-start  justify-evenly mx-5 mt-10 text-black  ">

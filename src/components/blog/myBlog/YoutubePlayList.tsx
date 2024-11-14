@@ -18,7 +18,7 @@ function YoutubePlayList() {
   });
 
   const opts = {
-    height: '280',
+    height: '278',
     width: '100%',
     playerVars: {
       autoplay: 0,
