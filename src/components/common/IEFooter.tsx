@@ -1,7 +1,7 @@
 'use client';
 
 import FilterLog from './FilterLog';
-import PrivacyPolicy from './privacyPolicy';
+import PrivacyPolicy from './PrivacyPolicy';
 import Support from './Support';
 
 function IEFooter() {

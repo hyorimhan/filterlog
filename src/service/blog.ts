@@ -229,3 +229,11 @@ export const updateComments = async ({
   const response = await axios.patch(`/api/blog/comments/${id}`, { content });
   return response.data;
 };
+
+export const allUsers = async () => {
+  const { data, error } = await supabase.from('blog').select('*');
+  if (error) {
+    throw new Error();
+  }
+  return data;
+};

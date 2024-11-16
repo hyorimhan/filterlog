@@ -18,7 +18,7 @@ function Ad() {
       modules={[Autoplay]}
     >
       <SwiperSlide>
-        <Image src={'/ad/adSwiper1.svg'} alt="ad" width={275} height={280} />
+        <Image src={'/ad/adSwiper3.svg'} alt="ad" width={275} height={280} />
       </SwiperSlide>
       {/* <SwiperSlide>
         <Image src={'/ad/adSwiper2.svg'} alt="ad" width={275} height={280} />
