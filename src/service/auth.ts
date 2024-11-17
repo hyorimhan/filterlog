@@ -31,6 +31,7 @@ export const userInfo = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
+  console.log('Authenticated User ID:', user?.id);
   return user;
 };
 
@@ -41,7 +42,7 @@ export const getBlogProfile = async (user_id: string) => {
     .from('blog')
     .select('*')
     .eq('user_id', user_id)
-    .single();
+    .maybeSingle();
   if (error) {
     console.log(error);
     return null;

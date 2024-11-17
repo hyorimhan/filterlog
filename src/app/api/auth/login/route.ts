@@ -17,6 +17,7 @@ export async function POST(request: NextRequest) {
     if (user) {
       return NextResponse.json({ message: '로그인 되었습니다', user });
     }
+    console.log('user', user);
   } catch (error) {
     return NextResponse.json({
       message: '네트워크 오류로 로그인에 실패했습니다',

@@ -10,13 +10,14 @@ import useUserInfo from '@/zustand/useUserInfo';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
-
-  const { user_id, nickname } = useUserInfo((state) => ({
-    user_id: state.user?.id,
-    nickname: state.user?.user_metadata.display_name,
-  }));
+  const { user, nickname } = useUserInfo();
+  const user_id = user?.id;
+  // const { user_id, nickname } = useUserInfo((state) => ({
+  //   user_id: state.user?.id,
+  //   nickname: state.user?.user_metadata.display_name,
+  // }));
   const router = useRouter();
-
+  console.log('user:', user, 'nickname:', nickname);
   const create = async (data: createBlogType) => {
     if (!user_id) {
       alert('오류가 발생했습니다');
@@ -33,6 +34,7 @@ function Create() {
 
     if (response.error) {
       alert(response.error);
+      console.log(response.error);
     }
   };
 
@@ -51,6 +53,7 @@ function Create() {
         alt="createBlog"
         width={1280}
         height={280}
+        className="pt-10"
       />
       <form className="mt-5" onSubmit={handleSubmit(create, createError)}>
         <div className="flex flex-col justify-center items-center">

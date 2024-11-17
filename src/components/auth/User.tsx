@@ -8,7 +8,6 @@ import { userProfileImg } from '@/service/auth';
 
 function User() {
   const user = useUserInfo((state) => state.user);
-
   const nickname = useUserInfo((state) => state.nickname);
 
   const { data: profileImg, isLoading: profileLoading } = useQuery({
@@ -41,7 +40,7 @@ function User() {
         {user?.id && (
           <>
             <div> {nickname}님 행복한 하루 보내세요!</div>
-            <div className="mt-3 space-x-2">
+            <div className="mt-3 space-x-2 ">
               <Link href={'/blog/myPage'}>
                 <button>마이페이지</button>
               </Link>

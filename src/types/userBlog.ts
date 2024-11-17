@@ -4,7 +4,7 @@ export type createBlogType = {
   blog_name: string;
   description: string;
   user_id: string;
-  nickname: string;
+  nickname: string | null;
 };
 
 export type blogType = Database['public']['Tables']['blog']['Row'];
