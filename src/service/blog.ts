@@ -230,8 +230,26 @@ export const updateComments = async ({
   return response.data;
 };
 
-export const allUsers = async () => {
-  const { data, error } = await supabase.from('blog').select('*');
+export const allUsers = async (page: number) => {
+  const pagePost = 10;
+  const from = page * pagePost;
+  const to = from + pagePost - 1;
+  const { data, count, error } = await supabase
+    .from('blog')
+    .select('*', { count: 'exact' })
+    .range(from, to);
+  if (error) {
+    throw new Error();
+  }
+  return { data, count: count || 0 };
+};
+
+export const allPosts = async () => {
+  const { data, error } = await supabase
+    .from('post')
+    .select('*')
+    .order('created_at', { ascending: false });
+
   if (error) {
     throw new Error();
   }

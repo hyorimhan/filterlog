@@ -1,13 +1,11 @@
 'use client';
 import User from '@/components/auth/User';
-import PostList from './PostList';
-import Emotion from './Emotion';
-import TotalEmotion from './TotalEmotion';
+import PostList from './post/PostList';
+import Emotion from './emotion/Emotion';
+import TotalEmotion from './emotion/TotalEmotion';
 import LeftSide from '@/components/common/LeftSide';
-import { useState } from 'react';
 
 function Default() {
-  const [searchWord, setSearchWord] = useState<string>('');
   return (
     <>
       <div className="grid grid-cols-[1fr_5fr]">
@@ -22,9 +20,9 @@ function Default() {
       </div>
 
       <div className="grid grid-cols-[1fr_5fr] mt-1">
-        <LeftSide searchWord={searchWord} setSearchWord={setSearchWord} />
+        <LeftSide />
         <div className="mx-1  ">
-          <PostList searchWord={searchWord} />
+          <PostList />
         </div>
       </div>
     </>

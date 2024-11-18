@@ -3,7 +3,7 @@ import User from '@/components/auth/User';
 import { deletePost, myPostDetail } from '@/service/blog';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import BlogHeader from './BlogHeader';
+import BlogHeader from '../../common/BlogHeader';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import Confirm from '@/utils/Confirm';

@@ -1,6 +1,6 @@
 import React from 'react';
 import User from '../auth/User';
-import BlogHeader from '../blog/myBlog/BlogHeader';
+import BlogHeader from '../common/BlogHeader';
 import Profile from './Profile';
 // import useUserInfo from '@/zustand/useUserInfo';
 

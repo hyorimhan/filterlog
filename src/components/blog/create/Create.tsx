@@ -5,19 +5,18 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { blogDescription, blogName } from './createBlogValidate';
 import useUserInfo from '@/zustand/useUserInfo';
+import { blogDescription, blogName } from './createBlogValidate';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
-  const { user, nickname } = useUserInfo();
-  const user_id = user?.id;
-  // const { user_id, nickname } = useUserInfo((state) => ({
-  //   user_id: state.user?.id,
-  //   nickname: state.user?.user_metadata.display_name,
-  // }));
+
+  const { user_id, nickname } = useUserInfo((state) => ({
+    user_id: state.user?.id,
+    nickname: state.user?.user_metadata.display_name,
+  }));
   const router = useRouter();
-  console.log('user:', user, 'nickname:', nickname);
+  console.log('user:', user_id, 'nickname:', nickname);
   const create = async (data: createBlogType) => {
     if (!user_id) {
       alert('오류가 발생했습니다');

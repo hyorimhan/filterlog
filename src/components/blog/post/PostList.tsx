@@ -2,21 +2,23 @@ import { myPostList } from '@/service/blog';
 import { postListType } from '@/types/userBlog';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import ReactPaginate from 'react-paginate';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import Fuse from 'fuse.js';
+import useSearch from '@/zustand/useSearch';
 
-function PostList({ searchWord }: { searchWord: string }) {
-  const [currentPage, setCurrentPage] = useState<number>(0);
-  const currentYear = new Date().getFullYear().toString();
-  const currentMonth = (new Date().getMonth() + 1).toString().padStart(2, '0');
-
-  const [selectedYear, setSelectedYear] = useState<string>(currentYear);
-  const [selectedMonth, setSelectedMonth] = useState<string>(currentMonth);
+function PostList() {
+  const {
+    currentPage,
+    selectedMonth,
+    selectedYear,
+    setCurrentPage,
+    searchWord,
+  } = useSearch();
 
   const user = useUserInfo((state) => state.user);
   const pagePost = 10;
@@ -105,45 +107,9 @@ function PostList({ searchWord }: { searchWord: string }) {
     }
   };
 
-  const yearOptions = Array.from(
-    { length: Number(currentYear) - 2024 + 1 },
-    (_, i) => (2024 + i).toString()
-  );
-  const monthOptions = Array.from({ length: 12 }, (_, i) =>
-    (i + 1).toString().padStart(2, '0')
-  );
-
   return (
     <div>
       <div className="grid grid-cols-2 gap-2 ">
-        <div>
-          <select
-            value={selectedYear}
-            onChange={(e) => {
-              setSelectedYear(e.target.value);
-              setCurrentPage(0);
-            }}
-          >
-            {yearOptions.map((year) => (
-              <option key={year} value={year}>
-                {year}년
-              </option>
-            ))}
-          </select>
-          <select
-            value={selectedMonth}
-            onChange={(e) => {
-              setSelectedMonth(e.target.value);
-              setCurrentPage(0);
-            }}
-          >
-            {monthOptions.map((month) => (
-              <option key={month} value={month}>
-                {month}월
-              </option>
-            ))}
-          </select>
-        </div>
         {displayPosts.length === 0 ? (
           <NoPostMessage />
         ) : (

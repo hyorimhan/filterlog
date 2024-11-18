@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import Logo from './Logo';
+import Logo from '../Logo';
 
 function Footer() {
   // return <footer className="h-[30px] bg-footer-blue-1">Footer</footer>;

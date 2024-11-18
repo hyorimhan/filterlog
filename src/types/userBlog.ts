@@ -79,3 +79,14 @@ export type commentsType = {
   content: string;
   nickname: string;
 };
+
+export type searchType = {
+  searchWord: string;
+  selectedYear: string;
+  selectedMonth: string;
+  currentPage: number;
+  setSearchWord: (searchWord: string) => void;
+  setSelectedYear: (selectedYear: string) => void;
+  setSelectedMonth: (selectedMonth: string) => void;
+  setCurrentPage: (currentPage: number) => void;
+};

@@ -1,4 +1,4 @@
-import Footer from '@/components/common/Footer';
+import Footer from '@/components/common/footer/Footer';
 import Header from '@/components/common/Header';
 import Image from 'next/image';
 
@@ -17,7 +17,7 @@ function layout({ children }: { children: React.ReactNode }) {
           />
         </div>
         <div className="mx-auto text-sm font-semibold border-2 border-custom-green-700 w-[1280px] h-10 flex justify-center items-center">
-          이웃 찾기
+          전체 블로그
         </div>
         <main className="border-2 border-t-0 pb-20 min-h-screen bg-bg-blog bg-no-repeat bg-right-bottom overflow-hidden w-[1280px] mx-auto border-x-custom-green-700">
           {children}

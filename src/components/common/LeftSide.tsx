@@ -1,24 +1,14 @@
 import Link from 'next/link';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import SearchBar from '../blog/myBlog/SearchBar';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
+import YearMonthSearch from '../blog/search/YearMonthSearch';
+import SearchBar from '../blog/search/SearchBar';
 
-function LeftSide({
-  searchWord,
-  setSearchWord,
-}: {
-  searchWord: string;
-  setSearchWord: Dispatch<SetStateAction<string>>;
-}) {
+function LeftSide() {
   const user = useUserInfo((state) => state.user);
   const { ownerId } = useBlogInfo();
   const isOwner = user?.id === ownerId;
-  const [] = useState<string>('');
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchWord(e.target.value);
-  };
   return (
     <div className=" h-[300px]">
       {isOwner ? (
@@ -39,8 +29,9 @@ function LeftSide({
         </div>
       </Link>
       <div className="rounded-lg w-full text-center border-2 p-2 border-custom-green-400 shadow-sm mt-1 hover:brightness-105 ">
-        <SearchBar searchWord={searchWord} onChange={handleSearch} />
+        <SearchBar />
       </div>
+      <YearMonthSearch />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import Footer from '@/components/common/Footer';
+import Footer from '@/components/common/footer/Footer';
 import { Libre_Franklin } from 'next/font/google';
 
 const libreFranklin = Libre_Franklin({ subsets: ['latin'] });

@@ -3,7 +3,7 @@ import React from 'react';
 
 function Magazine() {
   return (
-    <div className="grid grid-cols-2  border-2 border-custom-green-700">
+    <div className="grid grid-cols-2  ">
       <div className=" space-y-3 w-full font-galmuri mb-1 ">
         <p className="mt-5 text-center text-[16px] font-bold">
           FilterLog Magazine

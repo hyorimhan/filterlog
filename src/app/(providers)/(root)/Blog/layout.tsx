@@ -1,4 +1,4 @@
-import Footer from '@/components/common/Footer';
+import Footer from '@/components/common/footer/Footer';
 import Header from '@/components/common/Header';
 
 function layout({ children }: { children: React.ReactNode }) {
