@@ -1,4 +1,5 @@
 import { User } from '@supabase/supabase-js';
+import { Database } from './supabase';
 
 export type signUpType = {
   email: string | null;
@@ -20,3 +21,5 @@ export type profileType = Omit<
   signUpType,
   'passwordConfirm' | 'password'
 > | null;
+
+export type userType = Database['public']['Tables']['users']['Row'];

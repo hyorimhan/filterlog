@@ -1,5 +1,5 @@
-import Comment from '@/components/blog/myBlog/Comment';
-import Detail from '@/components/blog/myBlog/Detail';
+import Comment from '@/components/blog/comment/Comment';
+import Detail from '@/components/blog/post/Detail';
 import { blogParams } from '@/types/userBlog';
 
 const PostDetailPage = ({ params }: blogParams) => {

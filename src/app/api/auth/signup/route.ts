@@ -11,10 +11,12 @@ export async function POST(request: NextRequest) {
       password,
       options: { data: { display_name: nickname } },
     });
+    console.log(user);
+    console.log(error);
 
     const { error: userError } = await supabase
       .from('users')
-      .insert([{ email: user.user?.email, nickname }]);
+      .insert([{ email: user.user?.email, nickname, id: user.user?.id }]);
 
     if (userError) {
       return NextResponse.json({ message: userError.message });

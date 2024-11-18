@@ -1,6 +1,6 @@
 'use client';
-import BlogHeader from '@/components/blog/myBlog/BlogHeader';
-import Default from '@/components/blog/myBlog/Default';
+import BlogHeader from '@/components/common/BlogHeader';
+import Default from '@/components/blog/Default';
 import { getBlogId } from '@/service/blog';
 import { blogParams } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';

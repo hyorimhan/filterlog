@@ -11,7 +11,7 @@ const SignUpPage = () => {
         width={1000}
         height={300}
         alt="signUp"
-        className="mx-auto "
+        className="mx-auto pt-20"
       />
       <div className="flex justify-center mt-10">
         <SignUp />

@@ -5,8 +5,8 @@ import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
-import { blogDescription, blogName } from './createBlogValidate';
 import useUserInfo from '@/zustand/useUserInfo';
+import { blogDescription, blogName } from './createBlogValidate';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
@@ -16,7 +16,7 @@ function Create() {
     nickname: state.user?.user_metadata.display_name,
   }));
   const router = useRouter();
-
+  console.log('user:', user_id, 'nickname:', nickname);
   const create = async (data: createBlogType) => {
     if (!user_id) {
       alert('오류가 발생했습니다');
@@ -33,6 +33,7 @@ function Create() {
 
     if (response.error) {
       alert(response.error);
+      console.log(response.error);
     }
   };
 
@@ -51,6 +52,7 @@ function Create() {
         alt="createBlog"
         width={1280}
         height={280}
+        className="pt-10"
       />
       <form className="mt-5" onSubmit={handleSubmit(create, createError)}>
         <div className="flex flex-col justify-center items-center">
