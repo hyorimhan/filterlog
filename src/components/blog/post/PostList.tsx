@@ -1,4 +1,3 @@
-import { myPostList } from '@/service/blog';
 import { postListType } from '@/types/userBlog';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
@@ -10,6 +9,7 @@ import useUserInfo from '@/zustand/useUserInfo';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import Fuse from 'fuse.js';
 import useSearch from '@/zustand/useSearch';
+import { myPostList } from '@/service/post';
 
 function PostList() {
   const {

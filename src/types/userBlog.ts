@@ -90,3 +90,17 @@ export type searchType = {
   setSelectedMonth: (selectedMonth: string) => void;
   setCurrentPage: (currentPage: number) => void;
 };
+
+export type addOfficialPostType = {
+  title: string;
+  description: string;
+  owner_id: string;
+  img_url: string[] | string | null;
+  category: string;
+  id: string;
+};
+export type officialPostType = Omit<addOfficialPostType, 'id'>;
+
+export type SelecteOfficialPostType = addOfficialPostType & {
+  created_at: string;
+};

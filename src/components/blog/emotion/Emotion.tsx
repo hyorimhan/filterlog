@@ -1,4 +1,4 @@
-import { existingMyEmotion, myEmotion } from '@/service/blog';
+import { existingMyEmotion, myEmotion } from '@/service/emotion';
 import Confirm from '@/utils/Confirm';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
