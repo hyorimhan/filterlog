@@ -120,3 +120,10 @@ export const allOfficialPost = async ({
 
   return response.data;
 };
+
+export const detailOfficialPost = async ({ post_id }: { post_id: string }) => {
+  const response = await axios.get(`/api/blog/officialPost/${post_id}`, {
+    params: { post_id },
+  });
+  return response.data;
+};

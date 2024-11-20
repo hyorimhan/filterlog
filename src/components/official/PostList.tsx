@@ -7,14 +7,20 @@ import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 
 function PostList() {
   const { user } = useUserInfo();
+  const searchParams = useSearchParams();
   const { setCurrentPage, currentPage } = useSearch();
-  const [selectedTab, setSelectedTab] = useState<string>('tab-A');
-  const [category, setCategory] = useState<string>('magazine');
+  const [selectedTab, setSelectedTab] = useState<string>(
+    searchParams.get('tab') ?? 'tab-A'
+  );
+  const [category, setCategory] = useState<string>(
+    searchParams.get('category') ?? 'magazine'
+  );
   const { data: allPosts, isLoading } = useQuery<{
     data: SelecteOfficialPostType[];
     page: number;
@@ -77,14 +83,15 @@ function PostList() {
               }
             >
               {allPosts?.data.map((post) => (
-                <div
+                <Link
                   key={post.id}
+                  href={`/official/${post.id}`}
                   // className="border-2 h-72   m-2 border-custom-green-300 "
 
                   className={
                     category === 'notice'
-                      ? 'flex items-center p-2 border-2 m-1  border-custom-green-300'
-                      : 'border-2 h-80 m-1 border-custom-green-300'
+                      ? 'flex items-center p-2 border-2 m-1 text-black  border-custom-green-300'
+                      : 'border-2 h-80 m-1 text-black border-custom-green-300'
                   }
                 >
                   <div>
@@ -118,7 +125,7 @@ function PostList() {
                   <span className="flex justify-end  text-[11px]">
                     {post.created_at.slice(0, 10)}
                   </span>
-                </div>
+                </Link>
               ))}
             </div>
             <ReactPaginate
