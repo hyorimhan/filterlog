@@ -145,6 +145,36 @@ export type Database = {
           },
         ]
       }
+      official: {
+        Row: {
+          category: string | null
+          created_at: string
+          description: string | null
+          id: string
+          img_url: string | null
+          owner_id: string | null
+          title: string | null
+        }
+        Insert: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          img_url?: string | null
+          owner_id?: string | null
+          title?: string | null
+        }
+        Update: {
+          category?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          img_url?: string | null
+          owner_id?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
       post: {
         Row: {
           blog_id: string | null

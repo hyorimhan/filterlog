@@ -4,15 +4,16 @@ import { Accordion, AccordionItem } from '@szhsin/react-accordion';
 import { useForm } from 'react-hook-form';
 import useUserInfo from '@/zustand/useUserInfo';
 import { blogParams } from '@/types/userBlog';
+
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import Confirm from '@/utils/Confirm';
+import ReactPaginate from 'react-paginate';
 import {
   addComment,
   commentList,
   deleteComments,
   updateComments,
-} from '@/service/blog';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import Confirm from '@/utils/Confirm';
-import ReactPaginate from 'react-paginate';
+} from '@/service/comment';
 
 interface CommentFormData {
   content: string;

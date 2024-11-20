@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { editorProps } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import handleSubmit from './SubmitForm';
@@ -24,17 +24,19 @@ function Editor({
   defaultImg = [],
   post_id,
   cancelBtn,
-}: editorProps) {
+  targetTable = 'blogPosts',
+}: editorProps & { targetTable: 'blogPosts' | 'official' }) {
   const { nickname, user } = useUserInfo();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [title, setTitle] = useState<string>(defaultTitle);
   const [content, setContent] = useState<string>(defaultContent);
   const [disabled, setDisabled] = useState<boolean>(false);
+  const [category, setCategory] = useState<string>('');
   const ownerId = useBlogInfo((state) => state.ownerId);
 
   const owner = user?.id === ownerId;
-
+  const passOwnerCheck = targetTable === 'blogPosts';
   useEffect(() => {
     let initialContent = defaultContent || '';
 
@@ -52,9 +54,10 @@ function Editor({
   const { data: blog } = useQuery({
     queryKey: ['blog'],
     queryFn: () => existingBlog(user),
+    enabled: passOwnerCheck,
   });
 
-  if (!owner) {
+  if (!owner && passOwnerCheck) {
     router.replace('/IE');
     alert('계정주가 아닙니다');
     return;
@@ -77,8 +80,16 @@ function Editor({
     setContent(value.trim() === '<p><br></p>' ? '' : value);
   };
 
-  if (!blog?.blog_name || !blog?.id) {
+  const handleCategoryChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setCategory(e.target.value);
+  };
+
+  if (passOwnerCheck && !blog) {
     return <div>블로그 정보를 불러오는 중...</div>;
+  }
+
+  if (!user?.id) {
+    return '유저 아이디가 없습니다';
   }
   const user_id = user.id;
   return (
@@ -87,6 +98,7 @@ function Editor({
         onSubmit={(e) =>
           handleSubmit(
             e,
+            targetTable,
             nickname!,
             isUpdate,
             post_id,
@@ -96,10 +108,11 @@ function Editor({
             router,
             queryClient,
             {
-              blog_name: blog.blog_name!,
-              id: blog.id,
+              blog_name: blog?.blog_name!,
+              id: blog?.id!,
             },
-            setDisabled
+            setDisabled,
+            category
           )
         }
         id="editorForm"
@@ -116,6 +129,16 @@ function Editor({
             autoFocus
           />
         </div>
+        {targetTable !== 'blogPosts' && (
+          <div>
+            <select value={category} onChange={handleCategoryChange} required>
+              <option value="">카테고리 선택</option>
+              <option value="notice">공지사항</option>
+              <option value="event">이벤트</option>
+              <option value="magazine">매거진</option>
+            </select>
+          </div>
+        )}
 
         <ReactQuill
           value={content}

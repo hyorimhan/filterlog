@@ -6,7 +6,6 @@ export async function GET(request: NextRequest) {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
   const post_id = searchParams.get('post_id');
-
   const page = parseInt(searchParams.get('page') || '1');
   const limit = parseInt(searchParams.get('limit') || '10');
 

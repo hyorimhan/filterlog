@@ -1,4 +1,4 @@
-import { totalMyEmotion } from '@/service/blog';
+import { totalMyEmotion } from '@/service/emotion';
 import { totalEmotionType } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import { useQuery } from '@tanstack/react-query';

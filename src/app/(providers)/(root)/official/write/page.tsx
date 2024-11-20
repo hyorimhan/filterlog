@@ -1,13 +1,16 @@
 'use client';
 import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
 
 const Editor = dynamic(() => import('@/components/blog/editor/Editor'), {
   ssr: false,
+  loading: () => <p>에디터 로딩중...</p>,
 });
-const WritePage = () => {
+
+function OfficialPostWrite() {
   return (
     <Editor
-      targetTable="blogPosts"
+      targetTable="official"
       isUpdate={false}
       defaultTitle=""
       defaultContent=""
@@ -16,5 +19,6 @@ const WritePage = () => {
       cancelBtn={() => {}}
     />
   );
-};
-export default WritePage;
+}
+
+export default OfficialPostWrite;

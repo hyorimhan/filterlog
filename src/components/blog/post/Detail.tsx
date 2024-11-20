@@ -1,6 +1,5 @@
 'use client';
 import User from '@/components/auth/User';
-import { deletePost, myPostDetail } from '@/service/blog';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import BlogHeader from '../../common/BlogHeader';
@@ -10,6 +9,7 @@ import Confirm from '@/utils/Confirm';
 import { useRouter } from 'next/navigation';
 import Editor from '../editor/Editor';
 import Image from 'next/image';
+import { deletePost, myPostDetail } from '@/service/post';
 
 function Detail({ post_id }: { post_id: string }) {
   const ownerId = useBlogInfo((state) => state.ownerId);
@@ -45,6 +45,7 @@ function Detail({ post_id }: { post_id: string }) {
                 isUpdate={true}
                 defaultTitle={deatilPost.title}
                 defaultContent={deatilPost.content}
+                targetTable="blogPosts"
                 defaultImg={
                   Array.isArray(deatilPost.img_url)
                     ? deatilPost.img_url

@@ -1,4 +1,4 @@
-import { allPosts } from '@/service/blog';
+import { allPosts } from '@/service/post';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React from 'react';

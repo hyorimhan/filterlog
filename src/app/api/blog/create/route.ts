@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
       .from('blog')
       .select('*')
       .eq('user_id', user_id)
-      .maybeSingle();
+      .single();
 
     if (existing) {
       return NextResponse.json({ error: '이미 블로그가 존재합니다' });
