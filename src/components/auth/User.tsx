@@ -36,7 +36,7 @@ function User() {
         />
       </div>
 
-      <div className="justify-center flex flex-col items-center mt-3 pt-3 bg-yellow-200">
+      <div className="justify-center font-galmuri  flex flex-col items-center mt-3 pt-3 bg-yellow-200">
         {user?.id && (
           <>
             <div> {nickname}님 행복한 하루 보내세요!</div>

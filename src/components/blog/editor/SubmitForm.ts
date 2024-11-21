@@ -8,8 +8,8 @@ import { addOfficialPost, blogPost, updatePost } from '@/service/post';
 
 // 폼 제출
 export interface BlogData {
-  blog_name: string;
-  id: string;
+  blog_name: string | null;
+  id: string | null;
 }
 export default async function handleSubmit(
   e: FormEvent<HTMLFormElement>,
@@ -55,8 +55,8 @@ export default async function handleSubmit(
           content: processedContent,
           title,
           nickname: nickname,
-          blog_name: blog.blog_name,
-          blog_id: blog.id,
+          blog_name: blog.blog_name!,
+          blog_id: blog.id!,
           img_url: imageUrls?.length ? imageUrls : null,
           user_id,
         });

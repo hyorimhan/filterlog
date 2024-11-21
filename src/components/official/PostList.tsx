@@ -52,6 +52,7 @@ function PostList() {
   const handlePageClick = async (selectedPage: { selected: number }) => {
     setCurrentPage(selectedPage.selected);
   };
+
   return (
     <div className=" mt-5 mx-5">
       {owner && <Link href={'/official/write'}>글쓰기</Link>}
@@ -100,8 +101,8 @@ function PostList() {
                         <Image
                           src={
                             Array.isArray(post.img_url)
-                              ? post.img_url[0].replace(/[\[\]"]/g, '')
-                              : post.img_url.replace(/[\[\]"]/g, '')
+                              ? post.img_url[0].trim()
+                              : JSON.parse(post.img_url)[0].trim()
                           }
                           alt="postImg"
                           width={100}
@@ -116,13 +117,13 @@ function PostList() {
                     </span>
                   </div>
                   {category !== 'notice' && (
-                    <span className="text-center my-5 whitespace-normal line-clamp-2">
+                    <span className="text-center my-3 whitespace-normal line-clamp-2">
                       {post.description
                         .replace(/<\/?[^>]+(>|$)/g, '')
                         .replace(/>/g, '')}
                     </span>
                   )}
-                  <span className="flex justify-end  text-[11px]">
+                  <span className="flex justify-end items-end  text-[11px]">
                     {post.created_at.slice(0, 10)}
                   </span>
                 </Link>

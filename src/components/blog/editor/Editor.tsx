@@ -84,18 +84,20 @@ function Editor({
     setCategory(e.target.value);
   };
 
-  if (passOwnerCheck && !blog) {
+  if (passOwnerCheck && !blog?.blog_name && blog?.id) {
     return <div>블로그 정보를 불러오는 중...</div>;
   }
 
   if (!user?.id) {
     return '유저 아이디가 없습니다';
   }
+
+  console.log(user.id);
   const user_id = user.id;
   return (
     <>
       <form
-        onSubmit={(e) =>
+        onSubmit={(e) => {
           handleSubmit(
             e,
             targetTable,
@@ -108,13 +110,13 @@ function Editor({
             router,
             queryClient,
             {
-              blog_name: blog?.blog_name!,
-              id: blog?.id!,
+              blog_name: blog?.blog_name as string,
+              id: blog?.id as string,
             },
             setDisabled,
             category
-          )
-        }
+          );
+        }}
         id="editorForm"
       >
         <div className="flex justify-center">

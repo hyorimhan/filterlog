@@ -9,6 +9,7 @@ import Magazine from '@/components/IE/Magazine';
 import YoutubePlayList from '@/components/IE/video/YoutubePlayList';
 import ThreeBlogger from '@/components/IE/blogger/ThreeBlogger';
 import RecentPosts from '@/components/IE/RecentPosts';
+import Notice from '@/components/IE/Notice';
 
 const HomePage = () => {
   const user = useUserInfo((state) => state.user);
@@ -31,7 +32,7 @@ const HomePage = () => {
           <Ad />
         </section>
         <section className="w-[720px] h-[280px]  ">
-          <div className=" h-[560px] ">
+          <div className=" h-[560px] relative z-10">
             <Magazine />
           </div>
         </section>
@@ -48,12 +49,7 @@ const HomePage = () => {
         </section>
         <section className="w-[720px] h-[280px]"></section>
         <section className="font-galmuri text-center h-[280px] w-[280px]   border-custom-green-700 border-2 border-y-custom-green-700  border-r-0">
-          <div className=" mt-2 text-sm border-dashed border-b-2 pb-1 border-custom-green-400 mx-3 ">
-            공지
-          </div>
-          <div className="border-2 border-custom-green-300 mx-2 my-2">
-            방구 쿠션 줍기 않기 운동
-          </div>
+          <Notice />
         </section>
       </div>
     </>
