@@ -81,7 +81,7 @@ function Comment({ params }: blogParams) {
     }
   };
 
-  const updateComment = async (data: CommentFormData) => {
+  const updateComment = async () => {
     if (user?.id && nickname) {
       setCommentRegister(true);
       try {

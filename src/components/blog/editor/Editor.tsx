@@ -54,7 +54,7 @@ function Editor({
 
   const { data: blog } = useQuery({
     queryKey: ['blog'],
-    queryFn: () => existingBlog(user?.id!),
+    queryFn: () => existingBlog(user?.id as string),
     enabled: passOwnerCheck,
   });
 
