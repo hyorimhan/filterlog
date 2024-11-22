@@ -10,6 +10,7 @@ import useBlogInfo from '@/zustand/useBlogInfo';
 import Fuse from 'fuse.js';
 import useSearch from '@/zustand/useSearch';
 import { myPostList } from '@/service/post';
+import Loading from '@/components/common/Loading';
 
 function PostList() {
   const {
@@ -60,7 +61,7 @@ function PostList() {
   }, [postList?.data, searchWord]);
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   //클릭한 페이지
@@ -80,7 +81,7 @@ function PostList() {
       return (
         <Link
           href={`/blog/write?ownerId=${ownerId}`}
-          className="flex flex-col text-sm border-2 border-custom-green-700 focus:outline-none items-center justify-center h-full"
+          className="flex flex-col text-sm mt-10 focus:outline-none items-center justify-center h-full"
         >
           글이 아직 없어요! 첫 글을 써보세요
         </Link>

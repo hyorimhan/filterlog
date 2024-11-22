@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
+import Loading from '../common/Loading';
 
 function Magazine() {
   const category = 'magazine';
@@ -12,7 +13,7 @@ function Magazine() {
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
   return (
     <div className="grid grid-cols-2  ">

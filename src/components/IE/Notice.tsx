@@ -3,6 +3,7 @@ import { showOfficialPostInfo } from '@/service/post';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React from 'react';
+import Loading from '../common/Loading';
 
 function Notice() {
   const category = 'notice';
@@ -11,7 +12,7 @@ function Notice() {
     queryFn: () => showOfficialPostInfo(category),
   });
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
   return (
     <>

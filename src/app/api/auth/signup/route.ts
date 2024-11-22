@@ -11,8 +11,6 @@ export async function POST(request: NextRequest) {
       password,
       options: { data: { display_name: nickname } },
     });
-    console.log(user);
-    console.log(error);
 
     const { error: userError } = await supabase
       .from('users')
@@ -25,7 +23,6 @@ export async function POST(request: NextRequest) {
       if (error.message.includes('already registered')) {
         return NextResponse.json({ message: '이미 가입된 이메일입니다' });
       }
-      console.log(error.message);
       return NextResponse.json({ message: '회원가입에 실패했습니다' });
     }
 

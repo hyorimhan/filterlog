@@ -5,6 +5,7 @@ import React, { FormEvent } from 'react';
 import { QueryClient } from '@tanstack/react-query';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { addOfficialPost, blogPost, updatePost } from '@/service/post';
+import toast from 'react-hot-toast';
 
 // 폼 제출
 export interface BlogData {
@@ -47,7 +48,7 @@ export default async function handleSubmit(
       // else if (targetTable === 'official') {
       // }
 
-      alert('글이 수정되었습니다');
+      toast.success('글이 수정되었습니다');
       router.replace(`/blog/${blog.id}`);
     } else {
       if (targetTable === 'blogPosts') {
@@ -60,7 +61,7 @@ export default async function handleSubmit(
           img_url: imageUrls?.length ? imageUrls : null,
           user_id,
         });
-        alert('글이 등록되었습니다');
+        toast.success('글이 등록되었습니다');
         router.replace(`/blog/${blog.id}`);
       } else if (targetTable === 'official') {
         await addOfficialPost({
@@ -70,7 +71,7 @@ export default async function handleSubmit(
           img_url: imageUrls?.length ? imageUrls : null,
           owner_id: user_id,
         });
-        alert('글이 등록되었습니다');
+        toast.success('글이 등록되었습니다');
         router.replace(`/official`);
       }
     }

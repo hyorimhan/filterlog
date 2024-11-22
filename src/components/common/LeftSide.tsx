@@ -10,7 +10,7 @@ function LeftSide() {
   const isOwner = user?.id === ownerId;
 
   return (
-    <div className=" h-[300px]">
+    <div className=" h-[300px] space-y-2 mx-1">
       {isOwner ? (
         <Link
           href={`/blog/write?ownerId=${ownerId}`}
@@ -23,15 +23,9 @@ function LeftSide() {
       ) : (
         ''
       )}
-      <Link href={`/blog/guestBook`} className="text-black text-sm">
-        <div className="w-full text-center p-2 rounded-lg  bg-custom-green-400 shadow-sm mt-1 hover:brightness-105 ">
-          방명록
-        </div>
-      </Link>
-      <div className="rounded-lg w-full text-center border-2 p-2 border-custom-green-400 shadow-sm mt-1 hover:brightness-105 ">
-        <SearchBar />
-      </div>
+
       <YearMonthSearch />
+      <SearchBar />
     </div>
   );
 }

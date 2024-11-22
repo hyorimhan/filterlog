@@ -9,6 +9,7 @@ import {
   passwordConfirmValidate,
   passwordValidate,
 } from './AuthValidate';
+import toast from 'react-hot-toast';
 
 function SignUp() {
   const { register, handleSubmit, watch } = useForm<signUpType>();
@@ -19,7 +20,7 @@ function SignUp() {
     const response = await sIgnUp(data);
 
     if (response) {
-      alert(response.message);
+      toast.success(response.message);
       router.replace('/IE');
     }
   };

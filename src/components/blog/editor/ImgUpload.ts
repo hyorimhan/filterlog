@@ -1,5 +1,6 @@
 'use client';
 import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const base64ToBlob = (base64Data: string) => {
   const byteString = atob(base64Data.split(',')[1]);
@@ -22,7 +23,7 @@ export default async function handleImageUpload(rawContent: string) {
 
   const dataURITags = rawContent.match(/data:(?!image\/)[^;]+;base64,[^"]+/g);
   if (dataURITags) {
-    alert('이미지 외의 파일 형식은 업로드할 수 없습니다.');
+    toast.error('이미지 외의 파일 형식은 업로드할 수 없습니다.');
     return { processedContent: rawContent };
   }
   const imageTag = rawContent.match(/<img[^>]+src="([^">]+)"/g);
@@ -42,7 +43,9 @@ export default async function handleImageUpload(rawContent: string) {
             'image/jpg',
           ];
           if (!allowedTypes.includes(mimeType)) {
-            alert('이미지 파일만 업로드 가능합니다. (jpg, png, gif, webp)');
+            toast.error(
+              '이미지 파일만 업로드 가능합니다. (jpg, png, gif, webp)'
+            );
             throw new Error('Invalid image type');
           }
 
@@ -59,7 +62,7 @@ export default async function handleImageUpload(rawContent: string) {
           }
         } catch (error) {
           console.error('이미지 업로드 실패:', error);
-          alert('이미지 업로드에 실패했습니다.');
+          toast.error('이미지 업로드에 실패했습니다.');
           throw error;
         }
       }

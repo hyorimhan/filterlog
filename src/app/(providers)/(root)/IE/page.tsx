@@ -1,6 +1,6 @@
 'use client';
 import Login from '@/components/auth/Login';
-import User from '@/components/auth/User';
+import User from '@/components/auth/MyInfo';
 import Ad from '@/components/common/Ad';
 import MainSwiper from '@/components/IE/MainSwiper';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -10,6 +10,7 @@ import YoutubePlayList from '@/components/IE/video/YoutubePlayList';
 import ThreeBlogger from '@/components/IE/blogger/ThreeBlogger';
 import RecentPosts from '@/components/IE/RecentPosts';
 import Notice from '@/components/IE/Notice';
+// import { useQuery } from '@tanstack/react-query';
 
 const HomePage = () => {
   const user = useUserInfo((state) => state.user);
@@ -18,7 +19,7 @@ const HomePage = () => {
     <>
       <div className=" grid-cols-[2fr_6fr_2fr]  grid overflow-hidden ">
         <section className=" h-[280px] w-[280px]  border-l-0 border-t-0 border-r-custom-green-700 border-2 border-y-custom-green-700">
-          {user && user.email ? <User /> : <Login />}
+          {!user ? <Login /> : <User />}
         </section>
         <section className="w-[720px] h-[280px] ">
           <MainSwiper />

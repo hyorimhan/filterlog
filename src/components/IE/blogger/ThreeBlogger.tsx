@@ -1,4 +1,5 @@
 'use client';
+import Loading from '@/components/common/Loading';
 import { allUsers } from '@/service/blog';
 import useSearch from '@/zustand/useSearch';
 import { useQuery } from '@tanstack/react-query';
@@ -15,7 +16,7 @@ function ThreeBlogger() {
   const threeUsers = allUserData?.data.slice(0, 3);
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
   return (
     <div className="font-galmuri text-sm text-center pt-2 ">

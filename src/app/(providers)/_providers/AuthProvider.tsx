@@ -13,7 +13,6 @@ function AuthProvider({ children }: PropsWithChildren) {
       try {
         const user = await userInfo();
         saveUser(user);
-        console.log(user);
       } catch (error) {
         console.error('로그인 정보 불러오기 오류:', error);
       }

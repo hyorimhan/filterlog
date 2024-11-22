@@ -2,18 +2,19 @@ import { allPosts } from '@/service/post';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React from 'react';
+import Loading from '../common/Loading';
 
 function RecentPosts() {
-  const { data, isLoading } = useQuery({
-    queryKey: ['data'],
+  const { data: recentPost, isLoading } = useQuery({
+    queryKey: ['recentPost'],
     queryFn: allPosts,
   });
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
   return (
     <div>
-      {data?.map((post) => (
+      {recentPost?.map((post) => (
         <Link
           href={`blog/post/${post.id}`}
           key={post.id}

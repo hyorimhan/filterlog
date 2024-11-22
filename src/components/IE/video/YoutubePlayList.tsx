@@ -1,4 +1,5 @@
 'use client';
+import Loading from '@/components/common/Loading';
 import { youtubePlayLIst } from '@/service/video';
 import { useQuery } from '@tanstack/react-query';
 import Youtube from 'react-youtube';
@@ -36,7 +37,7 @@ function YoutubePlayList() {
   };
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   const videoIds = videoItems?.map((item) => item.snippet.resourceId.videoId);

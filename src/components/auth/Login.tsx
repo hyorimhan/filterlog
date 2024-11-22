@@ -5,11 +5,9 @@ import { emailValidate, passwordValidate } from './AuthValidate';
 import { login } from '@/service/auth';
 import { loginType } from '@/types/userForm';
 import useUserInfo from '@/zustand/useUserInfo';
-import { usePathname, useRouter } from 'next/navigation';
+import toast from 'react-hot-toast';
 
 function Login() {
-  const router = useRouter();
-  const pathname = usePathname();
   const { register, handleSubmit, reset } = useForm<loginType>();
   const { saveUser } = useUserInfo();
   const loginForm = async (data: loginType) => {
@@ -17,28 +15,30 @@ function Login() {
       const response = await login(data);
 
       if (response.error) {
-        alert(response.error);
+        toast.error(response.error);
         reset();
         return;
       }
       if (response.user) {
         saveUser(response.user);
-        router.replace(pathname);
+
+        window.location.reload();
+        toast.success(response.message);
       } else {
-        alert('아이디, 비밀번호를 다시 확인해주세요');
+        toast.error('아이디, 비밀번호를 다시 확인해주세요');
       }
     } catch (error) {
-      alert('오류가 발생했습니다');
+      toast.error('오류가 발생했습니다');
     }
   };
 
   const loginError = (errors: FieldErrors<loginType>) => {
     if (errors.email?.message) {
-      alert(errors.email.message);
+      toast.error(errors.email.message);
       return;
     }
     if (errors.password?.message) {
-      alert(errors.password.message);
+      toast.error(errors.password.message);
       return;
     }
   };

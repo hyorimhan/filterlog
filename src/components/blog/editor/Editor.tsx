@@ -11,6 +11,7 @@ import { editorProps } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import handleSubmit from './SubmitForm';
 import { existingBlog } from '@/service/blog';
+import toast from 'react-hot-toast';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
@@ -53,13 +54,13 @@ function Editor({
 
   const { data: blog } = useQuery({
     queryKey: ['blog'],
-    queryFn: () => existingBlog(user),
+    queryFn: () => existingBlog(user?.id!),
     enabled: passOwnerCheck,
   });
 
   if (!owner && passOwnerCheck) {
     router.replace('/IE');
-    alert('계정주가 아닙니다');
+    toast.error('계정주가 아닙니다');
     return;
   }
 
@@ -92,7 +93,6 @@ function Editor({
     return '유저 아이디가 없습니다';
   }
 
-  console.log(user.id);
   const user_id = user.id;
   return (
     <>

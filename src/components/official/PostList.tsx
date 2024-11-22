@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import Loading from '../common/Loading';
 
 function PostList() {
   const { user } = useUserInfo();
@@ -30,7 +31,7 @@ function PostList() {
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
   const pageCount = Math.ceil((allPosts?.page || 0) / 10);
   const handleTabClick = (tabId: string, category: string) => {

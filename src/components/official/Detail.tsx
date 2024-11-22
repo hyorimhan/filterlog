@@ -4,6 +4,7 @@ import { blogParams } from '@/types/userBlog';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import React from 'react';
+import Loading from '../common/Loading';
 
 function Detail({ params }: blogParams) {
   const { data: detailPost, isLoading } = useQuery({
@@ -12,7 +13,7 @@ function Detail({ params }: blogParams) {
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   return (
