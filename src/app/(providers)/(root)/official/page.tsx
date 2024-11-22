@@ -1,11 +1,12 @@
+'use client';
 import PostList from '@/components/official/PostList';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const OfficialPage = () => {
   return (
-    <div>
+    <Suspense fallback={<div>로딩중...</div>}>
       <PostList />
-    </div>
+    </Suspense>
   );
 };
 
