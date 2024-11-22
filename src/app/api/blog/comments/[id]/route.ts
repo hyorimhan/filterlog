@@ -69,8 +69,7 @@ export async function PATCH(request: NextRequest, { params }: blogParams) {
     .update({ content })
     .eq('id', id)
     .select();
-  console.log(data);
-  console.log(id);
+
   if (error) {
     return NextResponse.json({ error: '댓글 수정에 실패했습니다' });
   }

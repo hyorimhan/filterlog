@@ -18,7 +18,6 @@ async function handleProfileImg(
     const formData = await request.formData();
     const imgFile = formData.get('image') as Blob;
     const userId = formData.get('userId') as string;
-    console.log('요청 받음:', { method, userId });
     if (!imgFile || !userId) {
       return NextResponse.json('이미지 파일과 사용자 id가 없습니다');
     }

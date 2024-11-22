@@ -13,7 +13,6 @@ export type Database = {
         Row: {
           blog_name: string | null
           description: string | null
-          friend: string[] | null
           id: string
           nickname: string | null
           profile_img: string | null
@@ -22,7 +21,6 @@ export type Database = {
         Insert: {
           blog_name?: string | null
           description?: string | null
-          friend?: string[] | null
           id?: string
           nickname?: string | null
           profile_img?: string | null
@@ -31,7 +29,6 @@ export type Database = {
         Update: {
           blog_name?: string | null
           description?: string | null
-          friend?: string[] | null
           id?: string
           nickname?: string | null
           profile_img?: string | null

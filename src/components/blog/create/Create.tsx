@@ -7,19 +7,17 @@ import React from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 import useUserInfo from '@/zustand/useUserInfo';
 import { blogDescription, blogName } from './createBlogValidate';
+import toast from 'react-hot-toast';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
 
-  const { user_id, nickname } = useUserInfo((state) => ({
-    user_id: state.user?.id,
-    nickname: state.user?.user_metadata.display_name,
-  }));
+  const { user, nickname } = useUserInfo();
   const router = useRouter();
-  console.log('user:', user_id, 'nickname:', nickname);
+  const user_id = user?.id;
   const create = async (data: createBlogType) => {
     if (!user_id) {
-      alert('오류가 발생했습니다');
+      toast.error('오류가 발생했습니다');
       return;
     }
     const blogData = { ...data, user_id, nickname };
@@ -27,12 +25,12 @@ function Create() {
     const response = await createBlog(blogData);
 
     if (response) {
-      alert('블로그가 생성되었습니다');
+      toast.success('블로그가 생성되었습니다');
       router.replace(`/blog/${response.id}`);
     }
 
     if (response.error) {
-      alert(response.error);
+      toast.error(response.error);
       console.log(response.error);
     }
   };

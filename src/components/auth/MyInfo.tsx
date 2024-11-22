@@ -4,24 +4,29 @@ import Logout from './Logout';
 import Link from 'next/link';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
-import { userProfileImg } from '@/service/auth';
+import { userInfo, userProfileImg } from '@/service/auth';
+import Loading from '../common/Loading';
 
-function User() {
-  const user = useUserInfo((state) => state.user);
+function MyInfo() {
+  // const user = useUserInfo((state) => state.user);
   const nickname = useUserInfo((state) => state.nickname);
+  const { data: user, isLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: userInfo,
+  });
 
   const { data: profileImg, isLoading: profileLoading } = useQuery({
-    queryKey: ['profileImg'],
+    queryKey: ['profileImg', user?.id],
     queryFn: () => {
       if (!user?.id) return null;
       return userProfileImg(user?.id);
     },
     enabled: !!user?.id,
-    staleTime: 5000,
+    staleTime: 0,
   });
 
-  if (profileLoading) {
-    return '로딩중';
+  if (profileLoading || isLoading) {
+    return <Loading />;
   }
 
   return (
@@ -30,28 +35,30 @@ function User() {
         <Image
           src={profileImg || '/profile/profile.svg'}
           alt="profileimg"
-          width={80}
-          height={80}
+          width={100}
+          height={100}
           className="rounded-full border-2 border-custom-green-600"
         />
       </div>
 
-      <div className="justify-center flex flex-col items-center mt-3 pt-3 bg-yellow-200">
-        {user?.id && (
+      <div className="justify-center font-galmuri  flex flex-col items-center my-3  py-2 bg-yellow-200">
+        {user && (
           <>
             <div> {nickname}님 행복한 하루 보내세요!</div>
-            <div className="mt-3 space-x-2 ">
+            <div className="my-3 space-x-5 flex items-center">
               <Link href={'/blog/myPage'}>
-                <button>마이페이지</button>
+                <div className=" bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
+                  마이페이지
+                </div>
               </Link>
 
               <Link href={'/blog'}>
-                <button className="text-black">마이블로그</button>
+                <div className="bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
+                  마이블로그
+                </div>
               </Link>
             </div>
-            <div className="pb-3">
-              <Logout />
-            </div>
+            <Logout />
           </>
         )}
       </div>
@@ -59,4 +66,4 @@ function User() {
   );
 }
 
-export default User;
+export default MyInfo;

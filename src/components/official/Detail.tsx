@@ -4,6 +4,7 @@ import { blogParams } from '@/types/userBlog';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import React from 'react';
+import Loading from '../common/Loading';
 
 function Detail({ params }: blogParams) {
   const { data: detailPost, isLoading } = useQuery({
@@ -12,12 +13,9 @@ function Detail({ params }: blogParams) {
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
-  console.log('detailPost:', detailPost);
-  console.log('img_url type:', typeof detailPost.img_url);
-  console.log(detailPost);
   return (
     <section className="tabs m-2" style={{ maxWidth: '1280px' }}>
       <menu role="tablist" aria-label="Sample Tabs">
@@ -33,18 +31,20 @@ function Detail({ params }: blogParams) {
 
       <article role="tabpanel" id="tab-A">
         <p className="flex flex-col items-center justify-center">
-          {JSON.parse(detailPost.img_url).map((img: string, index: string) => (
-            <Image
-              src={img}
-              alt="magazineImg"
-              key={index}
-              width={700}
-              height={700}
-              unoptimized
-              className="flex flex-col items-center justify-center"
-            />
-          ))}
+          {detailPost.img_url &&
+            JSON.parse(detailPost.img_url).map((img: string, index: string) => (
+              <Image
+                src={img}
+                alt="magazineImg"
+                key={index}
+                width={500}
+                height={500}
+                unoptimized
+                className="flex flex-col items-center justify-center"
+              />
+            ))}
         </p>
+
         <div
           className="flex flex-col items-center my-2 text-sm justify-center"
           dangerouslySetInnerHTML={{

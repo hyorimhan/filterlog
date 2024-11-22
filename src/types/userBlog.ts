@@ -68,6 +68,7 @@ export type blogInfoType = {
   description: string | null;
   blog_name: string | null;
   user_id: string | null;
+  profile_img: string | null;
   id: string;
 };
 

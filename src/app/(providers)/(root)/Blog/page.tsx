@@ -5,14 +5,16 @@ import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
+import Loading from '@/components/common/Loading';
 
 const BlogPage = () => {
-  const user = useUserInfo((state) => state.user);
+  const { user } = useUserInfo();
   const router = useRouter();
-
+  const user_id = user?.id;
   const { data: existingData, isLoading } = useQuery({
     queryKey: ['existingData', user?.id],
-    queryFn: () => existingBlog(user),
+    queryFn: () => existingBlog(user_id!),
+    enabled: !!user_id,
   });
 
   useEffect(() => {
@@ -28,7 +30,7 @@ const BlogPage = () => {
   }, [user, existingData, router]);
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   return <div>{!existingData && <Create />}</div>;

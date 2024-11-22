@@ -11,7 +11,6 @@ export async function POST(request: NextRequest) {
     .insert([{ title, description, owner_id, category, img_url }])
     .select();
 
-  console.log(data);
   if (error) {
     return NextResponse.json({ error: '오류가 발생했습니다' });
   }

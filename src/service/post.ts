@@ -121,6 +121,19 @@ export const allOfficialPost = async ({
   return response.data;
 };
 
+export const showOfficialPostInfo = async (category: string) => {
+  const { data, error } = await supabase
+    .from('official')
+    .select('*')
+    .eq('category', category);
+
+  if (error) {
+    console.log(error);
+  }
+
+  return data;
+};
+
 export const detailOfficialPost = async ({ post_id }: { post_id: string }) => {
   const response = await axios.get(`/api/blog/officialPost/${post_id}`, {
     params: { post_id },

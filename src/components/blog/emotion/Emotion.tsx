@@ -1,3 +1,4 @@
+import Loading from '@/components/common/Loading';
 import { existingMyEmotion, myEmotion } from '@/service/emotion';
 import Confirm from '@/utils/Confirm';
 import useBlogInfo from '@/zustand/useBlogInfo';
@@ -6,6 +7,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 function Emotion() {
   const user = useUserInfo((state) => state.user);
@@ -35,18 +37,18 @@ function Emotion() {
           queryKey: ['emotionData', user_id, blog_id, today],
         });
       }
-      alert(data.message);
+      toast.success(data.message);
     },
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (!selected) {
-      return alert('감정을 선택해주세요');
+      return toast.error('감정을 선택해주세요');
     }
     Confirm({
       title: '내 오늘 기분은?',

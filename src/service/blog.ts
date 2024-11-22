@@ -1,6 +1,5 @@
 import { createClient } from '@/supabase/client';
 import { blogInfoUpdateType, createBlogType } from '@/types/userBlog';
-import { User } from '@supabase/supabase-js';
 import axios from 'axios';
 
 const supabase = createClient();
@@ -22,14 +21,14 @@ export const createBlog = async ({
 };
 
 // 이미 생성된 블로그가 있는지 확인
-export const existingBlog = async (user: User | null) => {
-  if (!user || !user.id) {
+export const existingBlog = async (user_id: string) => {
+  if (!user_id) {
     return null;
   }
   const { data: existing } = await supabase
     .from('blog')
     .select('*')
-    .eq('user_id', user?.id)
+    .eq('user_id', user_id)
     .single();
 
   return existing;

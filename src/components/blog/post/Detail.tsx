@@ -1,5 +1,5 @@
 'use client';
-import User from '@/components/auth/User';
+import User from '@/components/auth/MyInfo';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import BlogHeader from '../../common/BlogHeader';
@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation';
 import Editor from '../editor/Editor';
 import Image from 'next/image';
 import { deletePost, myPostDetail } from '@/service/post';
+import Loading from '@/components/common/Loading';
+import toast from 'react-hot-toast';
 
 function Detail({ post_id }: { post_id: string }) {
   const ownerId = useBlogInfo((state) => state.ownerId);
@@ -22,7 +24,7 @@ function Detail({ post_id }: { post_id: string }) {
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   const isOwner = user?.id === ownerId;
@@ -100,10 +102,10 @@ function Detail({ post_id }: { post_id: string }) {
                     onClick: async () => {
                       try {
                         await deletePost(post_id);
-                        alert('글이 삭제되었습니다.');
+                        toast.success('글이 삭제되었습니다.');
                         router.replace(`/blog/${deatilPost.blog_id}`);
                       } catch (error) {
-                        alert('글을 삭제하는 중 오류가 발생했습니다.');
+                        toast.error('글을 삭제하는 중 오류가 발생했습니다.');
                       }
                     },
                   });

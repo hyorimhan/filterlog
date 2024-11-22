@@ -15,6 +15,8 @@ import React, { useState } from 'react';
 // import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPen } from 'react-icons/fa';
+import Loading from '../common/Loading';
+import toast from 'react-hot-toast';
 
 function Profile() {
   const queryClient = useQueryClient();
@@ -45,7 +47,7 @@ function Profile() {
   });
 
   if (isLoading || profileLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -53,7 +55,7 @@ function Profile() {
     if (!file || !user?.id) return;
 
     if (file.size > 5 * 1024 * 1024 || !file.type.startsWith('image/')) {
-      alert('5mb 이하의 이미지 파일만 업로드 가능합니다');
+      toast.error('5mb 이하의 이미지 파일만 업로드 가능합니다');
       return;
     }
     const previewUrl = URL.createObjectURL(file);
@@ -90,7 +92,7 @@ function Profile() {
         user_id: user?.id,
       });
       if (response) {
-        alert(response.message);
+        toast.success(response.message);
         router.replace(`/blog/${getProfile?.id}`);
       }
     } catch (error) {

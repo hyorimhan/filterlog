@@ -1,11 +1,20 @@
+'use client';
+import Loading from '@/components/common/Loading';
 import PostList from '@/components/official/PostList';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 const OfficialPage = () => {
   return (
-    <div>
+    <Suspense
+      fallback={
+        <div>
+          {' '}
+          <Loading />
+        </div>
+      }
+    >
       <PostList />
-    </div>
+    </Suspense>
   );
 };
 

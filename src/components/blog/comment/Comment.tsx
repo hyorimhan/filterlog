@@ -14,6 +14,8 @@ import {
   deleteComments,
   updateComments,
 } from '@/service/comment';
+import Loading from '@/components/common/Loading';
+import toast from 'react-hot-toast';
 
 interface CommentFormData {
   content: string;
@@ -48,7 +50,7 @@ function Comment({ params }: blogParams) {
   });
 
   if (isLoading) {
-    return '로딩중';
+    return <Loading />;
   }
 
   const handlePageClick = (selectedPage: { selected: number }) => {
@@ -68,7 +70,7 @@ function Comment({ params }: blogParams) {
           post_id,
         });
         if (response) {
-          alert(response.message);
+          toast.success(response.message);
           reset();
           queryClient.invalidateQueries({ queryKey: ['comments', post_id] });
           setCommentRegister(false);
@@ -79,8 +81,7 @@ function Comment({ params }: blogParams) {
     }
   };
 
-  const updateComment = async (data: CommentFormData) => {
-    console.log(data);
+  const updateComment = async () => {
     if (user?.id && nickname) {
       setCommentRegister(true);
       try {
@@ -89,7 +90,7 @@ function Comment({ params }: blogParams) {
           id: commentId,
         });
         if (response) {
-          alert(response.message);
+          toast.success(response.message);
 
           queryClient.invalidateQueries({ queryKey: ['comments', post_id] });
           reset();
@@ -169,15 +170,15 @@ function Comment({ params }: blogParams) {
                                   comment.id
                                 );
                                 if (response) {
-                                  alert('댓글이 삭제되었습니다');
+                                  toast.success('댓글이 삭제되었습니다');
                                   queryClient.invalidateQueries({
                                     queryKey: ['comments', post_id],
                                   });
                                 } else {
-                                  alert('삭제에 실패했습니다');
+                                  toast.error('삭제에 실패했습니다');
                                 }
                               } catch (error) {
-                                alert('오류가 발생했습니다');
+                                toast.error('오류가 발생했습니다');
                               }
                             },
                           });

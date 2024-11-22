@@ -31,7 +31,7 @@ export const userInfo = async () => {
   const {
     data: { user },
   } = await supabase.auth.getUser();
-  console.log('Authenticated User ID:', user?.id);
+
   return user;
 };
 

@@ -1,3 +1,4 @@
+import Loading from '@/components/common/Loading';
 import { totalMyEmotion } from '@/service/emotion';
 import { totalEmotionType } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
@@ -15,7 +16,7 @@ function TotalEmotion() {
   });
 
   if (isLoading || !total?.emotionCounts) {
-    return '로딩중';
+    return <Loading />;
   }
 
   const emotions = ['sad', 'angry', 'soso', 'smile', 'happy'];

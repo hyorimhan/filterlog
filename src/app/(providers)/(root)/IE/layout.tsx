@@ -8,7 +8,10 @@ function layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="w-full h-screen  ">
       <Header />
-      <div className="h-[120px] w-[1280px] mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-custom-green-700">
+      <Link
+        href={'/IE'}
+        className="h-[120px] focus:outline-none w-[1280px] mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-custom-green-700"
+      >
         <Image
           src={'/logo/filTextLogo2.svg'}
           alt="filterlogLogo"
@@ -16,7 +19,7 @@ function layout({ children }: { children: React.ReactNode }) {
           height={500}
           className="w-[380px] h-[120px] mx-auto border-0 pb-3 my-auto bg-custom-green-300 object-cover "
         />
-      </div>
+      </Link>
       <div className="w-[1280px] h-1 flex justify-center mx-auto bg-gradient-to-b from-custome-white-50 border-2 border-x-custom-green-700 border-y-0 via-custom-green-700 to-custome-white-50"></div>
       <div className="h-[50px] w-[1280px] font-galmuri space-x-5 mx-auto flex  justify-center items-center  border-y-0 bg-custom-green-400 border-2  border-x-custom-green-700 ">
         <Link

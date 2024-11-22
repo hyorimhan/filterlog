@@ -1,9 +1,9 @@
 'use client';
-import User from '@/components/auth/User';
 import PostList from './post/PostList';
 import Emotion from './emotion/Emotion';
 import TotalEmotion from './emotion/TotalEmotion';
 import LeftSide from '@/components/common/LeftSide';
+import User from './User';
 
 function Default() {
   return (

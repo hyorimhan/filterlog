@@ -11,6 +11,7 @@ import { editorProps } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import handleSubmit from './SubmitForm';
 import { existingBlog } from '@/service/blog';
+import toast from 'react-hot-toast';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
@@ -53,13 +54,13 @@ function Editor({
 
   const { data: blog } = useQuery({
     queryKey: ['blog'],
-    queryFn: () => existingBlog(user),
+    queryFn: () => existingBlog(user?.id as string),
     enabled: passOwnerCheck,
   });
 
   if (!owner && passOwnerCheck) {
     router.replace('/IE');
-    alert('계정주가 아닙니다');
+    toast.error('계정주가 아닙니다');
     return;
   }
 
@@ -84,18 +85,19 @@ function Editor({
     setCategory(e.target.value);
   };
 
-  if (passOwnerCheck && !blog) {
+  if (passOwnerCheck && !blog?.blog_name && blog?.id) {
     return <div>블로그 정보를 불러오는 중...</div>;
   }
 
   if (!user?.id) {
     return '유저 아이디가 없습니다';
   }
+
   const user_id = user.id;
   return (
     <>
       <form
-        onSubmit={(e) =>
+        onSubmit={(e) => {
           handleSubmit(
             e,
             targetTable,
@@ -108,13 +110,13 @@ function Editor({
             router,
             queryClient,
             {
-              blog_name: blog?.blog_name!,
-              id: blog?.id!,
+              blog_name: blog?.blog_name as string,
+              id: blog?.id as string,
             },
             setDisabled,
             category
-          )
-        }
+          );
+        }}
         id="editorForm"
       >
         <div className="flex justify-center">

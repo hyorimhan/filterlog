@@ -4,7 +4,6 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   const supabase = createClient();
   const response = await request.json();
-  console.log('Create Blog Response:', response);
 
   const { blog_name, description, user_id, nickname } = response;
 
