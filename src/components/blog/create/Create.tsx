@@ -15,6 +15,7 @@ function Create() {
   const { user, nickname } = useUserInfo();
   const router = useRouter();
   const user_id = user?.id;
+
   const create = async (data: createBlogType) => {
     if (!user_id) {
       toast.error('오류가 발생했습니다');

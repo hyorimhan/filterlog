@@ -42,7 +42,7 @@ export const getBlogProfile = async (user_id: string) => {
     .from('blog')
     .select('*')
     .eq('user_id', user_id)
-    .maybeSingle();
+    .single();
   if (error) {
     console.log(error);
     return null;

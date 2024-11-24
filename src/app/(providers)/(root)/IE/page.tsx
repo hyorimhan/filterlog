@@ -1,6 +1,5 @@
 'use client';
 import Login from '@/components/auth/Login';
-import User from '@/components/auth/MyInfo';
 import Ad from '@/components/common/Ad';
 import MainSwiper from '@/components/IE/MainSwiper';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -10,16 +9,35 @@ import YoutubePlayList from '@/components/IE/video/YoutubePlayList';
 import ThreeBlogger from '@/components/IE/blogger/ThreeBlogger';
 import RecentPosts from '@/components/IE/RecentPosts';
 import Notice from '@/components/IE/Notice';
-// import { useQuery } from '@tanstack/react-query';
+import MyInfo from '@/components/auth/MyInfo';
+import { useQuery } from '@tanstack/react-query';
+import { userInfo } from '@/service/auth';
+import { useEffect } from 'react';
+import Loading from '@/components/common/Loading';
 
 const HomePage = () => {
-  const user = useUserInfo((state) => state.user);
+  // const user = useUserInfo((state) => state.user);
+  const { data: initialUser, isLoading } = useQuery({
+    queryKey: ['user'],
+    queryFn: userInfo,
+    staleTime: 0,
+  });
+  const { saveUser } = useUserInfo();
 
+  useEffect(() => {
+    if (initialUser) {
+      saveUser(initialUser);
+    }
+  }, [initialUser, saveUser]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className=" grid-cols-[2fr_6fr_2fr]  grid overflow-hidden ">
         <section className=" h-[280px] w-[280px]  border-l-0 border-t-0 border-r-custom-green-700 border-2 border-y-custom-green-700">
-          {!user ? <Login /> : <User />}
+          {!initialUser ? <Login showSignUp={true} /> : <MyInfo />}
         </section>
         <section className="w-[720px] h-[280px] ">
           <MainSwiper />

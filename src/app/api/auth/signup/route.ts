@@ -14,7 +14,9 @@ export async function POST(request: NextRequest) {
 
     const { error: userError } = await supabase
       .from('users')
-      .insert([{ email: user.user?.email, nickname, id: user.user?.id }]);
+      .insert([
+        { email: user.user?.email, nickname: nickname, id: user.user?.id },
+      ]);
 
     if (userError) {
       return NextResponse.json({ message: userError.message });

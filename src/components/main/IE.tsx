@@ -19,7 +19,7 @@ function IE() {
   return (
     <>
       <div
-        className="flex flex-col justify-center items-center"
+        className="flex flex-col justify-center items-center cursor-pointer"
         onDoubleClick={doubleClick}
       >
         <Image src={'/main/IE.png'} alt="IE" width={40} height={40} />

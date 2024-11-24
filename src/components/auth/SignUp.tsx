@@ -10,10 +10,11 @@ import {
   passwordValidate,
 } from './AuthValidate';
 import toast from 'react-hot-toast';
+import { useQueryClient } from '@tanstack/react-query';
 
 function SignUp() {
   const { register, handleSubmit, watch } = useForm<signUpType>();
-
+  const queryClient = useQueryClient();
   const router = useRouter();
   const password = watch('password');
   const signUpSubmit = async (data: signUpType) => {
@@ -21,6 +22,7 @@ function SignUp() {
 
     if (response) {
       toast.success(response.message);
+      queryClient.invalidateQueries({ queryKey: ['userData'] });
       router.replace('/IE');
     }
   };

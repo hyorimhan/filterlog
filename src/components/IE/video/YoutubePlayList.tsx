@@ -32,7 +32,7 @@ function YoutubePlayList() {
       iv_load_policy: 3,
 
       playsinline: 1,
-      origin: 'http://localhost:3000',
+      origin: 'filterlog.kro.kr',
     },
   };
 

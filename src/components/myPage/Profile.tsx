@@ -17,13 +17,22 @@ import { useForm } from 'react-hook-form';
 import { FaPen } from 'react-icons/fa';
 import Loading from '../common/Loading';
 import toast from 'react-hot-toast';
+import useBlogInfo from '@/zustand/useBlogInfo';
+import { blogDescriptionValidate, blogNameValidate } from './profileValidate';
 
 function Profile() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
+  const { blogInfo } = useBlogInfo();
+
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
+
+  if (!blogInfo) {
+    alert('블로그 먼저 생성해주세요');
+    router.replace('/blog');
+  }
 
   const { data: profileImg, isLoading: profileLoading } = useQuery({
     queryKey: ['profileImg', user?.id],
@@ -93,6 +102,10 @@ function Profile() {
       });
       if (response) {
         toast.success(response.message);
+        // queryClient.invalidateQueries({ queryKey: ['blogProfile'] });
+        await queryClient.invalidateQueries({ queryKey: ['userData'] });
+        await queryClient.invalidateQueries({ queryKey: ['profileData'] });
+
         router.replace(`/blog/${getProfile?.id}`);
       }
     } catch (error) {
@@ -107,7 +120,7 @@ function Profile() {
           alt="profileimg"
           width={100}
           height={100}
-          className="rounded-full border-2 border-custom-green-600  hover:brightness-75"
+          className="w-[100px] h-[100px] rounded-full border-2 border-custom-green-600  hover:brightness-75"
         />
         <span className="flex">
           <span className="absolute bottom-9 left-4 font-galmuri text-custom-green-700 font-semibold">
@@ -144,7 +157,7 @@ function Profile() {
             defaultValue={getProfile?.nickname as string}
             className="text-sm w-52"
           />
-          <div>*최소 3자 ~ 최대 13자</div>
+          <div>*최소 3자 ~ 최대 30자</div>
         </div>
 
         <div className="flex flex-col my-3">
@@ -154,11 +167,11 @@ function Profile() {
           <input
             type="text"
             id="blog_name"
-            {...register('blog_name')}
+            {...register('blog_name', blogNameValidate())}
             defaultValue={getProfile?.blog_name ?? ''}
             className="text-sm"
           />
-          <div>*최소 3자 ~ 최대 13자</div>
+          <div>*최소 2자 ~ 최대 30자</div>
         </div>
 
         <div className="flex flex-col my-3">
@@ -168,11 +181,11 @@ function Profile() {
           <input
             type="text"
             id="description"
-            {...register('description')}
+            {...register('description', blogDescriptionValidate())}
             defaultValue={getProfile?.description ?? ''}
             className="text-sm"
           />
-          <div>*최소 3자 ~ 최대 13자</div>
+          <div>*최소 2자 ~ 최대 50자</div>
         </div>
 
         <button className="my-5" disabled={isUploading}>

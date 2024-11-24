@@ -10,6 +10,7 @@ import Loading from '../common/Loading';
 function MyInfo() {
   // const user = useUserInfo((state) => state.user);
   const nickname = useUserInfo((state) => state.nickname);
+
   const { data: user, isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: userInfo,
@@ -37,7 +38,7 @@ function MyInfo() {
           alt="profileimg"
           width={100}
           height={100}
-          className="rounded-full border-2 border-custom-green-600"
+          className="w-[100px] h-[100px] rounded-full border-2 border-custom-green-600"
         />
       </div>
 

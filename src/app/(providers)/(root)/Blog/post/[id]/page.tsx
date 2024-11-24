@@ -6,8 +6,7 @@ const PostDetailPage = ({ params }: blogParams) => {
   return (
     <div>
       <Detail post_id={params.id} />
-      <div className="grid grid-cols-[1fr_5fr] gap-1 mr-1">
-        <div></div>
+      <div className="mx-10 ">
         <Comment params={params} />
       </div>
     </div>

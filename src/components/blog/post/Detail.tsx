@@ -1,5 +1,4 @@
 'use client';
-import User from '@/components/auth/MyInfo';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import BlogHeader from '../../common/BlogHeader';
@@ -32,10 +31,7 @@ function Detail({ post_id }: { post_id: string }) {
   return (
     <>
       <BlogHeader />
-      <div className="grid grid-cols-[1fr_5fr] gap-1 mr-1">
-        <div className="w-full">
-          <User />
-        </div>
+      <div className="mx-10">
         <div>
           <div className="w-full h-full  min-h-[500px] items-start flex-col justify-center border-2 mt-1 border-custom-green-400">
             <div className="flex justify-end mr-5 mt-3">
@@ -66,15 +62,18 @@ function Detail({ post_id }: { post_id: string }) {
                     {(Array.isArray(deatilPost.img_url)
                       ? deatilPost.img_url
                       : [deatilPost.img_url]
-                    ).map((img: string, index: number) => (
-                      <Image
-                        key={index}
-                        src={img.replace(/[\[\]"]/g, '')}
-                        alt={`Post image ${index + 1}`}
-                        width={300}
-                        height={300}
-                      />
-                    ))}
+                    ).map(
+                      (img: string, index: number) =>
+                        img && (
+                          <Image
+                            key={index}
+                            src={img.replace(/[\[\]"]/g, '')}
+                            alt={`Post image ${index + 1}`}
+                            width={300}
+                            height={300}
+                          />
+                        )
+                    )}
                   </div>
                   <div
                     dangerouslySetInnerHTML={{
