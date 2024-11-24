@@ -11,7 +11,7 @@ import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 // import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaPen } from 'react-icons/fa';
@@ -29,10 +29,12 @@ function Profile() {
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  if (!blogInfo) {
-    alert('블로그 먼저 생성해주세요');
-    router.replace('/blog');
-  }
+  useEffect(() => {
+    if (!blogInfo) {
+      toast.error('블로그 먼저 생성해주세요');
+      router.replace('/blog');
+    }
+  }, [blogInfo, router]);
 
   const { data: profileImg, isLoading: profileLoading } = useQuery({
     queryKey: ['profileImg', user?.id],
