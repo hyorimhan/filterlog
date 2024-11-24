@@ -21,8 +21,7 @@ function RecentPosts() {
           className="text-black"
         >
           <div className="border-2 my-2 border-custom-green-300 mx-2">
-            <span className="truncate"> {post.title}</span>
-            <span> - {post.blog_name}</span>
+            <span className="truncate text-xs"> {post.title}</span>
           </div>
         </Link>
       ))}

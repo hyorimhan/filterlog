@@ -16,10 +16,10 @@ const BlogPage = () => {
     queryFn: () => existingBlog(user_id!),
     enabled: !!user_id,
   });
+  console.log(existingData);
 
   useEffect(() => {
     if (!user) {
-      console.log('로그인 필요');
       router.replace('/IE');
       return;
     }

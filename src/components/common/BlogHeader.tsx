@@ -1,12 +1,14 @@
 'use client';
 
 import useBlogInfo from '@/zustand/useBlogInfo';
-import React from 'react';
 import Logout from '../auth/Logout';
 import Link from 'next/link';
+import useUserInfo from '@/zustand/useUserInfo';
 
 function BlogHeader() {
+  const { user } = useUserInfo();
   const blogInfo = useBlogInfo((state) => state.blogInfo);
+
   return (
     <>
       <div className=" h-8 space-x-3 p-1 flex justify-end items-center bg-custom-green-400 ">
@@ -27,7 +29,16 @@ function BlogHeader() {
           </div>
         </Link>
         <div>
-          <Logout />
+          {user ? (
+            <Logout />
+          ) : (
+            <Link
+              href={'/IE'}
+              className="bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black"
+            >
+              로그인
+            </Link>
+          )}
         </div>
       </div>
       <div className="h-[150px] w-[1280px] mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-y-custom-green-700">

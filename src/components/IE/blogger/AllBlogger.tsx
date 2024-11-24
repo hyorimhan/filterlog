@@ -40,12 +40,12 @@ function AllBlogger() {
               alt="userProfile"
               width={100}
               height={100}
-              className="rounded-full"
+              className="rounded-full w-[100px] h-[100px]"
             />
           </div>
           <Link
             href={`blog/${user.id}`}
-            className="flex flex-col text-sm space-y-5"
+            className="flex flex-col text-sm space-y-5 text-black focus:outline-none"
           >
             <span> 닉네임 : {user.nickname}</span>
             <span>블로그 제목 : {user.blog_name}</span>

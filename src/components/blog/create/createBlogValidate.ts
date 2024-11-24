@@ -5,8 +5,8 @@ export const blogName = () => ({
     message: '블로그 이름은 최소 2글자 이상 입력해주세요',
   },
   maxLength: {
-    value: 12,
-    message: '블로그 이름은 최대 12자까지 입력가능합니다',
+    value: 30,
+    message: '블로그 이름은 최대 30자까지 입력가능합니다',
   },
 });
 

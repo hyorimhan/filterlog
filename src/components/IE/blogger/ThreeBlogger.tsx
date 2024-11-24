@@ -23,11 +23,11 @@ function ThreeBlogger() {
       <div className="border-dashed border-b-2 pb-1  border-custom-green-400 mx-3 ">
         <span className="mx-auto text-center">다른 블로그 구경하기</span>
       </div>
-      {threeUsers?.map((user) => (
+      {threeUsers?.slice(0, 3).map((user) => (
         <Link
           href={`/blog/${user.id}`}
           key={user.id}
-          className="border-2 my-2 text-black focus:outline-none flex items-center mx-2 border-custom-green-300"
+          className="border-2 my-[6px] text-black focus:outline-none flex items-center mx-2 border-custom-green-300"
         >
           <span className="border-2 m-1 border-custom-green-400 rounded-full">
             <Image
@@ -35,18 +35,18 @@ function ThreeBlogger() {
               alt="profileImg"
               width={50}
               height={50}
-              className="rounded-full"
+              className="w-[50px] h-[50px] rounded-full"
             />
           </span>
-          <span className="flex flex-col text-xs">
-            <span> 닉네임: {user.nickname}</span>
-            <span className="ml-auto mr-2">블로그명: {user.blog_name}</span>
+          <span className="flex flex-col items-start text-xs">
+            {/* <span className=""> {user.nickname}</span> */}
+            <span className="ml-auto mr-2 ">{user.blog_name}</span>
           </span>
         </Link>
       ))}
       <Link
         href="/blogger"
-        className="cursor-pointer text-xs font-semibold focus:outline-none text-custom-green-700"
+        className="cursor-pointer text-xs focus:outline-none text-black flex justify-center "
       >
         more+
       </Link>

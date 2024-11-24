@@ -116,27 +116,30 @@ function Comment({ params }: blogParams) {
                   <input
                     id="content"
                     type="textarea"
-                    className="w-full h-full"
+                    className="w-full h-full text-lg  font-galmuri"
                     autoFocus
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
                   />
-                  <button
-                    type="submit"
-                    className="mt-5 "
-                    disabled={commentRegister}
-                  >
-                    수정
-                  </button>
-                  <button
-                    className="button"
-                    onClick={() => {
-                      setCommentContent('');
-                      setCommentId('');
-                    }}
-                  >
-                    수정 취소
-                  </button>
+                  <div className="space-x-2 py-2">
+                    {' '}
+                    <button
+                      type="submit"
+                      className="mt-5 "
+                      disabled={commentRegister}
+                    >
+                      수정
+                    </button>
+                    <button
+                      className="button"
+                      onClick={() => {
+                        setCommentContent('');
+                        setCommentId('');
+                      }}
+                    >
+                      수정 취소
+                    </button>
+                  </div>
                 </form>
               ) : (
                 <>
@@ -201,7 +204,7 @@ function Comment({ params }: blogParams) {
               <input
                 id="content"
                 type="textarea"
-                className="w-full h-full"
+                className="w-full h-full text-lg  font-galmuri"
                 autoFocus
                 placeholder="댓글을 작성해주세요"
                 {...register('content')}
