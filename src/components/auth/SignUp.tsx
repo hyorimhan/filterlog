@@ -37,6 +37,9 @@ function SignUp() {
     if (errors.passwordConfirm?.message) {
       alert(errors.passwordConfirm?.message);
     }
+    if (errors.nickname?.message) {
+      alert(errors.nickname.message);
+    }
   };
   return (
     <form

@@ -105,3 +105,5 @@ export type officialPostType = Omit<addOfficialPostType, 'id'>;
 export type SelecteOfficialPostType = addOfficialPostType & {
   created_at: string;
 };
+
+export type updateBlog = Omit<createBlogType, 'user_id'>;

@@ -39,6 +39,7 @@ function AuthProvider({ children }: PropsWithChildren) {
       }
       if (userData?.user_metadata.display_name && !profileData) {
         saveNickname(userData.user_metadata.display_name);
+      } else {
       }
     } catch (error) {
       console.log('이메일 정보가 없습니다');
