@@ -47,7 +47,7 @@ function MyInfo() {
           <>
             <div> {nickname}님 행복한 하루 보내세요!</div>
             <div className="my-3 space-x-5 flex items-center">
-              <Link href={'/blog/myPage'}>
+              <Link href={'/myPage'}>
                 <div className=" bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
                   마이페이지
                 </div>

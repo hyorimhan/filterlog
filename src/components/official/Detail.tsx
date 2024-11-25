@@ -8,7 +8,7 @@ import Loading from '../common/Loading';
 
 function Detail({ params }: blogParams) {
   const { data: detailPost, isLoading } = useQuery({
-    queryKey: ['detailPost'],
+    queryKey: ['detailPost', params.id],
     queryFn: () => detailOfficialPost({ post_id: params.id }),
   });
 
