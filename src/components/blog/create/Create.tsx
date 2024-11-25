@@ -1,13 +1,15 @@
 'use client';
-import { createBlog } from '@/service/blog';
+import { createBlog, existingBlog } from '@/service/blog';
 import { createBlogType } from '@/types/userBlog';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 import useUserInfo from '@/zustand/useUserInfo';
 import { blogDescription, blogName } from './createBlogValidate';
 import toast from 'react-hot-toast';
+import { useQuery } from '@tanstack/react-query';
+import Loading from '@/components/common/Loading';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
@@ -15,6 +17,28 @@ function Create() {
   const { user, nickname } = useUserInfo();
   const router = useRouter();
   const user_id = user?.id;
+
+  const { data: existingData, isLoading } = useQuery({
+    queryKey: ['existingData', user?.id],
+    queryFn: () => existingBlog(user_id!),
+    enabled: !!user_id,
+  });
+  console.log(existingData);
+
+  useEffect(() => {
+    if (!user) {
+      router.replace('/IE');
+      return;
+    }
+
+    if (existingData) {
+      router.replace(`/blog/${existingData.id}`);
+    }
+  }, [user, existingData, router]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const create = async (data: createBlogType) => {
     if (!user_id) {
