@@ -5,37 +5,41 @@ import {
   profileImgUpload,
   userProfileImg,
 } from '@/service/auth';
-import { updateBlogInfo } from '@/service/blog';
+import { existingBlog, updateBlogInfo } from '@/service/blog';
 import { blogInfoType, blogInfoUpdateType, updateBlog } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 // import React, { useState } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 import { FaPen } from 'react-icons/fa';
 import Loading from '../common/Loading';
 import toast from 'react-hot-toast';
-import useBlogInfo from '@/zustand/useBlogInfo';
+// import useBlogInfo from '@/zustand/useBlogInfo';
 import { blogDescriptionValidate, blogNameValidate } from './profileValidate';
 
 function Profile() {
   const queryClient = useQueryClient();
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
-  const { blogInfo } = useBlogInfo();
-
+  // const { blogInfo } = useBlogInfo();
+  // console.log(blogInfo);
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (!blogInfo) {
-      toast.error('블로그 먼저 생성해주세요');
-      router.replace('/blog');
-    }
-  }, [blogInfo, router]);
-
+  // useEffect(() => {
+  //   if (!blogInfo) {
+  //     toast.error('블로그 먼저 생성해주세요');
+  //     router.replace('/blog');
+  //   }
+  // }, [blogInfo, router]);
+  const { data: existingData, isLoading: existingLoading } = useQuery({
+    queryKey: ['existingData', user?.id],
+    queryFn: () => existingBlog(user?.id as string),
+    enabled: !!user?.id,
+  });
   const { data: profileImg, isLoading: profileLoading } = useQuery({
     queryKey: ['profileImg', user?.id],
     queryFn: () => {
@@ -57,8 +61,13 @@ function Profile() {
     enabled: !!user?.id,
   });
 
-  if (isLoading || profileLoading) {
+  if (isLoading || profileLoading || existingLoading) {
     return <Loading />;
+  }
+  if (!existingData) {
+    toast.error('블로그 먼저 생성해주세요');
+    router.replace('/blog');
+    return null;
   }
 
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
