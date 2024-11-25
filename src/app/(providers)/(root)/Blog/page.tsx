@@ -1,4 +1,3 @@
-// 'use client';
 import Create from '@/components/blog/create/Create';
 // import { existingBlog } from '../../../../service/blog';
 // import useUserInfo from '@/zustand/useUserInfo';
