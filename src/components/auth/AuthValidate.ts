@@ -27,7 +27,7 @@ export const nicknameValidate = () => ({
     message: '닉네임은 최소 2자 이상입니다',
   },
   maxLength: {
-    value: 10,
-    message: '닉네임은 10자 이상 입력할 수 없습니다',
+    value: 15,
+    message: '닉네임은 15자 이상 입력할 수 없습니다',
   },
 });

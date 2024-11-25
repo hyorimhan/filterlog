@@ -6,14 +6,14 @@ import {
   userProfileImg,
 } from '@/service/auth';
 import { updateBlogInfo } from '@/service/blog';
-import { blogInfoType, blogInfoUpdateType } from '@/types/userBlog';
+import { blogInfoType, blogInfoUpdateType, updateBlog } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 // import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, useForm } from 'react-hook-form';
 import { FaPen } from 'react-icons/fa';
 import Loading from '../common/Loading';
 import toast from 'react-hot-toast';
@@ -114,6 +114,21 @@ function Profile() {
       console.log(error);
     }
   };
+
+  const updateError = (errors: FieldErrors<updateBlog>) => {
+    if (errors.nickname?.message) {
+      toast.error(errors.nickname.message);
+      return;
+    }
+    if (errors.blog_name?.message) {
+      toast.error(errors.blog_name.message);
+      return;
+    }
+    if (errors.description?.message) {
+      toast.error(errors.description.message);
+      return;
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center mt-5  mx-auto">
       <label htmlFor="profile-upload" className="cursor-pointer relative ">
@@ -146,7 +161,7 @@ function Profile() {
       {isUploading && '업로드 중'}
       <form
         className=" flex flex-col mt-5"
-        onSubmit={handleSubmit(updateProfile)}
+        onSubmit={handleSubmit(updateProfile, updateError)}
       >
         <div className="flex flex-col my-3 ">
           <label htmlFor="nickname" id="nickname" className="text-sm">
