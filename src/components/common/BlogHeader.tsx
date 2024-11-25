@@ -17,7 +17,7 @@ function BlogHeader() {
             홈
           </div>
         </Link>
-        <Link href={'/blog/myPage'}>
+        <Link href={'/myPage'}>
           <div className=" bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
             마이페이지
           </div>
