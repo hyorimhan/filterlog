@@ -19,7 +19,7 @@ function NotePad() {
       className="flex flex-col justify-center cursor-pointer items-center my-8"
       onDoubleClick={doubleClick}
     >
-      <Image src={'/main/NotePad.png'} alt="IE" width={40} height={40} />
+      <Image src={'/main/notepad.png'} alt="IE" width={40} height={40} />
       <div className="font-tahoma text-xs  text-custome-white-50 mt-1 ">
         <p className="text-shadow font-gulim">메모장</p>
       </div>
