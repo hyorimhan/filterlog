@@ -50,6 +50,19 @@ export const getBlogProfile = async (user_id: string) => {
   return data;
 };
 
+export const getUserProfile = async (user_id: string) => {
+  const { data, error } = await supabase
+    .from('users')
+    .select('*')
+    .eq('id', user_id)
+    .single();
+  if (error) {
+    console.log(error);
+    return null;
+  }
+  return data;
+};
+
 //로그아웃
 export const logout = async () => {
   const response = await axios.delete('/api/auth/logout');

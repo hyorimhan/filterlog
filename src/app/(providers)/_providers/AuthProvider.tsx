@@ -67,7 +67,7 @@
 // export default AuthProvider;
 'use client';
 
-import { getBlogProfile, userInfo } from '@/service/auth';
+import { getUserProfile, userInfo } from '@/service/auth';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PropsWithChildren, useEffect } from 'react';
@@ -80,10 +80,10 @@ function AuthProvider({ children }: PropsWithChildren) {
     queryFn: userInfo,
     staleTime: 0, // 5분
   });
-
+  console.log(userData);
   const { data: profileData } = useQuery({
     queryKey: ['profileData', userData?.id],
-    queryFn: () => getBlogProfile(userData?.id as string),
+    queryFn: () => getUserProfile(userData?.id as string),
     enabled: Boolean(userData?.id),
     staleTime: 0, // 5분
   });
@@ -92,9 +92,9 @@ function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (userData) {
       saveUser(userData);
-      if (userData.user_metadata.display_name) {
-        saveNickname(userData.user_metadata.display_name);
-      }
+      // if (userData.user_metadata.display_name) {
+      //   saveNickname(userData.user_metadata.display_name);
+      // }
     }
   }, [userData, saveUser, saveNickname]);
 
