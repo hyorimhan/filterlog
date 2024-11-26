@@ -1,5 +1,6 @@
 'use client';
 import { logout } from '@/service/auth';
+import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -7,6 +8,7 @@ import toast from 'react-hot-toast';
 
 function Logout() {
   const { saveUser, user, saveNickname } = useUserInfo();
+  const { saveBlogInfo } = useBlogInfo();
   const router = useRouter();
   const queryClient = useQueryClient();
   const logoutFunc = async () => {
@@ -18,6 +20,7 @@ function Logout() {
       const response = await logout();
       saveUser(null);
       saveNickname(null);
+      saveBlogInfo(null);
 
       if (response.message) {
         await queryClient.resetQueries();

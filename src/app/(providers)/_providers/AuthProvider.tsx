@@ -92,9 +92,6 @@ function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (userData) {
       saveUser(userData);
-      queryClient.invalidateQueries({ queryKey: ['userData'] });
-      queryClient.invalidateQueries({ queryKey: ['profileData'] });
-
       // if (userData.user_metadata.display_name) {
       //   saveNickname(userData.user_metadata.display_name);
       // }
@@ -104,8 +101,6 @@ function AuthProvider({ children }: PropsWithChildren) {
   useEffect(() => {
     if (profileData?.nickname) {
       saveNickname(profileData.nickname);
-      queryClient.invalidateQueries({ queryKey: ['userData'] });
-      queryClient.invalidateQueries({ queryKey: ['profileData'] });
     }
   }, [profileData, saveNickname, queryClient]);
 
