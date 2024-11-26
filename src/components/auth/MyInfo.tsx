@@ -4,7 +4,7 @@ import Logout from './Logout';
 import Link from 'next/link';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
-import { userProfileImg } from '@/service/auth';
+import { getUserProfile, userProfileImg } from '@/service/auth';
 import Loading from '../common/Loading';
 
 function MyInfo() {
@@ -15,6 +15,12 @@ function MyInfo() {
   //   queryKey: ['user', user?.id],
   //   queryFn: userInfo,
   // });
+  const { data: profileData } = useQuery({
+    queryKey: ['profileData', user?.id],
+    queryFn: () => getUserProfile(user?.id as string),
+    enabled: Boolean(user?.id),
+    staleTime: 0, // 5분
+  });
 
   const { data: profileImg, isLoading: profileLoading } = useQuery({
     queryKey: ['profileImg', user?.id],
@@ -43,7 +49,7 @@ function MyInfo() {
       </div>
 
       <div className="justify-center font-galmuri  flex flex-col items-center my-3  py-2 bg-yellow-200">
-        <div> {nickname}님 행복한 하루 보내세요!</div>
+        <div> {profileData?.nickname}님 행복한 하루 보내세요!</div>
         <div className="my-3 space-x-5 flex items-center">
           <Link href={'/myPage'}>
             <div className=" bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
