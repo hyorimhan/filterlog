@@ -23,19 +23,18 @@ function Create() {
     queryFn: () => existingBlog(user_id!),
     enabled: !!user_id,
   });
-  console.log(existingData);
 
   useEffect(() => {
     if (!user) {
       router.replace('/IE');
       return;
     }
-
-    if (existingData) {
-      router.replace(`/blog/${existingData.id}`);
-    }
   }, [user, existingData, router]);
 
+  if (existingData) {
+    router.replace(`/blog/${existingData.id}`);
+    return <Loading />;
+  }
   if (isLoading) {
     return <Loading />;
   }
