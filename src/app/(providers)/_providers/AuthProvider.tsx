@@ -88,38 +88,24 @@ function AuthProvider({ children }: PropsWithChildren) {
     staleTime: 0, // 5분
   });
 
-  // // 데이터가 변경될 때만 상태 업데이트
-  // useEffect(() => {
-  //   if (userData) {
-  //     saveUser(userData);
-  //     if (userData.user_metadata.display_name) {
-  //       saveNickname(userData.user_metadata.display_name);
-  //     }
-  //   }
-  // }, [userData, saveUser, saveNickname]);
-
-  // useEffect(() => {
-  //   if (profileData?.nickname) {
-  //     saveNickname(profileData.nickname);
-  //     queryClient.invalidateQueries({ queryKey: ['userData'] });
-  //     queryClient.invalidateQueries({ queryKey: ['profileData'] });
-  //   }
-  // }, [profileData, saveNickname, queryClient]);
+  // 데이터가 변경될 때만 상태 업데이트
   useEffect(() => {
     if (userData) {
       saveUser(userData);
-      // user_metadata의 display_name이 있으면 우선 저장
       if (userData.user_metadata.display_name) {
         saveNickname(userData.user_metadata.display_name);
       }
-      // profileData의 nickname이 있으면 덮어씀 (더 우선순위)
-      if (profileData?.nickname) {
-        saveNickname(profileData.nickname);
-        queryClient.invalidateQueries({ queryKey: ['userData'] });
-        queryClient.invalidateQueries({ queryKey: ['profileData'] });
-      }
     }
-  }, [userData, profileData, saveUser, saveNickname, queryClient]);
+  }, [userData, saveUser, saveNickname]);
+
+  useEffect(() => {
+    if (profileData?.nickname) {
+      saveNickname(profileData.nickname);
+      queryClient.invalidateQueries({ queryKey: ['userData'] });
+      queryClient.invalidateQueries({ queryKey: ['profileData'] });
+    }
+  }, [profileData, saveNickname, queryClient]);
+
   return <>{children}</>;
 }
 
