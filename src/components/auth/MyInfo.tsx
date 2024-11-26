@@ -9,7 +9,6 @@ import Loading from '../common/Loading';
 
 function MyInfo() {
   const user = useUserInfo((state) => state.user);
-  const nickname = useUserInfo((state) => state.nickname);
 
   // const { data: userProfile, isLoading } = useQuery({
   //   queryKey: ['user', user?.id],
