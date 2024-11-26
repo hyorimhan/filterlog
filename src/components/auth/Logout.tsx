@@ -21,9 +21,9 @@ function Logout() {
       saveUser(null);
       saveNickname(null);
       saveBlogInfo(null);
+      await queryClient.resetQueries();
 
       if (response.message) {
-        await queryClient.resetQueries();
         router.replace('/IE');
         // await queryClient.invalidateQueries({ queryKey: ['user'] });
         // await queryClient.invalidateQueries({ queryKey: ['userData'] });

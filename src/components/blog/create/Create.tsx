@@ -22,6 +22,8 @@ function Create() {
     queryKey: ['existingData', user?.id],
     queryFn: () => existingBlog(user_id!),
     enabled: !!user_id,
+    staleTime: 0,
+    gcTime: 0,
   });
 
   useEffect(() => {
