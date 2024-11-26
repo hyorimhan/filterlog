@@ -6,8 +6,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 
 function Logout() {
-  const saveUser = useUserInfo((state) => state.saveUser);
-  const user = useUserInfo((state) => state.user);
+  const { saveUser, user, saveNickname } = useUserInfo();
   const router = useRouter();
   const queryClient = useQueryClient();
   const logoutFunc = async () => {
@@ -18,11 +17,13 @@ function Logout() {
     try {
       const response = await logout();
       saveUser(null);
+      saveNickname(null);
 
       if (response.message) {
+        await queryClient.resetQueries();
         router.replace('/IE');
-        await queryClient.invalidateQueries({ queryKey: ['user'] });
-        await queryClient.invalidateQueries({ queryKey: ['userData'] });
+        // await queryClient.invalidateQueries({ queryKey: ['user'] });
+        // await queryClient.invalidateQueries({ queryKey: ['userData'] });
 
         toast.success(response.message);
       } else {
