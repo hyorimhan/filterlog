@@ -71,7 +71,12 @@ function BlogHeader() {
         </span>
       </Link>
       <div className="h-12 text-sm border-2 font-medium border-y-custom-green-700 mb-1 flex justify-start pl-2 items-center">
-        <span> {blogInfo?.description}</span>
+        <span>
+          {' '}
+          {postBlogData?.blog?.description
+            ? postBlogData?.blog?.description
+            : blogInfo?.description}
+        </span>
       </div>
     </>
   );

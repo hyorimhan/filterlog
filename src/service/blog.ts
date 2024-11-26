@@ -54,7 +54,12 @@ export const getBlogId = async (blog_id: string) => {
 export const postBlogInfo = async (post_id: string) => {
   const { data, error } = await supabase
     .from('post')
-    .select('*')
+    .select(
+      `
+      *,
+      blog!post_blog_id_fkey(description, blog_name)
+    `
+    )
     .eq('id', post_id)
     .single();
 
