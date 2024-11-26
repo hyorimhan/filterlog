@@ -1,7 +1,6 @@
 'use client';
 import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
-import BlogHeader from '../../common/BlogHeader';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import Confirm from '@/utils/Confirm';
@@ -30,7 +29,6 @@ function Detail({ post_id }: { post_id: string }) {
 
   return (
     <>
-      <BlogHeader />
       <div className="mx-10">
         <div>
           <div className="w-full h-full  min-h-[500px] items-start flex-col justify-center border-2 mt-1 border-custom-green-400">

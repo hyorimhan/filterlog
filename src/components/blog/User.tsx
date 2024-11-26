@@ -1,34 +1,34 @@
 'use client';
-import { userProfileImg } from '@/service/auth';
-// import useBlogInfo from '@/zustand/useBlogInfo';
-import useUserInfo from '@/zustand/useUserInfo';
-import { useQuery } from '@tanstack/react-query';
+// import { userProfileImg } from '@/service/auth';
+import useBlogInfo from '@/zustand/useBlogInfo';
+// import useUserInfo from '@/zustand/useUserInfo';
+// import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import React from 'react';
-import Loading from '../common/Loading';
+// import Loading from '../common/Loading';
 
 function User() {
-  // const { blogInfo } = useBlogInfo();
-  const { nickname, user } = useUserInfo();
-  const { data: profileImg, isLoading: profileLoading } = useQuery({
-    queryKey: ['profileImg', user?.id],
-    queryFn: () => {
-      if (!user?.id) return null;
-      return userProfileImg(user?.id);
-    },
-    enabled: !!user?.id,
-    staleTime: 0,
-  });
+  const { blogInfo } = useBlogInfo();
+  // const { nickname } = useUserInfo();
+  // const { data: profileImg, isLoading: profileLoading } = useQuery({
+  //   queryKey: ['profileImg', user?.id],
+  //   queryFn: () => {
+  //     if (!user?.id) return null;
+  //     return userProfileImg(user?.id);
+  //   },
+  //   enabled: !!user?.id,
+  //   staleTime: 0,
+  // });
 
-  if (profileLoading) {
-    return <Loading />;
-  }
+  // if (profileLoading) {
+  //   return <Loading />;
+  // }
 
   return (
     <div className="h-full flex flex-col justify-center items-center">
-      {profileImg ? (
+      {blogInfo?.profile_img ? (
         <Image
-          src={profileImg}
+          src={blogInfo.profile_img}
           alt="bloggerInfo"
           width={100}
           height={100}
@@ -45,7 +45,7 @@ function User() {
       )}
 
       <div className="bg-yellow-200 p-3 w-full text-center m-2">
-        {nickname}님의 블로그
+        {blogInfo?.nickname}님의 블로그
       </div>
     </div>
   );

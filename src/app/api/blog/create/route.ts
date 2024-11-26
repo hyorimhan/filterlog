@@ -10,6 +10,9 @@ export async function POST(request: NextRequest) {
   if (!blog_name || !description) {
     return NextResponse.json({ error: '제목, 내용을 모두 입력해주세요' });
   }
+  if (!nickname) {
+    return NextResponse.json({ error: '닉네임 빠짐' });
+  }
 
   try {
     const { data: existing } = await supabase

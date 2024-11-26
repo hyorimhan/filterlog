@@ -4,11 +4,28 @@ import useBlogInfo from '@/zustand/useBlogInfo';
 import Logout from '../auth/Logout';
 import Link from 'next/link';
 import useUserInfo from '@/zustand/useUserInfo';
+import { postBlogInfo } from '@/service/blog';
+import { useQuery } from '@tanstack/react-query';
+import Loading from './Loading';
+import { usePathname } from 'next/navigation';
 
 function BlogHeader() {
   const { user } = useUserInfo();
   const blogInfo = useBlogInfo((state) => state.blogInfo);
+  const pathname = usePathname();
+  const postId = pathname.split('/').pop();
 
+  const { data: postBlogData, isLoading } = useQuery({
+    queryKey: ['post', postId],
+    queryFn: () => postBlogInfo(postId as string),
+    enabled: !!postId,
+    staleTime: 0,
+    gcTime: 0,
+  });
+
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <>
       <div className=" h-8 space-x-3 p-1 flex justify-end items-center bg-custom-green-400 ">
@@ -41,11 +58,25 @@ function BlogHeader() {
           )}
         </div>
       </div>
-      <div className="h-[150px] w-[1280px] mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-y-custom-green-700">
-        <span className="text-lg ">{blogInfo?.blog_name}</span>
-      </div>
+      <Link
+        href={`/blog/${
+          postBlogData?.blog_id ? postBlogData.blog_id : blogInfo?.id
+        }`}
+        className="h-[150px] w-[1280px] focus:outline-none text-black mx-auto flex  justify-center items-center border-b-0 border-t-0 bg-custom-green-300 border-2 border-y-custom-green-700"
+      >
+        <span className="text-lg ">
+          {postBlogData?.blog_name
+            ? postBlogData?.blog_name
+            : blogInfo?.blog_name}
+        </span>
+      </Link>
       <div className="h-12 text-sm border-2 font-medium border-y-custom-green-700 mb-1 flex justify-start pl-2 items-center">
-        <span> {blogInfo?.description}</span>
+        <span>
+          {' '}
+          {postBlogData?.blog?.description
+            ? postBlogData?.blog?.description
+            : blogInfo?.description}
+        </span>
       </div>
     </>
   );

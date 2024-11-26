@@ -50,6 +50,27 @@ export const getBlogId = async (blog_id: string) => {
   return data;
 };
 
+// post id로 특정 블로그 정보 가져오기
+export const postBlogInfo = async (post_id: string) => {
+  const { data, error } = await supabase
+    .from('post')
+    .select(
+      `
+      *,
+      blog!post_blog_id_fkey(description, blog_name)
+    `
+    )
+    .eq('id', post_id)
+    .single();
+
+  if (error) {
+    console.log(error);
+    return null;
+  }
+
+  return data;
+};
+
 export const updateBlogInfo = async ({
   nickname,
   blog_name,
