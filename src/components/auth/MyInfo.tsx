@@ -8,11 +8,11 @@ import { userInfo, userProfileImg } from '@/service/auth';
 import Loading from '../common/Loading';
 
 function MyInfo() {
-  // const user = useUserInfo((state) => state.user);
+  const user = useUserInfo((state) => state.user);
   const nickname = useUserInfo((state) => state.nickname);
 
-  const { data: user, isLoading } = useQuery({
-    queryKey: ['user'],
+  const { data: userProfile, isLoading } = useQuery({
+    queryKey: ['user', user?.id],
     queryFn: userInfo,
   });
 
@@ -43,7 +43,7 @@ function MyInfo() {
       </div>
 
       <div className="justify-center font-galmuri  flex flex-col items-center my-3  py-2 bg-yellow-200">
-        {user && (
+        {userProfile && (
           <>
             <div> {nickname}님 행복한 하루 보내세요!</div>
             <div className="my-3 space-x-5 flex items-center">
