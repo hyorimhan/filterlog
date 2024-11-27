@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
 import React, { useMemo } from 'react';
 import ReactPaginate from 'react-paginate';
-import Image from 'next/image';
+// import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import useUserInfo from '@/zustand/useUserInfo';
 import useBlogInfo from '@/zustand/useBlogInfo';
@@ -137,7 +137,7 @@ function PostList() {
                     </span>
                   </div>
                   <div className=" text-sm  flex items-start  justify-evenly mx-5 mt-10 text-black  ">
-                    <span>
+                    {/* <span>
                       {post.img_url && (
                         <span>
                           <Image
@@ -153,18 +153,22 @@ function PostList() {
                           ></Image>
                         </span>
                       )}
-                    </span>
+                    </span> */}
                     <span
                       className=" tracking-widest w-full  line-clamp-5"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
-                          post.content?.replace(/<p>><\/p>/g, '') || ''
-                        )
-                          .replace(
-                            /<img /g,
-                            '<div class="flex items-center"><img class="w-52  h-36 object-cover mr-2"  '
-                          )
-                          .replace(/<\/img>/g, '</img></div>'),
+                          (post.content || '')
+                            .replace(/<p>(&gt;)*>*(&gt;)*>*<\/p>/g, '') // &gt;가 포함된 모든 형태의 >> 패턴 제거
+                            .replace(/<img[^>]*>/g, '') // 이미지 태그 제거
+                            .replace(/<p><\/p>/g, '') // 빈 p 태그 제거
+                            .replace(/&gt;&gt;/g, '')
+                        ),
+                        // .replace(
+                        //   /<img /g,
+                        //   '<div class="flex items-center"><img class="w-52  h-36 object-cover mr-2"  '
+                        // )
+                        // .replace(/<\/img>/g, '</img></div>'),
                       }}
                     ></span>
                   </div>

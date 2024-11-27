@@ -55,27 +55,43 @@ function Detail({ post_id }: { post_id: string }) {
                 <div className="w-[500px] mx-auto   flex justify-center text-lg mt-5 border-b-2 border-b-custom-green-400">
                   {deatilPost.title}
                 </div>
-                <div className="flex justify-center my-10">
-                  <div>
-                    {(Array.isArray(deatilPost.img_url)
-                      ? deatilPost.img_url
-                      : [deatilPost.img_url]
-                    ).map(
+                <div className="flex flex-col items-center justify-center my-10">
+                  <div className="flex flex-col items-center justify-center">
+                    {/* {JSON.parse(deatilPost.img_url).map(
                       (img: string, index: number) =>
                         img && (
                           <Image
                             key={index}
-                            src={img.replace(/[\[\]"]/g, '')}
-                            alt={`Post image ${index + 1}`}
+                            src={img}
+                            alt={`Post img ${index + 1}`}
                             width={300}
                             height={300}
                           />
                         )
-                    )}
+                    )} */}
+                    {deatilPost.img_url &&
+                      (typeof deatilPost.img_url === 'string'
+                        ? JSON.parse(deatilPost.img_url)
+                        : deatilPost.img_url
+                      )?.map(
+                        (img: string, index: number) =>
+                          img && (
+                            <Image
+                              key={index}
+                              src={img}
+                              alt={`Post img ${index + 1}`}
+                              width={400}
+                              height={400}
+                            />
+                          )
+                      )}
                   </div>
                   <div
                     dangerouslySetInnerHTML={{
-                      __html: deatilPost.content.replace(/<p>><\/p>/g, ''),
+                      __html: deatilPost.content
+
+                        .replace(/<p>>&gt;<\/p>/g, '')
+                        .replace(/&gt;/g, ''),
                     }}
                   />
                 </div>

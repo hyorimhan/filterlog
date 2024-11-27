@@ -26,14 +26,19 @@ export default async function handleSubmit(
   blog: BlogData,
 
   setDisabled: React.Dispatch<React.SetStateAction<boolean>>,
-  category: string
+  category: string,
+  existingImages?: string[]
 ) {
   e.preventDefault();
-
   setDisabled(true);
 
   const cleanContent = content ? DOMPurify.sanitize(content) : '';
-  const { processedContent, imageUrls } = await handleImageUpload(cleanContent);
+  const existingUrls =
+    isUpdate && Array.isArray(existingImages) ? existingImages : [];
+  const { processedContent, imageUrls } = await handleImageUpload(
+    cleanContent,
+    existingUrls
+  );
 
   try {
     if (isUpdate && post_id) {
@@ -42,13 +47,17 @@ export default async function handleSubmit(
           post_id,
           title,
           content: processedContent,
-          img_url: imageUrls?.length ? imageUrls : null,
+          img_url: imageUrls?.length
+            ? imageUrls.map((url) => url.replace(/[\[\]"]/g, ''))
+            : null,
         });
       }
       // else if (targetTable === 'official') {
       // }
 
       toast.success('글이 수정되었습니다');
+      queryClient.invalidateQueries({ queryKey: ['postDetail', post_id] });
+
       router.replace(`/blog/${blog.id}`);
     } else {
       if (targetTable === 'blogPosts') {
@@ -62,6 +71,7 @@ export default async function handleSubmit(
           user_id,
         });
         toast.success('글이 등록되었습니다');
+
         router.replace(`/blog/${blog.id}`);
       } else if (targetTable === 'official') {
         await addOfficialPost({
