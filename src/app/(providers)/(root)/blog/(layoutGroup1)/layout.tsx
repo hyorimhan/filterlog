@@ -5,11 +5,11 @@ function layout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <BaseLayout
-        withHeader={false}
+        withBlogHeader={true}
         withFooter={true}
-        withBlogHeader={false}
-        mainClassName={`${layoutStyle.main} border-x-2 h-screen  bg-custom-green-300`}
-        divClassName=""
+        withHeader={true}
+        mainClassName={`${layoutStyle.main}${layoutStyle.main_bg}`}
+        divClassName={layoutStyle.div_container}
       >
         {children}
       </BaseLayout>

@@ -1,12 +1,25 @@
-import Header from '@/components/common/Header';
-import Image from 'next/image';
-import Footer from '@/components/common/footer/Footer';
-import IEFooter from '@/components/common/footer/IEFooter';
-import Link from 'next/link';
+// import Header from '@/components/common/Header';
+// import Image from 'next/image';
+// import Footer from '@/components/common/footer/Footer';
+// import IEFooter from '@/components/common/footer/IEFooter';
+// import Link from 'next/link';
+import BaseLayout from '@/components/common/BaseLayout';
+import { layoutStyle } from '@/styles/layout';
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="w-full h-screen  ">
+    <>
+      <BaseLayout
+        withBlogHeader={false}
+        withFooter={true}
+        withHeader={true}
+        mainClassName={`${layoutStyle.main} border-2 border-y-custom-green-700 `}
+        divClassName={layoutStyle.div_container}
+      >
+        {children}
+      </BaseLayout>
+
+      {/* <div className="w-full h-screen  ">
       <Header />
       <Link
         href={'/IE'}
@@ -42,12 +55,13 @@ function layout({ children }: { children: React.ReactNode }) {
         </Link>
       </div>
 
-      <main className="border-2 min-h-screen w-[1280px] mx-auto border-y-custom-green-700 border-x-custom-green-700">
+      <main className="border-2 border-y-custom-green-700 ">
         {children}
         <IEFooter />
       </main>
       <Footer />
-    </div>
+    </div> */}
+    </>
   );
 }
 

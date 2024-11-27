@@ -80,7 +80,7 @@ function PostList() {
     if (owner && hasNoPosts && !defaultResults) {
       return (
         <Link
-          href={`/write?ownerId=${ownerId}`}
+          href={`blog/write?ownerId=${ownerId}`}
           className="flex flex-col text-sm mt-10 focus:outline-none items-center justify-center h-full"
         >
           글이 아직 없어요! 첫 글을 써보세요
@@ -121,7 +121,7 @@ function PostList() {
                 key={post.id}
                 className="border-2 h-[290px]  border-custom-green-400 rounded-lg shadow"
               >
-                <Link href={`/post/${post.id}`}>
+                <Link href={`blog/post/${post.id}`}>
                   <div className="text-right mt-2 mr-3 text-black">
                     <span className="text-sm  border-b-2 text-custom-green-700 border-b-custom-green-300">
                       Date:

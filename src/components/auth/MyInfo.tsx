@@ -50,7 +50,7 @@ function MyInfo() {
       <div className="justify-center font-galmuri  flex flex-col items-center my-3  py-2 bg-yellow-200">
         <div> {profileData?.nickname}님 행복한 하루 보내세요!</div>
         <div className="my-3 space-x-5 flex items-center">
-          <Link href={'/myPage'}>
+          <Link href={'blog/myPage'}>
             <div className=" bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
               마이페이지
             </div>

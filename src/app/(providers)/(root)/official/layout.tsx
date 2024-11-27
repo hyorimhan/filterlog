@@ -1,12 +1,24 @@
-import Footer from '@/components/common/footer/Footer';
-import Header from '@/components/common/Header';
-import Image from 'next/image';
-import Link from 'next/link';
+import BaseLayout from '@/components/common/BaseLayout';
+// import Footer from '@/components/common/footer/Footer';
+// import Header from '@/components/common/Header';
+import { layoutStyle } from '@/styles/layout';
+// import Image from 'next/image';
+// import Link from 'next/link';
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="w-full h-screen   font-galmuri">
+      <BaseLayout
+        withBlogHeader={false}
+        withFooter={true}
+        withHeader={true}
+        mainClassName={`${layoutStyle.main}${layoutStyle.main_bg}`}
+        divClassName={layoutStyle.div_container}
+      >
+        {children}
+      </BaseLayout>
+
+      {/* <div className="w-full h-screen   font-galmuri">
         <Header />
         <Link
           href={'/IE'}
@@ -25,7 +37,7 @@ function layout({ children }: { children: React.ReactNode }) {
           {children}
         </main>
       </div>
-      <Footer />
+      <Footer /> */}
     </>
   );
 }

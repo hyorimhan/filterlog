@@ -12,7 +12,10 @@ function LeftSide() {
   return (
     <div className=" h-[300px] space-y-2 mx-1">
       {isOwner ? (
-        <Link href={`/write?ownerId=${ownerId}`} className="text-black text-sm">
+        <Link
+          href={`blog/write?ownerId=${ownerId}`}
+          className="text-black text-sm"
+        >
           <div className="w-full text-center p-2 rounded-lg  bg-custom-green-600 shadow-sm  hover:brightness-105">
             글쓰기
           </div>
