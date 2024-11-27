@@ -38,20 +38,42 @@ function Editor({
 
   const owner = user?.id === ownerId;
   const passOwnerCheck = targetTable === 'blogPosts';
+  // useEffect(() => {
+  //   let initialContent = defaultContent || '';
+
+  //   if (defaultImg) {
+  //     const imgHtml = defaultImg
+  //       .map((img) => {
+  //         const cleanUrl = img.replace(/[\[\]"]/g, '');
+  //         return `<img src="${cleanUrl}" alt="blog_img" width={300} height={300}/>`;
+  //       })
+  //       .join('');
+
+  //     initialContent += imgHtml;
+  //   }
+
+  //   setContent(initialContent);
+  // }, [defaultContent, defaultImg]);
   useEffect(() => {
     let initialContent = defaultContent || '';
 
-    const imgHtml = defaultImg
-      .map((img) => {
-        const cleanUrl = img.replace(/[\[\]"]/g, '');
-        return `<Image src="${cleanUrl}" alt="blog_img" width={300} height={300}/>`;
-      })
-      .join('');
+    if (defaultImg && defaultImg.length > 0 && defaultImg[0]) {
+      try {
+        const urls = JSON.parse(defaultImg[0]); // JSON 문자열을 파싱
+        const imgHtml = urls
+          .map((img: string) => {
+            return `<img src="${img}" alt="blog_img" width="300" height="300" />`;
+          })
+          .join('');
 
-    initialContent += imgHtml;
+        initialContent += imgHtml;
+      } catch (error) {
+        console.error('이미지 파싱 오류:', error);
+      }
+    }
+
     setContent(initialContent);
   }, [defaultContent, defaultImg]);
-
   const { data: blog } = useQuery({
     queryKey: ['blog'],
     queryFn: () => existingBlog(user?.id as string),
@@ -114,7 +136,8 @@ function Editor({
               id: blog?.id as string,
             },
             setDisabled,
-            category
+            category,
+            defaultImg
           );
         }}
         id="editorForm"
@@ -158,7 +181,13 @@ function Editor({
           disabled={disabled}
           className="py-3 px-4 rounded"
         >
-          {isUpdate ? '수정' : '작성'}
+          {disabled
+            ? isUpdate
+              ? '수정 중...'
+              : '등록 중...'
+            : isUpdate
+            ? '수정'
+            : '작성'}
         </button>
         {isUpdate && cancelBtn && <button onClick={cancelBtn}>취소</button>}
       </div>

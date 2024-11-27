@@ -10,6 +10,7 @@ import { blogDescription, blogName } from './createBlogValidate';
 import toast from 'react-hot-toast';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '@/components/common/Loading';
+import { getUserProfile } from '@/service/auth';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
@@ -17,6 +18,16 @@ function Create() {
   const { user, nickname } = useUserInfo();
   const router = useRouter();
   const user_id = user?.id;
+
+  const { data: profileData } = useQuery({
+    queryKey: ['profileData', user?.id],
+    queryFn: () => getUserProfile(user?.id as string),
+    enabled: Boolean(user?.id),
+    staleTime: 0, // 5분
+  });
+  console.log('profileData', profileData);
+  console.log('nickname', nickname);
+  console.log('user', user);
 
   const { data: existingData, isLoading } = useQuery({
     queryKey: ['existingData', user?.id],
@@ -46,7 +57,11 @@ function Create() {
       toast.error('오류가 발생했습니다');
       return;
     }
-    const blogData = { ...data, user_id, nickname };
+    const blogData = {
+      ...data,
+      user_id,
+      nickname: profileData?.nickname ?? nickname,
+    };
 
     const response = await createBlog(blogData);
 

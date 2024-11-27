@@ -17,9 +17,12 @@ const base64ToBlob = (base64Data: string) => {
 };
 
 // base64 이미지 찾아 처리
-export default async function handleImageUpload(rawContent: string) {
+export default async function handleImageUpload(
+  rawContent: string,
+  existingUrl: string[] = []
+) {
   let processedContent = rawContent;
-  const imageUrls = [];
+  const imageUrls = [...existingUrl];
 
   const dataURITags = rawContent.match(/data:(?!image\/)[^;]+;base64,[^"]+/g);
   if (dataURITags) {
