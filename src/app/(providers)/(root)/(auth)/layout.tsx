@@ -1,4 +1,4 @@
-import BaseLayout from '@/components/common/BaseLayout';
+import BaseLayout from '@/components/common/layout/BaseLayout';
 import { layoutStyle } from '@/styles/layout';
 
 function layout({ children }: { children: React.ReactNode }) {

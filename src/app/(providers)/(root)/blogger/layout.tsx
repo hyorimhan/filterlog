@@ -1,4 +1,5 @@
-import BaseLayout from '@/components/common/BaseLayout';
+import BaseLayout from '@/components/common/layout/BaseLayout';
+import IELogo from '@/components/common/layout/IELogo';
 import { layoutStyle } from '@/styles/layout';
 // import Image from 'next/image';
 // import Link from 'next/link';
@@ -13,6 +14,7 @@ function layout({ children }: { children: React.ReactNode }) {
         mainClassName={`${layoutStyle.main}${layoutStyle.main_bg} border-t-0`}
         divClassName={layoutStyle.div_container}
       >
+        <IELogo />
         {children}
       </BaseLayout>
 

@@ -1,5 +1,5 @@
+import Footer from '../footer/Footer';
 import BlogHeader from './BlogHeader';
-import Footer from './footer/Footer';
 import Header from './Header';
 
 type baseLayoutType = {

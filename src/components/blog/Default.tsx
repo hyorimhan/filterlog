@@ -10,7 +10,7 @@ import { getBlogId } from '@/service/blog';
 import { useEffect } from 'react';
 import Loading from '../common/Loading';
 import { blogParams } from '@/types/userBlog';
-import BlogHeader from '../common/BlogHeader';
+// import BlogHeader from '../common/layout/BlogHeader';
 
 function Default({ params }: blogParams) {
   const blog_id = params.id;
@@ -37,7 +37,7 @@ function Default({ params }: blogParams) {
   }
   return (
     <>
-      <BlogHeader />
+      {/* <BlogHeader /> */}
       <div className="grid grid-cols-[1fr_5fr]">
         <div className="h-[300px] border-2 border-y-custom-green-700 border-r-custom-green-700">
           <User />

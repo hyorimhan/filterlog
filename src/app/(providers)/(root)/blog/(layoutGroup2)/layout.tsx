@@ -1,4 +1,4 @@
-import BaseLayout from '@/components/common/BaseLayout';
+import BaseLayout from '@/components/common/layout/BaseLayout';
 import { layoutStyle } from '@/styles/layout';
 
 function layout({ children }: { children: React.ReactNode }) {
@@ -7,7 +7,7 @@ function layout({ children }: { children: React.ReactNode }) {
       withBlogHeader={false}
       withFooter={true}
       withHeader={true}
-      mainClassName={`${layoutStyle.main}${layoutStyle.main_bg}`}
+      mainClassName={`${layoutStyle.main} ${layoutStyle.main_bg}`}
       divClassName={layoutStyle.div_container}
     >
       {children}
