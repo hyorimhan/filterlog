@@ -31,7 +31,7 @@ function ThreeBlogger() {
         >
           <span className="border-2 m-1 border-custom-green-400 rounded-full">
             <Image
-              src={user.profile_img || '/profile/profile.svg'}
+              src={user.profile_img ?? '/profile/profile.svg'}
               alt="profileImg"
               width={50}
               height={50}

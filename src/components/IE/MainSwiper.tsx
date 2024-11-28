@@ -23,7 +23,7 @@ function MainSwiper() {
       modules={[Autoplay, Pagination]}
     >
       <SwiperSlide>
-        <Link href={'http://t2m.kr/ohhmE'}>
+        <Link href={'https://t2m.kr/ohhmE'}>
           <Image
             src={'/swiper/swiper2.svg'}
             alt="swiper"
@@ -34,7 +34,7 @@ function MainSwiper() {
         </Link>
       </SwiperSlide>
       <SwiperSlide>
-        <Link href={'http://t2m.kr/fpLNn'}>
+        <Link href={'https://t2m.kr/fpLNn'}>
           <Image
             src={'/swiper/swiper1.svg'}
             alt="swiper"

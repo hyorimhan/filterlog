@@ -97,5 +97,5 @@ export const allUsers = async (page: number) => {
   if (error) {
     throw new Error();
   }
-  return { data, count: count || 0 };
+  return { data, count: count ?? 0 };
 };

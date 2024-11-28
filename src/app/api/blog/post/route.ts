@@ -6,8 +6,8 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
   const blog_id = searchParams.get('blog_id');
-  const page = parseInt(searchParams.get('page') || '1');
-  const limit = parseInt(searchParams.get('limit') || '10');
+  const page = parseInt(searchParams.get('page') ?? '1');
+  const limit = parseInt(searchParams.get('limit') ?? '10');
   const year = searchParams.get('year');
   const month = searchParams.get('month');
 

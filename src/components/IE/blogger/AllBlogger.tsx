@@ -36,7 +36,7 @@ function AllBlogger() {
         >
           <div className="rounded-full border-2 mr-5  border-custom-green-700">
             <Image
-              src={user.profile_img || '/profile/profile.svg'}
+              src={user.profile_img ?? '/profile/profile.svg'}
               alt="userProfile"
               width={100}
               height={100}

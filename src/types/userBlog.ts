@@ -8,7 +8,7 @@ export type createBlogType = {
 };
 
 export type blogType = Database['public']['Tables']['blog']['Row'];
-
+export type UserTableType = Database['public']['Tables']['users']['Row'];
 export type blogParams = {
   params: {
     id: string;

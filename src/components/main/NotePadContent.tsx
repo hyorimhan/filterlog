@@ -1,53 +1,16 @@
-// import useWindowStore from '@/zustand/useWindowStore';
-// import dynamic from 'next/dynamic';
-// import React, { useRef } from 'react';
-// import Draggable from 'react-draggable';
-// import 'xp.css/dist/XP.css';
-
-// function MyComContent({ initialPath, position, title, id, width, height }) {
-//   const DynamicContent = dynamic(
-//     () => import(`../../app/(providers)/(root)/${initialPath}/page`)
-//   );
-//   const nodeRef = useRef(null);
-//   const focusWindow = useWindowStore((state) => state.focusWindow);
-//   const isFocused = useWindowStore((state) => state.windows[id]?.isFocused);
-//   return (
-//     <Draggable
-//       defaultPosition={position}
-//       bounds="body"
-//       nodeRef={nodeRef}
-//       cancel=".title-bar-controls, .window-body"
-//       onStart={() => focusWindow(id)}
-//     >
-//       <div
-//         ref={nodeRef}
-//         className={`window ${isFocused ? 'focused' : ''}`}
-//         style={{ width, height, zIndex: isFocused ? 10 : 1 }}
-//       >
-//         <div className="title-bar" onMouseDown={() => focusWindow(id)}>
-//           <div className="title-bar-text"> {title}</div>
-//           <div className="title-bar-controls">
-//             <button aria-label="Minimize" />
-//             <button aria-label="Maximize" />
-//             <button aria-label="Close" />
-//           </div>
-//         </div>
-//         <div>
-//           <DynamicContent id={id} />
-//         </div>
-//       </div>
-//     </Draggable>
-//   );
-// }
-
-// export default MyComContent;
 import useWindowStore, { windowType } from '@/zustand/useWindowStore';
 // import dynamic from 'next/dynamic';
 import React, { useRef } from 'react';
 import Draggable from 'react-draggable';
 import 'xp.css/dist/XP.css';
 
-function NotePadContent({ position, title, id, width, height }: windowType) {
+function NotePadContent({
+  position,
+  title,
+  id,
+  width,
+  height,
+}: Readonly<windowType>) {
   const nodeRef = useRef(null);
 
   // Zustand 상태에서 addWindow와 focusWindow 가져오기

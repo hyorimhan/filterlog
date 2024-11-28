@@ -3,9 +3,8 @@ import {
   getBlogProfile,
   profileImgUpdate,
   profileImgUpload,
-  userProfileImg,
 } from '@/service/auth';
-import { existingBlog, updateBlogInfo } from '@/service/blog';
+import { updateBlogInfo } from '@/service/blog';
 import { blogInfoType, blogInfoUpdateType, updateBlog } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
@@ -19,6 +18,7 @@ import Loading from '../common/Loading';
 import toast from 'react-hot-toast';
 // import useBlogInfo from '@/zustand/useBlogInfo';
 import { blogDescriptionValidate, blogNameValidate } from './profileValidate';
+import { UseBlogQuery, UseProfileQuery } from '@/hooks/user/UseProfileQuery';
 
 function Profile() {
   const queryClient = useQueryClient();
@@ -29,26 +29,32 @@ function Profile() {
   const [imgPreview, setImgPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState<boolean>(false);
 
+  const { existingData, isLoading: existingLoading } = UseBlogQuery({
+    user_id: user?.id ?? '',
+  });
+  const { profileImg, isLoading: profileLoading } = UseProfileQuery({
+    user_id: user?.id ?? '',
+  });
   // useEffect(() => {
   //   if (!blogInfo) {
   //     toast.error('블로그 먼저 생성해주세요');
   //     router.replace('/blog');
   //   }
   // }, [blogInfo, router]);
-  const { data: existingData, isLoading: existingLoading } = useQuery({
-    queryKey: ['existingData', user?.id],
-    queryFn: () => existingBlog(user?.id as string),
-    enabled: !!user?.id,
-  });
-  const { data: profileImg, isLoading: profileLoading } = useQuery({
-    queryKey: ['profileImg', user?.id],
-    queryFn: () => {
-      if (!user?.id) return null;
-      return userProfileImg(user?.id);
-    },
-    enabled: !!user?.id,
-    staleTime: 5000,
-  });
+  // const { data: existingData, isLoading: existingLoading } = useQuery({
+  //   queryKey: ['existingData', user?.id],
+  //   queryFn: () => existingBlog(user?.id as string),
+  //   enabled: !!user?.id,
+  // });
+  // const { data: profileImg, isLoading: profileLoading } = useQuery({
+  //   queryKey: ['profileImg', user?.id],
+  //   queryFn: () => {
+  //     if (!user?.id) return null;
+  //     return userProfileImg(user?.id);
+  //   },
+  //   enabled: !!user?.id,
+  //   staleTime: 5000,
+  // });
 
   const { register, handleSubmit } = useForm<blogInfoUpdateType>();
 
@@ -127,15 +133,12 @@ function Profile() {
   const updateError = (errors: FieldErrors<updateBlog>) => {
     if (errors.nickname?.message) {
       toast.error(errors.nickname.message);
-      return;
     }
     if (errors.blog_name?.message) {
       toast.error(errors.blog_name.message);
-      return;
     }
     if (errors.description?.message) {
       toast.error(errors.description.message);
-      return;
     }
   };
   return (

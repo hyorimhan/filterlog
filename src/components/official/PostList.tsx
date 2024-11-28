@@ -33,7 +33,7 @@ function PostList() {
   if (isLoading) {
     return <Loading />;
   }
-  const pageCount = Math.ceil((allPosts?.page || 0) / 10);
+  const pageCount = Math.ceil((allPosts?.page ?? 0) / 10);
   const handleTabClick = (tabId: string, category: string) => {
     setSelectedTab(tabId);
     setCategory(category);

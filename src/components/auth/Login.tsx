@@ -8,7 +8,7 @@ import useUserInfo from '@/zustand/useUserInfo';
 import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
 
-function Login({ showSignUp = true }: { showSignUp: boolean }) {
+function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
   const { register, handleSubmit, reset } = useForm<loginType>();
   const { saveUser } = useUserInfo();
   const queryClient = useQueryClient(); // 추가
@@ -39,11 +39,9 @@ function Login({ showSignUp = true }: { showSignUp: boolean }) {
   const loginError = (errors: FieldErrors<loginType>) => {
     if (errors.email?.message) {
       toast.error(errors.email.message);
-      return;
     }
     if (errors.password?.message) {
       toast.error(errors.password.message);
-      return;
     }
   };
   return (
@@ -53,21 +51,23 @@ function Login({ showSignUp = true }: { showSignUp: boolean }) {
         <div className="flex">
           <div className="mr-3">
             <div className="mb-[6px]">
-              <label htmlFor="email"></label>
+              {/* <label htmlFor="email"></label> */}
               <input
                 id="email"
                 type="email"
                 placeholder="아이디"
+                aria-label="email"
                 autoFocus
                 className="w-[150px] h-6"
                 {...register('email', emailValidate())}
               />
             </div>
             <div>
-              <label htmlFor="password"></label>
+              {/* <label htmlFor="password"></label> */}
               <input
                 type="password"
                 placeholder="비밀번호"
+                aria-label="password"
                 className="w-[150px] h-6"
                 {...register('password', passwordValidate())}
               />

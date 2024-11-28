@@ -25,7 +25,7 @@ interface CommentFormData {
   user_id: string;
 }
 
-function Comment({ params }: blogParams) {
+function Comment({ params }: Readonly<blogParams>) {
   const { register, handleSubmit, reset } = useForm<CommentFormData>();
   const { user, nickname } = useUserInfo();
 
@@ -57,7 +57,7 @@ function Comment({ params }: blogParams) {
     setCurrentPage(selectedPage.selected);
   };
 
-  const pageCount = Math.ceil((comments?.count || 0) / limit);
+  const pageCount = Math.ceil((comments?.count ?? 0) / limit);
 
   const registerComment = async (data: CommentFormData) => {
     if (user?.id && nickname) {
@@ -157,7 +157,7 @@ function Comment({ params }: blogParams) {
                       <button
                         onClick={() => {
                           setCommentId(comment.id);
-                          setCommentContent(comment.content!);
+                          setCommentContent(comment.content);
                         }}
                       >
                         수정

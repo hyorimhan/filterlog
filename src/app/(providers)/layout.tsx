@@ -1,8 +1,9 @@
+import { PropsWithChildren } from 'react';
 import AuthProvider from './_providers/AuthProvider';
 import QueryProvider from './_providers/QueryProvider';
 import 'xp.css/dist/XP.css';
 
-function ProvidersLayout({ children }: { children: React.ReactNode }) {
+function ProvidersLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <QueryProvider>
       <AuthProvider>

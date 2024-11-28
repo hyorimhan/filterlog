@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function GET(request: NextRequest) {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
-  const page = parseInt(searchParams.get('page') || '1');
+  const page = parseInt(searchParams.get('page') ?? '1');
   const category = searchParams.get('category');
 
   const pagePost = 10;
@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
   }
 
   return NextResponse.json({
-    data: data || [],
-    page: count || 0,
+    data: data ?? [],
+    page: count ?? 0,
   });
 }

@@ -1,16 +1,17 @@
 'use client';
-import { detailOfficialPost } from '@/service/post';
 import { blogParams } from '@/types/userBlog';
-import { useQuery } from '@tanstack/react-query';
+
 import Image from 'next/image';
 import React from 'react';
 import Loading from '../common/Loading';
+import { UsePostQuery } from '@/hooks/user/UseProfileQuery';
 
-function Detail({ params }: blogParams) {
-  const { data: detailPost, isLoading } = useQuery({
-    queryKey: ['detailPost', params.id],
-    queryFn: () => detailOfficialPost({ post_id: params.id }),
-  });
+function Detail({ params }: Readonly<blogParams>) {
+  // const { data: detailPost, isLoading } = useQuery({
+  //   queryKey: ['detailPost', params.id],
+  //   queryFn: () => detailOfficialPost({ post_id: params.id }),
+  // });
+  const { detailPost, isLoading } = UsePostQuery({ post_id: params.id });
 
   if (isLoading) {
     return <Loading />;

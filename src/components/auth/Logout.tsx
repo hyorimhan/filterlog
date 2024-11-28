@@ -30,7 +30,7 @@ function Logout() {
 
         toast.success(response.message);
       } else {
-        ('로그아웃에 실패했습니다');
+        toast.error('로그아웃에 실패했습니다');
       }
     } catch (error) {
       toast.error('오류가 발생했습니다');
@@ -39,6 +39,7 @@ function Logout() {
 
   return (
     <div
+      role="button"
       onClick={logoutFunc}
       className=" p-1 shadow-md rounded-md hover:brightness-105 cursor-pointer bg-custom-green-300"
     >

@@ -73,6 +73,7 @@ function PostList() {
   const pageCount = Math.ceil((postList?.total || 0) / pagePost); // 페이지 수 계산
   const owner = ownerId === user?.id;
 
+  //분리
   const NoPostMessage = () => {
     const hasNoPosts = postList?.data?.length === 0;
     const defaultResults = searchWord !== '';
@@ -158,7 +159,7 @@ function PostList() {
                       className=" tracking-widest w-full  line-clamp-5"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
-                          (post.content || '')
+                          (post.content ?? '')
                             .replace(/<p>(&gt;)*>*(&gt;)*>*<\/p>/g, '') // &gt;가 포함된 모든 형태의 >> 패턴 제거
                             .replace(/<img[^>]*>/g, '') // 이미지 태그 제거
                             .replace(/<p><\/p>/g, '') // 빈 p 태그 제거

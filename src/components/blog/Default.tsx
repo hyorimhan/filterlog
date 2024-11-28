@@ -12,7 +12,7 @@ import Loading from '../common/Loading';
 import { blogParams } from '@/types/userBlog';
 // import BlogHeader from '../common/layout/BlogHeader';
 
-function Default({ params }: blogParams) {
+function Default({ params }: Readonly<blogParams>) {
   const blog_id = params.id;
   const { saveOwnerId, saveBlogInfo } = useBlogInfo();
 

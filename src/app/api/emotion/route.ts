@@ -7,7 +7,7 @@ export async function GET(request: NextRequest) {
   const ownerId = searchParams.get('ownerId');
   const blog_id = searchParams.get('blog_id');
   const date =
-    searchParams.get('date') || new Date().toISOString().split('T')[0];
+    searchParams.get('date') ?? new Date().toISOString().split('T')[0];
   const action = searchParams.get('action');
   if (action === 'getTotalEmotions') {
     const { data, error: totalError } = await supabase

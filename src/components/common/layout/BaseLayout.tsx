@@ -18,7 +18,7 @@ function BaseLayout({
   withBlogHeader,
   divClassName,
   mainClassName,
-}: baseLayoutType) {
+}: Readonly<baseLayoutType>) {
   return (
     <>
       <div className={divClassName}>
