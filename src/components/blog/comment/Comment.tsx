@@ -116,7 +116,7 @@ function Comment({ params }: Readonly<blogParams>) {
                   <input
                     id="content"
                     type="textarea"
-                    className="w-full h-full text-lg  font-galmuri"
+                    className="w-full h-full text-lg "
                     autoFocus
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
@@ -204,7 +204,7 @@ function Comment({ params }: Readonly<blogParams>) {
               <input
                 id="content"
                 type="textarea"
-                className="w-full h-full text-lg  font-galmuri"
+                className="w-full h-full text-lg  "
                 autoFocus
                 placeholder="댓글을 작성해주세요"
                 {...register('content')}

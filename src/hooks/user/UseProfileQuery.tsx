@@ -1,6 +1,6 @@
 import { getUserProfile, userProfileImg } from '@/service/auth';
 import { existingBlog } from '@/service/blog';
-import { detailOfficialPost } from '@/service/post';
+import { detailOfficialPosts, myPostDetail } from '@/service/post';
 import { useQuery } from '@tanstack/react-query';
 // import { blogType, UserTableType } from '../../types/userBlog';
 
@@ -35,13 +35,20 @@ export const UseProfileQuery = ({ user_id }: { user_id: string }) => {
 };
 
 export const UsePostQuery = ({ post_id }: { post_id: string }) => {
-  const { data: detailPost, isLoading } = useQuery({
-    queryKey: ['detailPost', post_id],
-    queryFn: () => detailOfficialPost({ post_id }),
+  const { data: detailOfficialPost, isLoading } = useQuery({
+    queryKey: ['detailOfficialPost', post_id],
+    queryFn: () => detailOfficialPosts({ post_id }),
+  });
+
+  const { data: detailMyPost, isLoading: myPostLoading } = useQuery({
+    queryKey: ['postDetail', post_id],
+    queryFn: () => myPostDetail(post_id),
   });
   return {
-    detailPost,
+    detailOfficialPost,
     isLoading,
+    myPostLoading,
+    detailMyPost,
   };
 };
 

@@ -8,7 +8,6 @@ import { FieldErrors, useForm } from 'react-hook-form';
 import useUserInfo from '@/zustand/useUserInfo';
 import { blogDescription, blogName } from './createBlogValidate';
 import toast from 'react-hot-toast';
-// import { useQuery } from '@tanstack/react-query';
 import Loading from '@/components/common/Loading';
 import { UseBlogQuery, UseProfileQuery } from '@/hooks/user/UseProfileQuery';
 
@@ -21,13 +20,6 @@ function Create() {
 
   const { profileData } = UseProfileQuery({ user_id: user_id ?? '' });
   const { existingData, isLoading } = UseBlogQuery({ user_id: user_id ?? '' });
-
-  // const { data: existingData, isLoading } = useQuery({
-  //   queryKey: ['existingData', user?.id],
-  //   queryFn: () => existingBlog(user_id!),
-  //   enabled: !!user_id,
-  //   gcTime: 0,
-  // });
 
   useEffect(() => {
     if (!user) {

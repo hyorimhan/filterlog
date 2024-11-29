@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { deletePost } from '@/service/post';
 import Loading from '@/components/common/Loading';
 import toast from 'react-hot-toast';
+
 import { UsePostQuery } from '@/hooks/user/UseProfileQuery';
 
 function Detail({ post_id }: Readonly<{ post_id: string }>) {
@@ -16,13 +17,9 @@ function Detail({ post_id }: Readonly<{ post_id: string }>) {
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
   const [update, setUpdate] = useState<boolean>(false);
-  // const { data: deatilPost, isLoading } = useQuery({
-  //   queryKey: ['postDetail', post_id],
-  //   queryFn: () => myPostDetail(post_id),
-  // });
-  const { detailPost, isLoading } = UsePostQuery({ post_id });
+  const { detailMyPost, myPostLoading } = UsePostQuery({ post_id });
 
-  if (isLoading) {
+  if (myPostLoading) {
     return <Loading />;
   }
 
@@ -34,18 +31,18 @@ function Detail({ post_id }: Readonly<{ post_id: string }>) {
         <div className="w-full h-full  min-h-[500px] items-start flex-col justify-center border-2 mt-1 border-custom-green-400">
           <div className="flex justify-end mr-5 mt-3">
             <span className="mr-2">Date: </span>
-            {detailPost.created_at.slice(0, 10)}
+            {detailMyPost?.created_at?.slice(0, 10)}
           </div>
           {update ? (
             <Editor
               isUpdate={true}
-              defaultTitle={detailPost.title}
-              defaultContent={detailPost.content}
+              defaultTitle={detailMyPost.title}
+              defaultContent={detailMyPost.content}
               targetTable="blogPosts"
               defaultImg={
-                Array.isArray(detailPost.img_url)
-                  ? detailPost.img_url
-                  : [detailPost.img_url]
+                Array.isArray(detailMyPost.img_url)
+                  ? detailMyPost.img_url
+                  : [detailMyPost.img_url]
               }
               post_id={post_id}
               cancelBtn={() => setUpdate(false)}
@@ -53,26 +50,14 @@ function Detail({ post_id }: Readonly<{ post_id: string }>) {
           ) : (
             <>
               <div className="w-[500px] mx-auto   flex justify-center text-lg mt-5 border-b-2 border-b-custom-green-400">
-                {detailPost.title}
+                {detailMyPost.title}
               </div>
               <div className="flex flex-col items-center justify-center my-10">
                 <div className="flex flex-col items-center justify-center">
-                  {/* {JSON.parse(deatilPost.img_url).map(
-                      (img: string, index: number) =>
-                        img && (
-                          <Image
-                            key={index}
-                            src={img}
-                            alt={`Post img ${index + 1}`}
-                            width={300}
-                            height={300}
-                          />
-                        )
-                    )} */}
-                  {detailPost.img_url &&
-                    (typeof detailPost.img_url === 'string'
-                      ? JSON.parse(detailPost.img_url)
-                      : detailPost.img_url
+                  {detailMyPost.img_url &&
+                    (typeof detailMyPost.img_url === 'string'
+                      ? JSON.parse(detailMyPost.img_url)
+                      : detailMyPost.img_url
                     )?.map(
                       (img: string, index: number) =>
                         img && (
@@ -88,8 +73,7 @@ function Detail({ post_id }: Readonly<{ post_id: string }>) {
                 </div>
                 <div
                   dangerouslySetInnerHTML={{
-                    __html: detailPost.content
-
+                    __html: detailMyPost.content
                       .replace(/<p>>&gt;<\/p>/g, '')
                       .replace(/&gt;/g, ''),
                   }}
@@ -116,7 +100,7 @@ function Detail({ post_id }: Readonly<{ post_id: string }>) {
                     try {
                       await deletePost(post_id);
                       toast.success('글이 삭제되었습니다.');
-                      router.replace(`/blog/${detailPost.blog_id}`);
+                      router.replace(`/blog/${detailMyPost.blog_id}`);
                     } catch (error) {
                       toast.error('글을 삭제하는 중 오류가 발생했습니다.');
                     }

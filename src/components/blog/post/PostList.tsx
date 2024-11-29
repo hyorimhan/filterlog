@@ -122,7 +122,7 @@ function PostList() {
                 key={post.id}
                 className="border-2 h-[290px]  border-custom-green-400 rounded-lg shadow"
               >
-                <Link href={`blog/post/${post.id}`}>
+                <Link href={`/blog/post/${post.id}`}>
                   <div className="text-right mt-2 mr-3 text-black">
                     <span className="text-sm  border-b-2 text-custom-green-700 border-b-custom-green-300">
                       Date:
