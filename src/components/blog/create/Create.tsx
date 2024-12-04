@@ -1,16 +1,16 @@
 'use client';
-import { createBlog, existingBlog } from '@/service/blog';
+import Loading from '@/components/common/Loading';
+import { useBlogQuery } from '@/hooks/blog/useBlogQuery';
+import { useProfileQuery } from '@/hooks/user/useProfileQuery';
+import { createBlog } from '@/service/blog';
 import { createBlogType } from '@/types/userBlog';
+import useUserInfo from '@/zustand/useUserInfo';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
-import useUserInfo from '@/zustand/useUserInfo';
-import { blogDescription, blogName } from './createBlogValidate';
 import toast from 'react-hot-toast';
-import { useQuery } from '@tanstack/react-query';
-import Loading from '@/components/common/Loading';
-import { getUserProfile } from '@/service/auth';
+import { blogDescription, blogName } from './createBlogValidate';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
@@ -19,28 +19,12 @@ function Create() {
   const router = useRouter();
   const user_id = user?.id;
 
-  const { data: profileData } = useQuery({
-    queryKey: ['profileData', user?.id],
-    queryFn: () => getUserProfile(user?.id as string),
-    enabled: Boolean(user?.id),
-    staleTime: 0, // 5분
-  });
-  console.log('profileData', profileData);
-  console.log('nickname', nickname);
-  console.log('user', user);
-
-  const { data: existingData, isLoading } = useQuery({
-    queryKey: ['existingData', user?.id],
-    queryFn: () => existingBlog(user_id!),
-    enabled: !!user_id,
-    staleTime: 0,
-    gcTime: 0,
-  });
+  const { profileData } = useProfileQuery({ user_id: user_id ?? '' });
+  const { existingData, isLoading } = useBlogQuery({ user_id: user_id ?? '' });
 
   useEffect(() => {
     if (!user) {
       router.replace('/IE');
-      return;
     }
   }, [user, existingData, router]);
 

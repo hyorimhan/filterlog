@@ -4,19 +4,18 @@ import Ad from '@/components/common/Ad';
 import MainSwiper from '@/components/IE/MainSwiper';
 import useUserInfo from '@/zustand/useUserInfo';
 
-import Magazine from '@/components/IE/Magazine';
-import YoutubePlayList from '@/components/IE/video/YoutubePlayList';
-import ThreeBlogger from '@/components/IE/blogger/ThreeBlogger';
-import RecentPosts from '@/components/IE/RecentPosts';
-import Notice from '@/components/IE/Notice';
 import MyInfo from '@/components/auth/MyInfo';
-import { useQuery } from '@tanstack/react-query';
-import { userInfo } from '@/service/auth';
-import { useEffect } from 'react';
 import Loading from '@/components/common/Loading';
+import ThreeBlogger from '@/components/IE/blogger/ThreeBlogger';
+import Magazine from '@/components/IE/Magazine';
+import Notice from '@/components/IE/Notice';
+import RecentPosts from '@/components/IE/RecentPosts';
+import YoutubePlayList from '@/components/IE/video/YoutubePlayList';
+import { userInfo } from '@/service/auth';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect } from 'react';
 
 const HomePage = () => {
-  // const user = useUserInfo((state) => state.user);
   const { data: initialUser, isLoading } = useQuery({
     queryKey: ['user'],
     queryFn: userInfo,
@@ -55,7 +54,7 @@ const HomePage = () => {
             <Magazine />
           </div>
         </section>
-        <section className="font-galmuri text-sm text-center h-[280px] w-[280px]   border-2 border-y-custom-green-700 border-l-custom-green-700 border-y-0 border-r-0 ">
+        <section className=" text-sm text-center h-[280px] w-[280px]   border-2 border-y-custom-green-700 border-l-custom-green-700 border-y-0 border-r-0 ">
           <div className=" mt-5 text-sm border-dashed border-b-2 pb-1 border-custom-green-400 mx-3">
             최신 글
           </div>
@@ -63,11 +62,11 @@ const HomePage = () => {
         </section>
       </div>
       <div className=" grid-cols-[2fr_6fr_2fr]  grid  overflow-hidden">
-        <section className="font-galmuri text-center h-[280px] w-[280px]  border-r-custom-green-700 border-2 border-b-custom-green-700 border-t-0 border-l-0 border-r-0">
+        <section className=" text-center h-[280px] w-[280px]  border-r-custom-green-700 border-2 border-b-custom-green-700 border-t-0 border-l-0 border-r-0">
           <YoutubePlayList />
         </section>
         <section className="w-[720px] h-[280px]"></section>
-        <section className="font-galmuri text-center h-[280px] w-[280px]   border-custom-green-700 border-2 border-y-custom-green-700  border-r-0">
+        <section className="text-center h-[280px] w-[280px]   border-custom-green-700 border-2 border-y-custom-green-700  border-r-0">
           <Notice />
         </section>
       </div>

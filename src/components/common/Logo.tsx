@@ -5,11 +5,11 @@ function Logo({
   w,
   h,
   style,
-}: {
+}: Readonly<{
   w: number;
   h: number;
   style: string | undefined;
-}) {
+}>) {
   return (
     <Image
       src={'/logo/filterlog.svg'}

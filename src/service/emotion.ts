@@ -17,16 +17,16 @@ export const myEmotion = async ({
 
 // 등록된 감정
 export const existingMyEmotion = async ({
-  ownerId,
+  owner_id,
   blog_id,
   date,
 }: {
-  ownerId: string;
+  owner_id: string;
   blog_id: string;
   date: string;
 }) => {
   const response = await axios.get('/api/emotion', {
-    params: { ownerId, blog_id, date },
+    params: { owner_id, blog_id, date },
   });
   return response.data;
 };

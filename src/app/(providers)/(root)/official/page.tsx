@@ -8,7 +8,6 @@ const OfficialPage = () => {
     <Suspense
       fallback={
         <div>
-          {' '}
           <Loading />
         </div>
       }

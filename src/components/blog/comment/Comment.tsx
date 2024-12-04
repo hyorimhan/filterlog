@@ -1,21 +1,21 @@
 'use client';
-import React, { useState } from 'react';
-import { Accordion, AccordionItem } from '@szhsin/react-accordion';
-import { useForm } from 'react-hook-form';
-import useUserInfo from '@/zustand/useUserInfo';
 import { blogParams } from '@/types/userBlog';
+import useUserInfo from '@/zustand/useUserInfo';
+import { Accordion, AccordionItem } from '@szhsin/react-accordion';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import Confirm from '@/utils/Confirm';
-import ReactPaginate from 'react-paginate';
+import Loading from '@/components/common/Loading';
 import {
   addComment,
   commentList,
   deleteComments,
   updateComments,
 } from '@/service/comment';
-import Loading from '@/components/common/Loading';
+import Confirm from '@/utils/Confirm';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
+import ReactPaginate from 'react-paginate';
 
 interface CommentFormData {
   content: string;
@@ -25,14 +25,13 @@ interface CommentFormData {
   user_id: string;
 }
 
-function Comment({ params }: blogParams) {
+function Comment({ params }: Readonly<blogParams>) {
   const { register, handleSubmit, reset } = useForm<CommentFormData>();
   const { user, nickname } = useUserInfo();
 
   const post_id = params.id;
   const limit = 10;
   const [currentPage, setCurrentPage] = useState<number>(0);
-
   const [commentRegister, setCommentRegister] = useState<boolean>(false);
   const [commentId, setCommentId] = useState<string>('');
   const [commentContent, setCommentContent] = useState<string>('');
@@ -57,7 +56,7 @@ function Comment({ params }: blogParams) {
     setCurrentPage(selectedPage.selected);
   };
 
-  const pageCount = Math.ceil((comments?.count || 0) / limit);
+  const pageCount = Math.ceil((comments?.count ?? 0) / limit);
 
   const registerComment = async (data: CommentFormData) => {
     if (user?.id && nickname) {
@@ -116,7 +115,7 @@ function Comment({ params }: blogParams) {
                   <input
                     id="content"
                     type="textarea"
-                    className="w-full h-full text-lg  font-galmuri"
+                    className="w-full h-full text-lg "
                     autoFocus
                     value={commentContent}
                     onChange={(e) => setCommentContent(e.target.value)}
@@ -157,7 +156,7 @@ function Comment({ params }: blogParams) {
                       <button
                         onClick={() => {
                           setCommentId(comment.id);
-                          setCommentContent(comment.content!);
+                          setCommentContent(comment.content);
                         }}
                       >
                         수정
@@ -165,7 +164,6 @@ function Comment({ params }: blogParams) {
                       <button
                         onClick={() => {
                           Confirm({
-                            title: '댓글 삭제',
                             message: '정말 댓글을 삭제하시겠습니까?',
                             onClick: async () => {
                               try {
@@ -204,7 +202,7 @@ function Comment({ params }: blogParams) {
               <input
                 id="content"
                 type="textarea"
-                className="w-full h-full text-lg  font-galmuri"
+                className="w-full h-full text-lg  "
                 autoFocus
                 placeholder="댓글을 작성해주세요"
                 {...register('content')}

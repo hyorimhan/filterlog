@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import React from 'react';
 import Logo from '../Logo';
 
 function Footer() {
@@ -23,7 +22,7 @@ function Footer() {
 
           <div className="absolute bottom-0 top-0 left-1/3 transform -translate-x-1/2 flex items-center space-x-2 ml-2">
             <Logo w={17} h={17} style="" />
-            <span className="font-gulim font-bold text-shadow text-custome-white-50 text-nowrap">
+            <span className="font-gulim font-bold text-shadow text-custom-white-50 text-nowrap">
               시작
             </span>
           </div>

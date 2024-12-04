@@ -15,7 +15,11 @@ function RecentPosts() {
   return (
     <div>
       {recentPost?.slice(0, 7).map((post) => (
-        <Link href={`/post/${post.id}`} key={post.id} className="text-black">
+        <Link
+          href={`/blog/post/${post.id}`}
+          key={post.id}
+          className="text-black"
+        >
           <div className="border-2 my-2 border-custom-green-300 mx-2">
             <span className="truncate text-xs"> {post.title}</span>
           </div>

@@ -1,9 +1,10 @@
 import Loading from '@/components/common/Loading';
-import { existingMyEmotion, myEmotion } from '@/service/emotion';
+import { useEmotionQuery } from '@/hooks/blog/useEmotionQuery';
+import { myEmotion } from '@/service/emotion';
 import Confirm from '@/utils/Confirm';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -20,12 +21,10 @@ function Emotion() {
   const isOwner = user?.id === ownerId;
   const blog_id = blogInfo?.id ?? '';
 
-  // 블로그 계정주 감정 데이터 조회
-  const { data: emotionData, isLoading } = useQuery({
-    queryKey: ['emotionData', ownerId, blog_id, today],
-    queryFn: () =>
-      existingMyEmotion({ ownerId: ownerId!, blog_id, date: today }),
-    enabled: !!ownerId && !!blog_id,
+  const { emotionData, isLoading } = useEmotionQuery({
+    owner_id: ownerId ?? '',
+    blog_id,
+    date: today,
   });
 
   const mutation = useMutation({
@@ -51,7 +50,6 @@ function Emotion() {
       return toast.error('감정을 선택해주세요');
     }
     Confirm({
-      title: '내 오늘 기분은?',
       message: '정말 선택하시겠습니까? 선택시 수정 불가능합니다',
       onClick: () => mutation.mutate(selected),
     });

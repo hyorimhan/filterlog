@@ -8,15 +8,13 @@ function SearchBar() {
     setSearchWord(e.target.value);
   };
   return (
-    <>
-      <input
-        type="text"
-        value={searchWord}
-        onChange={handleSearch}
-        className="w-full "
-        placeholder="검색어를 입력해주세요"
-      ></input>
-    </>
+    <input
+      type="text"
+      value={searchWord}
+      onChange={handleSearch}
+      className="w-full "
+      placeholder="검색어를 입력해주세요"
+    ></input>
   );
 }
 

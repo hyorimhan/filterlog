@@ -1,4 +1,5 @@
 import { createClient } from '@/supabase/server';
+import { getPaginationParams } from '@/utils/pagination';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
@@ -6,13 +7,11 @@ export async function GET(request: NextRequest) {
   const { searchParams } = new URL(request.url);
 
   const blog_id = searchParams.get('blog_id');
-  const page = parseInt(searchParams.get('page') || '1');
-  const limit = parseInt(searchParams.get('limit') || '10');
+
   const year = searchParams.get('year');
   const month = searchParams.get('month');
 
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
+  const { page, limit, from, to } = getPaginationParams(searchParams);
 
   try {
     let query = supabase.from('post').select('*', { count: 'exact' });
@@ -40,7 +39,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       data,
-      total: count,
+      count,
       page,
       limit,
     });

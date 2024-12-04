@@ -20,7 +20,6 @@ const MainPage = () => {
   return (
     <div className="ml-10 mt-10 w-20">
       <IE />
-
       <NotePad />
       <Paint />
       {IEwindow && <IEContent key={IEwindow.id} {...IEwindow} />}

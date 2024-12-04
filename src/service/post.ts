@@ -110,12 +110,14 @@ export const addOfficialPost = async ({
 export const allOfficialPost = async ({
   category,
   page,
+  limit,
 }: {
   category: string;
   page: number;
+  limit: number;
 }) => {
   const response = await axios.get('/api/blog/officialPost/', {
-    params: { category, page },
+    params: { category, page, limit },
   });
 
   return response.data;
@@ -134,7 +136,7 @@ export const showOfficialPostInfo = async (category: string) => {
   return data;
 };
 
-export const detailOfficialPost = async ({ post_id }: { post_id: string }) => {
+export const detailOfficialPosts = async ({ post_id }: { post_id: string }) => {
   const response = await axios.get(`/api/blog/officialPost/${post_id}`, {
     params: { post_id },
   });

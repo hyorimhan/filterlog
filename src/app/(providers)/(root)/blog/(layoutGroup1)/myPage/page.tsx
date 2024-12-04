@@ -2,11 +2,7 @@
 import Default from '@/components/myPage/Default';
 
 const MyPage = () => {
-  return (
-    <div>
-      <Default />
-    </div>
-  );
+  return <Default />;
 };
 
 export default MyPage;

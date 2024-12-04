@@ -1,17 +1,17 @@
 'use client';
 
 import useUserInfo from '@/zustand/useUserInfo';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 
-import dynamic from 'next/dynamic';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useBlogQuery } from '@/hooks/blog/useBlogQuery';
 import { editorProps } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
-import handleSubmit from './SubmitForm';
-import { existingBlog } from '@/service/blog';
+import dynamic from 'next/dynamic';
+import { ChangeEvent, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
+import handleSubmit from './SubmitForm';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
@@ -38,22 +38,7 @@ function Editor({
 
   const owner = user?.id === ownerId;
   const passOwnerCheck = targetTable === 'blogPosts';
-  // useEffect(() => {
-  //   let initialContent = defaultContent || '';
 
-  //   if (defaultImg) {
-  //     const imgHtml = defaultImg
-  //       .map((img) => {
-  //         const cleanUrl = img.replace(/[\[\]"]/g, '');
-  //         return `<img src="${cleanUrl}" alt="blog_img" width={300} height={300}/>`;
-  //       })
-  //       .join('');
-
-  //     initialContent += imgHtml;
-  //   }
-
-  //   setContent(initialContent);
-  // }, [defaultContent, defaultImg]);
   useEffect(() => {
     let initialContent = defaultContent || '';
 
@@ -74,11 +59,8 @@ function Editor({
 
     setContent(initialContent);
   }, [defaultContent, defaultImg]);
-  const { data: blog } = useQuery({
-    queryKey: ['blog'],
-    queryFn: () => existingBlog(user?.id as string),
-    enabled: passOwnerCheck,
-  });
+
+  const { existingData } = useBlogQuery({ user_id: user?.id ?? '' });
 
   if (!owner && passOwnerCheck) {
     router.replace('/IE');
@@ -107,7 +89,7 @@ function Editor({
     setCategory(e.target.value);
   };
 
-  if (passOwnerCheck && !blog?.blog_name && blog?.id) {
+  if (passOwnerCheck && !existingData?.blog_name && existingData?.id) {
     return <div>블로그 정보를 불러오는 중...</div>;
   }
 
@@ -132,8 +114,8 @@ function Editor({
             router,
             queryClient,
             {
-              blog_name: blog?.blog_name as string,
-              id: blog?.id as string,
+              blog_name: existingData?.blog_name as string,
+              id: existingData?.id as string,
             },
             setDisabled,
             category,

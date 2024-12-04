@@ -12,7 +12,7 @@ function IEContent({
   id,
   width,
   height,
-}: windowType) {
+}: Readonly<windowType>) {
   const nodeRef = useRef(null);
 
   // Zustand 상태에서 addWindow와 focusWindow 가져오기

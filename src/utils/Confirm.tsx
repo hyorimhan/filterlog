@@ -1,11 +1,9 @@
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
 export function Confirm({
-  title,
   message,
   onClick,
 }: {
-  title: string;
   message: string;
   onClick: () => void;
 }) {
@@ -13,8 +11,7 @@ export function Confirm({
     customUI: ({ onClose }) => {
       return (
         <div className="custom-ui">
-          <div className="font-galmuri font-lg">{title}</div>
-          <p className="text-center fomt-sm">{message}</p>
+          <p className="text-center font-lg">{message}</p>
           <div className="flex justify-center gap-4 mt-4">
             <button
               className="px-4 py-2 mr-2 text-black"

@@ -1,14 +1,14 @@
 'use client';
-import { logout } from '@/service/auth';
+import {logout} from '@/service/auth';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
-import { useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import {useQueryClient} from '@tanstack/react-query';
+import {useRouter} from 'next/navigation';
 import toast from 'react-hot-toast';
 
 function Logout() {
-  const { saveUser, user, saveNickname } = useUserInfo();
-  const { saveBlogInfo } = useBlogInfo();
+  const {saveUser, user, saveNickname} = useUserInfo();
+  const {saveBlogInfo} = useBlogInfo();
   const router = useRouter();
   const queryClient = useQueryClient();
   const logoutFunc = async () => {
@@ -25,12 +25,10 @@ function Logout() {
 
       if (response.message) {
         router.replace('/IE');
-        // await queryClient.invalidateQueries({ queryKey: ['user'] });
-        // await queryClient.invalidateQueries({ queryKey: ['userData'] });
 
         toast.success(response.message);
       } else {
-        ('로그아웃에 실패했습니다');
+        toast.error('로그아웃에 실패했습니다');
       }
     } catch (error) {
       toast.error('오류가 발생했습니다');
@@ -39,9 +37,9 @@ function Logout() {
 
   return (
     <div
+      role="button"
       onClick={logoutFunc}
-      className=" p-1 shadow-md rounded-md hover:brightness-105 cursor-pointer bg-custom-green-300"
-    >
+      className=" p-1 shadow-md rounded-md hover:brightness-105 cursor-pointer bg-custom-green-300">
       로그아웃
     </div>
   );

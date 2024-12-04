@@ -1,16 +1,15 @@
-import { postListType } from '@/types/userBlog';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import React, { useMemo } from 'react';
-import ReactPaginate from 'react-paginate';
-// import Image from 'next/image';
-import DOMPurify from 'dompurify';
-import useUserInfo from '@/zustand/useUserInfo';
-import useBlogInfo from '@/zustand/useBlogInfo';
-import Fuse from 'fuse.js';
-import useSearch from '@/zustand/useSearch';
-import { myPostList } from '@/service/post';
 import Loading from '@/components/common/Loading';
+import { myPostList } from '@/service/post';
+import { postListType } from '@/types/userBlog';
+import useBlogInfo from '@/zustand/useBlogInfo';
+import useSearch from '@/zustand/useSearch';
+import useUserInfo from '@/zustand/useUserInfo';
+import { useQuery } from '@tanstack/react-query';
+import DOMPurify from 'dompurify';
+import Fuse from 'fuse.js';
+import Link from 'next/link';
+import { useMemo } from 'react';
+import ReactPaginate from 'react-paginate';
 
 function PostList() {
   const {
@@ -22,7 +21,7 @@ function PostList() {
   } = useSearch();
 
   const user = useUserInfo((state) => state.user);
-  const pagePost = 10;
+  const limit = 10;
   const { ownerId, blogInfo } = useBlogInfo();
   const blog_id = blogInfo?.id ?? '';
 
@@ -37,7 +36,7 @@ function PostList() {
       myPostList({
         blog_id,
         page: currentPage + 1,
-        limit: pagePost,
+        limit,
         year: selectedYear,
         month: selectedMonth,
       }),
@@ -70,9 +69,10 @@ function PostList() {
   };
 
   const displayPosts = searchResults;
-  const pageCount = Math.ceil((postList?.total || 0) / pagePost); // 페이지 수 계산
+  const pageCount = Math.ceil((postList?.total ?? 0) / limit);
   const owner = ownerId === user?.id;
 
+  //분리
   const NoPostMessage = () => {
     const hasNoPosts = postList?.data?.length === 0;
     const defaultResults = searchWord !== '';
@@ -80,7 +80,7 @@ function PostList() {
     if (owner && hasNoPosts && !defaultResults) {
       return (
         <Link
-          href={`/write?ownerId=${ownerId}`}
+          href={`blog/write?ownerId=${ownerId}`}
           className="flex flex-col text-sm mt-10 focus:outline-none items-center justify-center h-full"
         >
           글이 아직 없어요! 첫 글을 써보세요
@@ -115,13 +115,13 @@ function PostList() {
           <NoPostMessage />
         ) : (
           displayPosts
-            ?.slice(currentPage * pagePost, (currentPage + 1) * pagePost)
+            ?.slice(currentPage * limit, (currentPage + 1) * limit)
             .map((post) => (
               <div
                 key={post.id}
                 className="border-2 h-[290px]  border-custom-green-400 rounded-lg shadow"
               >
-                <Link href={`/post/${post.id}`}>
+                <Link href={`/blog/post/${post.id}`}>
                   <div className="text-right mt-2 mr-3 text-black">
                     <span className="text-sm  border-b-2 text-custom-green-700 border-b-custom-green-300">
                       Date:
@@ -158,7 +158,7 @@ function PostList() {
                       className=" tracking-widest w-full  line-clamp-5"
                       dangerouslySetInnerHTML={{
                         __html: DOMPurify.sanitize(
-                          (post.content || '')
+                          (post.content ?? '')
                             .replace(/<p>(&gt;)*>*(&gt;)*>*<\/p>/g, '') // &gt;가 포함된 모든 형태의 >> 패턴 제거
                             .replace(/<img[^>]*>/g, '') // 이미지 태그 제거
                             .replace(/<p><\/p>/g, '') // 빈 p 태그 제거

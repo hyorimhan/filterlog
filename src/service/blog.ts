@@ -61,7 +61,7 @@ export const postBlogInfo = async (post_id: string) => {
     `
     )
     .eq('id', post_id)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.log(error);
@@ -97,5 +97,5 @@ export const allUsers = async (page: number) => {
   if (error) {
     throw new Error();
   }
-  return { data, count: count || 0 };
+  return { data, count: count ?? 0 };
 };

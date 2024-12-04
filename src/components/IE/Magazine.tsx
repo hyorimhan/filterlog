@@ -1,23 +1,19 @@
-import { showOfficialPostInfo } from '@/service/post';
-import { useQuery } from '@tanstack/react-query';
+import { useCategoryPost } from '@/hooks/blog/usePostQuery';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import Loading from '../common/Loading';
 
 function Magazine() {
   const category = 'magazine';
-  const { data: showOfficialPost, isLoading } = useQuery({
-    queryKey: ['showOfficialPost', category],
-    queryFn: () => showOfficialPostInfo(category),
-  });
 
-  if (isLoading) {
+  const { showOfficialPost, categoryLoading } = useCategoryPost(category);
+
+  if (categoryLoading) {
     return <Loading />;
   }
   return (
     <div className="grid grid-cols-2  ">
-      <div className=" space-y-3 w-full font-galmuri mb-1 ">
+      <div className=" space-y-3 w-full mb-1 ">
         <p className="mt-5 text-center text-[16px] font-bold">
           Filter Magazine
         </p>
