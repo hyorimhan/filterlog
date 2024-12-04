@@ -1,25 +1,22 @@
 'use client';
 import Loading from '@/components/common/Loading';
-import { allUsers } from '@/service/blog';
+import { useBloggerQuery } from '@/hooks/blog/useBlogQuery';
 import useSearch from '@/zustand/useSearch';
-import { useQuery } from '@tanstack/react-query';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 function ThreeBlogger() {
   const { currentPage } = useSearch();
-  const { data: allUserData, isLoading } = useQuery({
-    queryKey: ['allUserData'],
-    queryFn: () => allUsers(currentPage),
-  });
+  const { allUserData, isLoading } = useBloggerQuery(currentPage);
+
   const threeUsers = allUserData?.data.slice(0, 3);
 
   if (isLoading) {
     return <Loading />;
   }
   return (
-    <div className="font-galmuri text-sm text-center pt-2 ">
+    <div className=" text-sm text-center pt-2 ">
       <div className="border-dashed border-b-2 pb-1  border-custom-green-400 mx-3 ">
         <span className="mx-auto text-center">다른 블로그 구경하기</span>
       </div>

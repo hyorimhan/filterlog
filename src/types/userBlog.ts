@@ -26,7 +26,6 @@ export type blogPostType = {
 };
 
 export type userProfileType = Omit<createBlogType, 'user_id'>;
-// export type postFormType = Omit<blogPostType, 'post' | 'nickname' | 'blog_id'>;
 
 export type postListType = {
   title: string | null;
@@ -102,7 +101,7 @@ export type addOfficialPostType = {
 };
 export type officialPostType = Omit<addOfficialPostType, 'id'>;
 
-export type SelecteOfficialPostType = addOfficialPostType & {
+export type SelectOfficialPostType = addOfficialPostType & {
   created_at: string;
 };
 

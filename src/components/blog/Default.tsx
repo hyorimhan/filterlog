@@ -1,26 +1,20 @@
 'use client';
-import PostList from './post/PostList';
+import LeftSide from '@/components/common/LeftSide';
+import useBlogInfo from '@/zustand/useBlogInfo';
 import Emotion from './emotion/Emotion';
 import TotalEmotion from './emotion/TotalEmotion';
-import LeftSide from '@/components/common/LeftSide';
+import PostList from './post/PostList';
 import User from './User';
-import useBlogInfo from '@/zustand/useBlogInfo';
-import { useQuery } from '@tanstack/react-query';
-import { getBlogId } from '@/service/blog';
+
+import { useBlogInfoQuery } from '@/hooks/blog/useBlogQuery';
+import { blogParams } from '@/types/userBlog';
 import { useEffect } from 'react';
 import Loading from '../common/Loading';
-import { blogParams } from '@/types/userBlog';
-// import BlogHeader from '../common/layout/BlogHeader';
 
 function Default({ params }: Readonly<blogParams>) {
   const blog_id = params.id;
   const { saveOwnerId, saveBlogInfo } = useBlogInfo();
-
-  const { data: blogData, isLoading } = useQuery({
-    queryKey: ['blog', blog_id],
-    queryFn: () => getBlogId(blog_id),
-    enabled: !!blog_id,
-  });
+  const { blogData, isLoading } = useBlogInfoQuery(blog_id);
 
   useEffect(() => {
     if (blogData) {

@@ -61,7 +61,7 @@ export const postBlogInfo = async (post_id: string) => {
     `
     )
     .eq('id', post_id)
-    .single();
+    .maybeSingle();
 
   if (error) {
     console.log(error);

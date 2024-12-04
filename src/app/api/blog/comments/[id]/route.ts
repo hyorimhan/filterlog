@@ -1,16 +1,13 @@
 import { createClient } from '@/supabase/server';
 import { blogParams } from '@/types/userBlog';
+import { getPaginationParams } from '@/utils/pagination';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest) {
   const supabase = createClient();
   const { searchParams } = new URL(request.url);
   const post_id = searchParams.get('post_id');
-  const page = parseInt(searchParams.get('page') ?? '1');
-  const limit = parseInt(searchParams.get('limit') ?? '10');
-
-  const from = (page - 1) * limit;
-  const to = from + limit - 1;
+  const { page, limit, from, to } = getPaginationParams(searchParams);
 
   const {
     data: commentData,

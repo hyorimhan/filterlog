@@ -2,7 +2,6 @@ import Logo from '@/components/common/Logo';
 import Question from '@/components/startScreen/Question';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 
 const StartScreen = () => {
   return (
@@ -19,14 +18,14 @@ const StartScreen = () => {
             <Logo w={50} h={50} style="mr-10" />
             <div className="mr-8">
               <div className="flex justify-end">
-                <div className="text-5xl text-custome-white-50 text-left">
+                <div className="text-5xl text-custom-white-50 text-left">
                   Filter
                 </div>
-                <div className="mb-7 ml-2 text-3xl text-custome-orange-1">
+                <div className="mb-7 ml-2 text-3xl text-custom-orange-1">
                   log
                 </div>
               </div>
-              <div className="text-xl font-gulim text-custome-white-50">
+              <div className="text-xl font-gulim text-custom-white-50">
                 시작하려면 사용자 이름을 클릭하십시오.
               </div>
             </div>
@@ -47,9 +46,7 @@ const StartScreen = () => {
               height={70}
               className="w-[70px] h-[70px] object-cover border-2 border-blue-200 rounded-md"
             />
-            <span className="font-gulim text-custome-white-50 ml-5">
-              사용자
-            </span>
+            <span className="font-gulim text-custom-white-50 ml-5">사용자</span>
             <span className="flex gap-1 ml-5 ">
               <Link href={'/main'}>
                 <Image
@@ -66,7 +63,7 @@ const StartScreen = () => {
       </div>
 
       <div className="relative bg-custom-blue-1000 w-full h-[110px] flex-shrink-0">
-        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-custome-orange-2 to-transparent"></div>
+        <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-custom-orange-2 to-transparent"></div>
       </div>
     </div>
   );

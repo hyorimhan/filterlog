@@ -1,20 +1,21 @@
 'use client';
-<link rel="stylesheet" href="https://unpkg.com/xp.css"></link>;
+
 import { allOfficialPost } from '@/service/post';
-import { SelecteOfficialPostType } from '@/types/userBlog';
+import { SelectOfficialPostType } from '@/types/userBlog';
 import useSearch from '@/zustand/useSearch';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import Loading from '../common/Loading';
 
 function PostList() {
   const { user } = useUserInfo();
   const searchParams = useSearchParams();
+  const limit = 10;
   const { setCurrentPage, currentPage } = useSearch();
   const [selectedTab, setSelectedTab] = useState<string>(
     searchParams.get('tab') ?? 'tab-A'
@@ -23,17 +24,19 @@ function PostList() {
     searchParams.get('category') ?? 'magazine'
   );
   const { data: allPosts, isLoading } = useQuery<{
-    data: SelecteOfficialPostType[];
+    data: SelectOfficialPostType[];
     page: number;
+    limit: number;
   }>({
     queryKey: ['allPosts', category, currentPage],
-    queryFn: () => allOfficialPost({ category, page: currentPage + 1 }),
+    queryFn: () => allOfficialPost({ category, page: currentPage + 1, limit }),
   });
 
   if (isLoading) {
     return <Loading />;
   }
-  const pageCount = Math.ceil((allPosts?.page ?? 0) / 10);
+  const pageCount = Math.ceil((allPosts?.page ?? 0) / limit);
+
   const handleTabClick = (tabId: string, category: string) => {
     setSelectedTab(tabId);
     setCategory(category);
@@ -46,9 +49,9 @@ function PostList() {
     { id: 'tab-C', category: 'event', label: '이벤트' },
   ];
 
-  const owenrId = process.env.NEXT_PUBLIC_OWNER_KEY;
+  const ownerId = process.env.NEXT_PUBLIC_OWNER_KEY;
 
-  const owner = user?.id === owenrId;
+  const owner = user?.id === ownerId;
 
   const handlePageClick = async (selectedPage: { selected: number }) => {
     setCurrentPage(selectedPage.selected);
@@ -66,7 +69,7 @@ function PostList() {
               aria-controls={tab.id}
               aria-selected={selectedTab === tab.id}
               onClick={() => handleTabClick(tab.id, tab.category)}
-              className="font-galmuri text-sm"
+              className="text-sm"
             >
               {tab.label}
             </button>

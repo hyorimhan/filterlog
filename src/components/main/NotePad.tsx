@@ -1,6 +1,5 @@
 import useWindowStore from '@/zustand/useWindowStore';
 import Image from 'next/image';
-import React from 'react';
 
 function NotePad() {
   const addWindow = useWindowStore((state) => state.addWindow);
@@ -20,7 +19,7 @@ function NotePad() {
       onDoubleClick={doubleClick}
     >
       <Image src={'/main/notepad.png'} alt="IE" width={40} height={40} />
-      <div className="font-tahoma text-xs  text-custome-white-50 mt-1 ">
+      <div className="font-tahoma text-xs  text-custom-white-50 mt-1 ">
         <p className="text-shadow font-gulim">메모장</p>
       </div>
     </div>

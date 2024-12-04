@@ -1,5 +1,10 @@
 import { createClient } from '@/supabase/server';
-import { NextRequest, NextResponse } from 'next/server';
+import {
+  handleError,
+  handleNetworkError,
+  handleSuccess,
+} from '@/utils/error/api';
+import { NextRequest } from 'next/server';
 
 export async function POST(request: NextRequest) {
   const supabase = createClient();
@@ -9,17 +14,10 @@ export async function POST(request: NextRequest) {
       email,
       password,
     });
-    if (error) {
-      return NextResponse.json({
-        message: '이메일이나 비밀번호를 다시 확인해주세요',
-      });
-    }
-    if (user) {
-      return NextResponse.json({ message: '로그인 되었습니다', user });
-    }
-  } catch (error) {
-    return NextResponse.json({
-      message: '네트워크 오류로 로그인에 실패했습니다',
-    });
+    if (error) return handleError(error?.message);
+
+    if (user) return handleSuccess('로그인 되었습니다', user);
+  } catch {
+    handleNetworkError();
   }
 }

@@ -1,17 +1,16 @@
-import Link from 'next/link';
-import React from 'react';
-import { FieldErrors, useForm } from 'react-hook-form';
-import { emailValidate, passwordValidate } from './AuthValidate';
+import { EMAIL_VALIDATION, PASSWORD_VALIDATION } from '@/constants/auth';
 import { login } from '@/service/auth';
 import { loginType } from '@/types/userForm';
 import useUserInfo from '@/zustand/useUserInfo';
-import toast from 'react-hot-toast';
 import { useQueryClient } from '@tanstack/react-query';
+import Link from 'next/link';
+import { FieldErrors, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
 
 function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
   const { register, handleSubmit, reset } = useForm<loginType>();
   const { saveUser } = useUserInfo();
-  const queryClient = useQueryClient(); // 추가
+  const queryClient = useQueryClient();
 
   const loginForm = async (data: loginType) => {
     try {
@@ -36,18 +35,15 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
     }
   };
 
-  const loginError = (errors: FieldErrors<loginType>) => {
-    if (errors.email?.message) {
-      toast.error(errors.email.message);
-    }
-    if (errors.password?.message) {
-      toast.error(errors.password.message);
-    }
+  const handleError = (errors: FieldErrors) => {
+    Object.values(errors).forEach((error) => {
+      if (error?.message) alert(error.message);
+    });
   };
   return (
     <div className="font-dotum flex flex-col items-center justify-center">
       <div className="mt-[30%]" />
-      <form onSubmit={handleSubmit(loginForm, loginError)}>
+      <form onSubmit={handleSubmit(loginForm, handleError)}>
         <div className="flex">
           <div className="mr-3">
             <div className="mb-[6px]">
@@ -59,7 +55,7 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
                 aria-label="email"
                 autoFocus
                 className="w-[150px] h-6"
-                {...register('email', emailValidate())}
+                {...register('email', EMAIL_VALIDATION())}
               />
             </div>
             <div>
@@ -69,7 +65,7 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
                 placeholder="비밀번호"
                 aria-label="password"
                 className="w-[150px] h-6"
-                {...register('password', passwordValidate())}
+                {...register('password', PASSWORD_VALIDATION())}
               />
             </div>
           </div>
@@ -80,7 +76,7 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
       </form>
       {showSignUp && (
         <Link href={'/signup'}>
-          <div className="font-galmuri focus:outline-none border-t-[1px] mt-10 w-full text-center pt-6 text-black ">
+          <div className="focus:outline-none border-t-[1px] mt-10 w-full text-center pt-6 text-black ">
             회원가입
           </div>
         </Link>

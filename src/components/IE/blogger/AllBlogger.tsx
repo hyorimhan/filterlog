@@ -1,19 +1,15 @@
 'use client';
 import Loading from '@/components/common/Loading';
-import { allUsers } from '@/service/blog';
+import { useBloggerQuery } from '@/hooks/blog/useBlogQuery';
 import useSearch from '@/zustand/useSearch';
-import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react';
 import ReactPaginate from 'react-paginate';
 
 function AllBlogger() {
   const { setCurrentPage, currentPage } = useSearch();
-  const { data: allUserData, isLoading } = useQuery({
-    queryKey: ['allUserData'],
-    queryFn: () => allUsers(currentPage),
-  });
+  const { allUserData, isLoading } = useBloggerQuery(currentPage);
+  const limit = 10;
 
   if (isLoading) {
     return <Loading />;
@@ -25,7 +21,7 @@ function AllBlogger() {
 
   const totalCount =
     typeof allUserData?.count === 'number' ? allUserData.count : 0;
-  const pageCount = Math.ceil(totalCount / 10);
+  const pageCount = Math.ceil(totalCount / limit);
 
   return (
     <div>

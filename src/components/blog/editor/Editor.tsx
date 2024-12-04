@@ -5,13 +5,13 @@ import { useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import 'react-quill/dist/quill.snow.css';
 
-import dynamic from 'next/dynamic';
-import { ChangeEvent, useEffect, useState } from 'react';
+import { useBlogQuery } from '@/hooks/blog/useBlogQuery';
 import { editorProps } from '@/types/userBlog';
 import useBlogInfo from '@/zustand/useBlogInfo';
-import handleSubmit from './SubmitForm';
+import dynamic from 'next/dynamic';
+import { ChangeEvent, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
-import { UseBlogQuery } from '@/hooks/user/UseProfileQuery';
+import handleSubmit from './SubmitForm';
 
 const ReactQuill = dynamic(() => import('react-quill'), {
   ssr: false,
@@ -60,13 +60,7 @@ function Editor({
     setContent(initialContent);
   }, [defaultContent, defaultImg]);
 
-  const { existingData } = UseBlogQuery({ user_id: user?.id ?? '' });
-
-  // const { data: blog } = useQuery({
-  //   queryKey: ['blog'],
-  //   queryFn: () => existingBlog(user?.id as string),
-  //   enabled: passOwnerCheck,
-  // });
+  const { existingData } = useBlogQuery({ user_id: user?.id ?? '' });
 
   if (!owner && passOwnerCheck) {
     router.replace('/IE');

@@ -1,23 +1,23 @@
 'use client';
-import React, { useState } from 'react';
+import Loading from '@/components/common/Loading';
+import { deletePost } from '@/service/post';
+import Confirm from '@/utils/Confirm';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
-import Confirm from '@/utils/Confirm';
-import { useRouter } from 'next/navigation';
-import Editor from '../editor/Editor';
 import Image from 'next/image';
-import { deletePost } from '@/service/post';
-import Loading from '@/components/common/Loading';
+import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import toast from 'react-hot-toast';
+import Editor from '../editor/Editor';
 
-import { UsePostQuery } from '@/hooks/user/UseProfileQuery';
+import { usePostQuery } from '@/hooks/blog/usePostQuery';
 
 function Detail({ post_id }: Readonly<{ post_id: string }>) {
   const ownerId = useBlogInfo((state) => state.ownerId);
   const router = useRouter();
   const user = useUserInfo((state) => state.user);
   const [update, setUpdate] = useState<boolean>(false);
-  const { detailMyPost, myPostLoading } = UsePostQuery({ post_id });
+  const { detailMyPost, myPostLoading } = usePostQuery({ post_id });
 
   if (myPostLoading) {
     return <Loading />;
@@ -94,7 +94,6 @@ function Detail({ post_id }: Readonly<{ post_id: string }>) {
               className="text-sm bg-custom-green-300 p-2 rounded-lg cursor-pointer "
               onClick={() => {
                 Confirm({
-                  title: '삭제',
                   message: '정말 글을 삭제하시겠습니까?',
                   onClick: async () => {
                     try {

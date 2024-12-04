@@ -1,17 +1,13 @@
 'use client';
-import { showOfficialPostInfo } from '@/service/post';
-import { useQuery } from '@tanstack/react-query';
+
+import { useCategoryPost } from '@/hooks/blog/usePostQuery';
 import Link from 'next/link';
-import React from 'react';
 import Loading from '../common/Loading';
 
 function Notice() {
   const category = 'notice';
-  const { data: showOfficialPost, isLoading } = useQuery({
-    queryKey: ['showOfficialPost', category],
-    queryFn: () => showOfficialPostInfo(category),
-  });
-  if (isLoading) {
+  const { showOfficialPost, categoryLoading } = useCategoryPost(category);
+  if (categoryLoading) {
     return <Loading />;
   }
   return (

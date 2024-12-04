@@ -1,7 +1,6 @@
 'use client';
 import SignUp from '@/components/auth/SignUp';
 import Image from 'next/image';
-import React from 'react';
 
 const SignUpPage = () => {
   return (

@@ -1,16 +1,11 @@
 'use client';
+import { usePostQuery } from '@/hooks/blog/usePostQuery';
 import { blogParams } from '@/types/userBlog';
 import Image from 'next/image';
-import React from 'react';
 import Loading from '../common/Loading';
-import { UsePostQuery } from '@/hooks/user/UseProfileQuery';
 
 function Detail({ params }: Readonly<blogParams>) {
-  // const { data: detailPost, isLoading } = useQuery({
-  //   queryKey: ['detailPost', params.id],
-  //   queryFn: () => detailOfficialPosts({ post_id: params.id }),
-  // });
-  const { detailOfficialPost, isLoading } = UsePostQuery({
+  const { detailOfficialPost, isLoading } = usePostQuery({
     post_id: params.id,
   });
 

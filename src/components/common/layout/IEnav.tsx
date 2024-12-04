@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import React from 'react';
 import IELogo from './IELogo';
 
 function IEnav() {
@@ -20,7 +19,7 @@ function IEnav() {
   return (
     <>
       <IELogo />
-      <div className=" h-1 flex justify-center mx-auto bg-gradient-to-b from-custome-white-50  border-y-0 via-custom-green-700 to-custome-white-50"></div>
+      <div className=" h-1 flex justify-center mx-auto bg-gradient-to-b from-custom-white-50  border-y-0 via-custom-green-700 to-custom-white-50"></div>
       <div className="h-[50px] font-galmuri space-x-5 mx-auto flex  justify-center items-center  border-y-0 bg-custom-green-400  ">
         {navLinks.map((nav) => (
           <Link

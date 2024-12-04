@@ -1,16 +1,15 @@
-import { postListType } from '@/types/userBlog';
-import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
-import React, { useMemo } from 'react';
-import ReactPaginate from 'react-paginate';
-// import Image from 'next/image';
-import DOMPurify from 'dompurify';
-import useUserInfo from '@/zustand/useUserInfo';
-import useBlogInfo from '@/zustand/useBlogInfo';
-import Fuse from 'fuse.js';
-import useSearch from '@/zustand/useSearch';
-import { myPostList } from '@/service/post';
 import Loading from '@/components/common/Loading';
+import { myPostList } from '@/service/post';
+import { postListType } from '@/types/userBlog';
+import useBlogInfo from '@/zustand/useBlogInfo';
+import useSearch from '@/zustand/useSearch';
+import useUserInfo from '@/zustand/useUserInfo';
+import { useQuery } from '@tanstack/react-query';
+import DOMPurify from 'dompurify';
+import Fuse from 'fuse.js';
+import Link from 'next/link';
+import { useMemo } from 'react';
+import ReactPaginate from 'react-paginate';
 
 function PostList() {
   const {
@@ -22,7 +21,7 @@ function PostList() {
   } = useSearch();
 
   const user = useUserInfo((state) => state.user);
-  const pagePost = 10;
+  const limit = 10;
   const { ownerId, blogInfo } = useBlogInfo();
   const blog_id = blogInfo?.id ?? '';
 
@@ -37,7 +36,7 @@ function PostList() {
       myPostList({
         blog_id,
         page: currentPage + 1,
-        limit: pagePost,
+        limit,
         year: selectedYear,
         month: selectedMonth,
       }),
@@ -70,7 +69,7 @@ function PostList() {
   };
 
   const displayPosts = searchResults;
-  const pageCount = Math.ceil((postList?.total || 0) / pagePost); // 페이지 수 계산
+  const pageCount = Math.ceil((postList?.total ?? 0) / limit);
   const owner = ownerId === user?.id;
 
   //분리
@@ -116,7 +115,7 @@ function PostList() {
           <NoPostMessage />
         ) : (
           displayPosts
-            ?.slice(currentPage * pagePost, (currentPage + 1) * pagePost)
+            ?.slice(currentPage * limit, (currentPage + 1) * limit)
             .map((post) => (
               <div
                 key={post.id}

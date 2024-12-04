@@ -1,22 +1,22 @@
-import { signUpType } from '@/types/userForm';
-import { useRouter } from 'next/navigation';
-import React from 'react';
-import { FieldErrors, useForm } from 'react-hook-form';
-import { sIgnUp } from '../../service/auth';
 import {
-  emailValidate,
-  nicknameValidate,
-  passwordConfirmValidate,
-  passwordValidate,
-} from './AuthValidate';
-import toast from 'react-hot-toast';
+  EMAIL_VALIDATION,
+  NICKNAME_VALIDATION,
+  PASSWORD_CONFIRM_VALIDATION,
+  PASSWORD_VALIDATION,
+} from '@/constants/auth';
+import { signUpType } from '@/types/userForm';
 import { useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { FieldErrors, useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { sIgnUp } from '../../service/auth';
 
 function SignUp() {
   const { register, handleSubmit, watch } = useForm<signUpType>();
   const queryClient = useQueryClient();
   const router = useRouter();
   const password = watch('password');
+
   const signUpSubmit = async (data: signUpType) => {
     const response = await sIgnUp(data);
 
@@ -26,20 +26,10 @@ function SignUp() {
       router.replace('/IE');
     }
   };
-
   const handleError = (errors: FieldErrors) => {
-    if (errors.email?.message) {
-      alert(errors.email.message);
-    }
-    if (errors.password?.message) {
-      alert(errors.password.message);
-    }
-    if (errors.passwordConfirm?.message) {
-      alert(errors.passwordConfirm?.message);
-    }
-    if (errors.nickname?.message) {
-      alert(errors.nickname.message);
-    }
+    Object.values(errors).forEach((error) => {
+      if (error?.message) alert(error.message);
+    });
   };
   return (
     <form
@@ -53,7 +43,7 @@ function SignUp() {
         <input
           type="email"
           id="email"
-          {...register('email', emailValidate())}
+          {...register('email', EMAIL_VALIDATION())}
           className="w-52 my-2 ml-2 text-sm"
         />
       </div>
@@ -64,7 +54,7 @@ function SignUp() {
         <input
           type="password"
           id="password"
-          {...register('password', passwordValidate())}
+          {...register('password', PASSWORD_VALIDATION())}
           className="w-52 ml-2 text-sm"
         />
       </div>
@@ -75,7 +65,10 @@ function SignUp() {
         <input
           type="password"
           id="passwordConfirm"
-          {...register('passwordConfirm', passwordConfirmValidate(password))}
+          {...register(
+            'passwordConfirm',
+            PASSWORD_CONFIRM_VALIDATION(password)
+          )}
           className="w-52 my-2 ml-2 text-sm"
         />
       </div>
@@ -86,7 +79,7 @@ function SignUp() {
         <input
           type="text"
           id="nickname"
-          {...register('nickname', nicknameValidate())}
+          {...register('nickname', NICKNAME_VALIDATION())}
           className="w-52 ml-2 text-sm font-dotum"
         />
       </div>

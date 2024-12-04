@@ -1,15 +1,16 @@
 'use client';
+import Loading from '@/components/common/Loading';
+import { useBlogQuery } from '@/hooks/blog/useBlogQuery';
+import { useProfileQuery } from '@/hooks/user/useProfileQuery';
 import { createBlog } from '@/service/blog';
 import { createBlogType } from '@/types/userBlog';
+import useUserInfo from '@/zustand/useUserInfo';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
-import useUserInfo from '@/zustand/useUserInfo';
-import { blogDescription, blogName } from './createBlogValidate';
 import toast from 'react-hot-toast';
-import Loading from '@/components/common/Loading';
-import { UseBlogQuery, UseProfileQuery } from '@/hooks/user/UseProfileQuery';
+import { blogDescription, blogName } from './createBlogValidate';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
@@ -18,8 +19,8 @@ function Create() {
   const router = useRouter();
   const user_id = user?.id;
 
-  const { profileData } = UseProfileQuery({ user_id: user_id ?? '' });
-  const { existingData, isLoading } = UseBlogQuery({ user_id: user_id ?? '' });
+  const { profileData } = useProfileQuery({ user_id: user_id ?? '' });
+  const { existingData, isLoading } = useBlogQuery({ user_id: user_id ?? '' });
 
   useEffect(() => {
     if (!user) {

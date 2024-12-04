@@ -1,14 +1,13 @@
-import Image from 'next/image';
-import React from 'react';
-import Logout from './Logout';
-import Link from 'next/link';
+import { useProfileQuery } from '@/hooks/user/useProfileQuery';
 import useUserInfo from '@/zustand/useUserInfo';
+import Image from 'next/image';
+import Link from 'next/link';
 import Loading from '../common/Loading';
-import { UseProfileQuery } from '@/hooks/user/UseProfileQuery';
+import Logout from './Logout';
 
 function MyInfo() {
   const user = useUserInfo((state) => state.user);
-  const { profileData, profileImg, isLoading } = UseProfileQuery({
+  const { profileData, profileImg, isLoading } = useProfileQuery({
     user_id: user?.id ?? '',
   });
 
