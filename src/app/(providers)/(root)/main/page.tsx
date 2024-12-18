@@ -1,12 +1,13 @@
 'use client';
 
-import IEContent from '@/components/main/IeContent';
 import InternetExplorer from '@/components/main/InternetExplorer';
 import NotePad from '@/components/main/NotePad';
 import NotePadContent from '@/components/main/NotePadContent';
 
 import Paint from '@/components/main/Paint';
 import useWindowStore from '@/zustand/useWindowStore';
+import IeContent from '@/components/main/IEContent';
+import IEContent from '@/components/main/IEContent';
 
 const MainPage = () => {
   const windows = useWindowStore((state) => state.windows);

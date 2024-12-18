@@ -4,7 +4,7 @@ import 'xp.css/dist/XP.css';
 import BaseWindow from '../common/BaseWindow';
 import { memo } from 'react';
 
-function IeContent({ ...props }: Readonly<windowType>) {
+function IEContent({ ...props }: Readonly<windowType>) {
   return (
     <BaseWindow className="window" {...props}>
       <div className="flex justify-center mt-20 font-dotum text-sm ">
@@ -26,4 +26,4 @@ function IeContent({ ...props }: Readonly<windowType>) {
   );
 }
 
-export default memo(IeContent);
+export default memo(IEContent);
