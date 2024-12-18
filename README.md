@@ -1,36 +1,202 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
-
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+███████╗██╗██╗  ████████╗███████╗██████╗ ██╗      ██████╗  ██████╗ 
+██╔════╝██║██║  ╚══██╔══╝██╔════╝██╔══██╗██║     ██╔═══██╗██╔════╝ 
+█████╗  ██║██║     ██║   █████╗  ██████╔╝██║     ██║   ██║██║  ███╗
+██╔══╝  ██║██║     ██║   ██╔══╝  ██╔══██╗██║     ██║   ██║██║   ██║
+██║     ██║███████╗██║   ███████╗██║  ██║███████╗╚██████╔╝╚██████╔╝
+╚═╝     ╚═╝╚══════╝╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+```
+╔══════════════════════════ WELCOME ══════════════════════════╗
+║                                                            ║
+║  그때 그 시절, 메모장에 끄적이던 일기처럼...                ║
+║  당신의 이야기를 기록하고 공유하세요.        ■■■■■■■□□□ 70% ║
+║                                                            ║
+╚════════════════════════════════════════════════════════════╝
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🌈 SPECIFICATIONS
+<table align="center">
+  <tr>
+    <td align="center">💻 OS</td>
+    <td align="center">🎮 해상도</td>
+    <td align="center">🔊 사운드</td>
+  </tr>
+  <tr>
+    <td align="center">Windows XP SP2+</td>
+    <td align="center">1024 x 768</td>
+    <td align="center">DirectX 지원</td>
+  </tr>
+</table>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## ✨ FEATURES
+<table align="center">
+<tr>
+<td>
 
-To learn more about Next.js, take a look at the following resources:
+```
+┏━━━ XP Style ━━━┓
+┃               ┃
+┃  🖥️  부팅화면  ┃
+┃  🪟  바탕화면  ┃
+┃  🌐  IE 구현   ┃
+┃               ┃
+┗━━━━━━━━━━━━━━━┛
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+</td>
+<td>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+┏━━━ Contents ━━━┓
+┃               ┃
+┃  📰 매거진    ┃
+┃  🎵 음악      ┃
+┃  ✨ 광고      ┃
+┃               ┃
+┗━━━━━━━━━━━━━━━┛
+```
 
-## Deploy on Vercel
+</td>
+<td>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+┏━━━ Blog ━━━━━┓
+┃              ┃
+┃  👤 프로필   ┃
+┃  📊 통계     ┃
+┃  🔍 검색     ┃
+┃              ┃
+┗━━━━━━━━━━━━━━┛
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+</td>
+</tr>
+</table>
+
+---
+
+## 📊 EMOTION TRACKING
+
+```
+╔═══════════════ EMOTION SYSTEM ═══════════════╗
+║                                              ║
+║    😊 → 📝 → 📊 → 📈                        ║
+║                                              ║
+║    [감정 선택] → [기록] → [분석] → [통계]     ║
+║                                              ║
+╚══════════════════════════════════════════════╝
+```
+
+<table align="center">
+<tr>
+<td align="center">
+
+### 📝 기록
+- 감정 상태 선택
+- 일일 감정 저장
+- 메모 추가
+
+</td>
+<td align="center">
+
+### 📊 분석
+- 전체 통계
+- 주간 리포트
+- 월간 요약
+
+</td>
+<td align="center">
+
+### 📈 시각화
+- 감정 그래프
+- TOP 5 감정
+- 변화 추이
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🎮 START GUIDE
+
+```
+Loading FilterLog...
+[■■■■■■■■■■] 100%
+System Ready!
+
+1. [전원 ON]  - Windows XP 부팅
+2. [바탕화면] - 시스템 로드
+3. [IE 실행]  - 브라우저 시작
+4. [접속]    - FilterLog 시작
+```
+
+---
+
+## 💾 TECH STACK
+<table align="center">
+<tr>
+<td>
+
+```
+Frontend
+━━━━━━━
+□ React
+□ TypeScript
+□ Tailwind
+```
+
+</td>
+<td>
+
+```
+Backend
+━━━━━━━
+□ Node.js
+□ Express
+□ MongoDB
+```
+
+</td>
+<td>
+
+```
+Extra
+━━━━━━━
+□ Animation
+□ WebGL
+□ Audio API
+```
+
+</td>
+</tr>
+</table>
+
+---
+
+## 🔮 ROADMAP 2024
+
+```
+╔════════════════ COMING SOON ════════════════╗
+║                                            ║
+║   🎨 XP 테마 시스템                        ║
+║   📝 블로그 스킨                           ║
+║   📫 방명록 & 쪽지                         ║
+║   🎯 감정 분석 AI                          ║
+║                                            ║
+╚════════════════════════════════════════════╝
+```
+
+---
+
+<img src="/api/placeholder/600/100" alt="Footer Banner">
+
+`Copyright © 2024 FilterLog | Made with 💖 by FilterLog Team`
+
+</div>
