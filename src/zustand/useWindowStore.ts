@@ -3,11 +3,11 @@ import { create } from 'zustand';
 export type windowType = {
   id: string;
   title: string;
-  initialPath: string;
+  initialPath?: string;
   width: number;
   height: number;
   position: { x: number; y: number };
-  isFocused: boolean;
+  isFocused?: boolean;
   zIndex: number;
 };
 

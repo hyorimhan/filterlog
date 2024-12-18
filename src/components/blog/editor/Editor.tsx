@@ -42,12 +42,18 @@ function Editor({
   useEffect(() => {
     let initialContent = defaultContent || '';
 
-    if (defaultImg && defaultImg.length > 0 && defaultImg[0]) {
+    if (defaultImg && defaultImg.length > 0 && defaultImg[0] !== null) {
       try {
-        const urls = JSON.parse(defaultImg[0]); // JSON 문자열을 파싱
+        let urls = defaultImg;
+
+        if (typeof defaultImg[0] === 'string' && defaultImg[0].includes('[')) {
+          urls = JSON.parse(defaultImg[0]);
+        }
+
         const imgHtml = urls
+          .filter((img: string) => img)
           .map((img: string) => {
-            return `<img src="${img}" alt="blog_img" width="300" height="300" />`;
+            return `<img src="${img}" alt="Post image" width="300" height="300" />`;
           })
           .join('');
 

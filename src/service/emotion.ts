@@ -28,13 +28,14 @@ export const existingMyEmotion = async ({
   const response = await axios.get('/api/emotion', {
     params: { owner_id, blog_id, date },
   });
+
   return response.data;
 };
 
 // 총 감정
-export const totalMyEmotion = async ({ ownerId }: { ownerId: string }) => {
+export const totalMyEmotion = async ({ owner_id }: { owner_id: string }) => {
   const response = await axios.get('/api/emotion', {
-    params: { ownerId, action: 'getTotalEmotions' },
+    params: { owner_id, action: 'getTotalEmotions' },
   });
   return response.data;
 };

@@ -23,7 +23,11 @@ function MainSwiper() {
       modules={[Autoplay, Pagination]}
     >
       <SwiperSlide>
-        <Link href={'https://t2m.kr/ohhmE'}>
+        <Link
+          href={
+            'https://filterlog.kro.kr/official/80981d98-501e-4599-94d6-94a6102308d2'
+          }
+        >
           <Image
             src={'/swiper/swiper2.svg'}
             alt="swiper"
@@ -34,7 +38,11 @@ function MainSwiper() {
         </Link>
       </SwiperSlide>
       <SwiperSlide>
-        <Link href={'https://t2m.kr/fpLNn'}>
+        <Link
+          href={
+            'https://filterlog.kro.kr/official/a805873e-d3d3-43b6-a89b-608719f8f797'
+          }
+        >
           <Image
             src={'/swiper/swiper1.svg'}
             alt="swiper"

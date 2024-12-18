@@ -1,7 +1,7 @@
 'use client';
 import Loading from '@/components/common/Loading';
 import { deletePost } from '@/service/post';
-import Confirm from '@/utils/Confirm';
+import Confirm from '@/components/common/Confirm';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import Image from 'next/image';

@@ -1,7 +1,6 @@
 'use client';
 import Loading from '@/components/common/Loading';
 import { useBlogQuery } from '@/hooks/blog/useBlogQuery';
-import { useProfileQuery } from '@/hooks/user/useProfileQuery';
 import { createBlog } from '@/service/blog';
 import { createBlogType } from '@/types/userBlog';
 import useUserInfo from '@/zustand/useUserInfo';
@@ -11,6 +10,7 @@ import { useEffect } from 'react';
 import { FieldErrors, useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { blogDescription, blogName } from './createBlogValidate';
+import useUserProfileQuery from '@/hooks/user/useUserProfileQuery';
 
 function Create() {
   const { register, handleSubmit } = useForm<createBlogType>();
@@ -19,7 +19,7 @@ function Create() {
   const router = useRouter();
   const user_id = user?.id;
 
-  const { profileData } = useProfileQuery({ user_id: user_id ?? '' });
+  const { profileData } = useUserProfileQuery({ user_id: user_id ?? '' });
   const { existingData, isLoading } = useBlogQuery({ user_id: user_id ?? '' });
 
   useEffect(() => {

@@ -11,7 +11,7 @@ function TotalEmotion() {
 
   const { data: total, isLoading } = useQuery<totalEmotionType>({
     queryKey: ['total', ownerId],
-    queryFn: () => totalMyEmotion({ ownerId: ownerId! }),
+    queryFn: () => totalMyEmotion({ owner_id: ownerId! }),
     enabled: !!ownerId,
   });
 
@@ -36,7 +36,7 @@ function TotalEmotion() {
               height={50}
               className="mr-4"
             />
-            {/* 막대 */}
+
             <div className="w-[400px] flex items-center bg-gray-200 rounded-full h-6">
               <div
                 className="w-[400px] bg-custom-green-600 h-6 ml-[1.5px] rounded-full transition-all duration-500"

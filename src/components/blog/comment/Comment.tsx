@@ -12,7 +12,7 @@ import {
   deleteComments,
   updateComments,
 } from '@/service/comment';
-import Confirm from '@/utils/Confirm';
+import Confirm from '@/components/common/Confirm';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import toast from 'react-hot-toast';
 import ReactPaginate from 'react-paginate';
@@ -30,7 +30,7 @@ function Comment({ params }: Readonly<blogParams>) {
   const { user, nickname } = useUserInfo();
 
   const post_id = params.id;
-  const limit = 10;
+  const limit = 3;
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [commentRegister, setCommentRegister] = useState<boolean>(false);
   const [commentId, setCommentId] = useState<string>('');
@@ -43,7 +43,7 @@ function Comment({ params }: Readonly<blogParams>) {
     limit: number;
     page: number;
   } | null>({
-    queryKey: ['comments', post_id],
+    queryKey: ['comments', post_id, currentPage],
     queryFn: () => commentList({ post_id, limit, page: currentPage + 1 }),
     enabled: !!post_id,
   });
@@ -71,7 +71,11 @@ function Comment({ params }: Readonly<blogParams>) {
         if (response) {
           toast.success(response.message);
           reset();
-          queryClient.invalidateQueries({ queryKey: ['comments', post_id] });
+          await queryClient.invalidateQueries({
+            queryKey: ['comments', post_id],
+            exact: false,
+          });
+          setCurrentPage(0);
           setCommentRegister(false);
         }
       } finally {
@@ -91,7 +95,10 @@ function Comment({ params }: Readonly<blogParams>) {
         if (response) {
           toast.success(response.message);
 
-          queryClient.invalidateQueries({ queryKey: ['comments', post_id] });
+          await queryClient.invalidateQueries({
+            queryKey: ['comments', post_id],
+            exact: false,
+          });
           reset();
           setCommentId('');
           setCommentContent('');
@@ -172,8 +179,9 @@ function Comment({ params }: Readonly<blogParams>) {
                                 );
                                 if (response) {
                                   toast.success('댓글이 삭제되었습니다');
-                                  queryClient.invalidateQueries({
+                                  await queryClient.invalidateQueries({
                                     queryKey: ['comments', post_id],
+                                    exact: false,
                                   });
                                 } else {
                                   toast.error('삭제에 실패했습니다');

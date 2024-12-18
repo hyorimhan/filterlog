@@ -15,16 +15,17 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
   const loginForm = async (data: loginType) => {
     try {
       const response = await login(data);
-
       if (response.error) {
         toast.error(response.error);
         reset();
         return;
       }
-      if (response.user) {
-        saveUser(response.user);
-        await queryClient.invalidateQueries({ queryKey: ['userData'] });
-        await queryClient.invalidateQueries({ queryKey: ['user'] });
+      if (response.data.user) {
+        saveUser(response.data.user);
+        await Promise.all([
+          queryClient.invalidateQueries({ queryKey: ['userData'] }),
+          queryClient.invalidateQueries({ queryKey: ['user'] }),
+        ]);
 
         toast.success(response.message);
       } else {
@@ -69,14 +70,14 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
               />
             </div>
           </div>
-          <button type="submit" className="w-[75px]">
+          <button type="submit" className="w-[75px] font-galmuri">
             로그인
           </button>
         </div>
       </form>
       {showSignUp && (
         <Link href={'/signup'}>
-          <div className="focus:outline-none border-t-[1px] mt-10 w-full text-center pt-6 text-black ">
+          <div className="focus:outline-none font-galmuri border-t-[1px] mt-10 w-full text-center pt-6 text-black ">
             회원가입
           </div>
         </Link>

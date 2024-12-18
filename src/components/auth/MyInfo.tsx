@@ -4,12 +4,14 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Loading from '../common/Loading';
 import Logout from './Logout';
+import useUserProfileQuery from '@/hooks/user/useUserProfileQuery';
 
 function MyInfo() {
   const user = useUserInfo((state) => state.user);
-  const { profileData, profileImg, isLoading } = useProfileQuery({
+  const { profileImg, isLoading } = useProfileQuery({
     user_id: user?.id ?? '',
   });
+  const { profileData } = useUserProfileQuery({ user_id: user?.id ?? '' });
 
   if (isLoading) {
     return <Loading />;
