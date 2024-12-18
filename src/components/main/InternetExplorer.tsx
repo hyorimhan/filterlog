@@ -9,8 +9,10 @@ function InternetExplorer() {
       windowTitle="Internet Explorer"
       title="Internet"
       plusTitle="Explorer"
-      path="/IE"
+      path="IE"
       imgUrl="/main/IE.png"
+      width={300}
+      height={300}
     />
   );
 }

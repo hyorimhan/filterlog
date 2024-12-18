@@ -6,15 +6,23 @@ import NotePadContent from '@/components/main/NotePadContent';
 
 import Paint from '@/components/main/Paint';
 import useWindowStore from '@/zustand/useWindowStore';
-import IeContent from '@/components/main/IEContent';
 import IEContent from '@/components/main/IEContent';
+import PaintContent from '@/components/main/PaintContent';
+import NotionContent from '@/components/main/NotionContent';
+import Notion from '@/components/main/Notion';
 
 const MainPage = () => {
   const windows = useWindowStore((state) => state.windows);
   const windowsArray = Object.values(windows);
-  const IEwindow = windowsArray.find((window) => window.initialPath === '/IE');
-  const NotePadWindow = windowsArray.find(
+  const IEwindow = windowsArray.find((window) => window.initialPath === 'IE');
+  const notePadWindow = windowsArray.find(
     (windows) => windows.initialPath === 'NotePad'
+  );
+  const paintWindow = windowsArray.find(
+    (window) => window.initialPath === 'Paint'
+  );
+  const notionWindow = windowsArray.find(
+    (window) => window.initialPath === 'Notion'
   );
 
   return (
@@ -22,9 +30,14 @@ const MainPage = () => {
       <InternetExplorer />
       <NotePad />
       <Paint />
+      <Notion />
       {IEwindow && <IEContent key={IEwindow.id} {...IEwindow} />}
-      {NotePadWindow && (
-        <NotePadContent key={NotePadWindow.id} {...NotePadWindow} />
+      {notePadWindow && (
+        <NotePadContent key={notePadWindow.id} {...notePadWindow} />
+      )}
+      {paintWindow && <PaintContent key={paintWindow.id} {...paintWindow} />}
+      {notionWindow && (
+        <NotionContent key={notionWindow.id} {...notionWindow} />
       )}
     </div>
   );

@@ -27,7 +27,7 @@ function BaseWindow({
   const focusWindow = useWindowStore((state) => state.focusWindow);
   const zIndex = useWindowStore(
     (state) => state.windows[props.id]?.zIndex || 1
-  ); // 기본 z-index 1
+  );
   const deleteWindow = useWindowStore((state) => state.deleteWindow);
 
   return (

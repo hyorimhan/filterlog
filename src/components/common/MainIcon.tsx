@@ -8,12 +8,16 @@ function MainIcon({
   imgUrl,
   plusTitle,
   windowTitle,
+  width,
+  height,
 }: {
   title: string;
   path: string;
   imgUrl: string;
   plusTitle?: string;
   windowTitle?: string;
+  width: number;
+  height: number;
 }) {
   const addWindow = useWindowStore((state) => state.addWindow);
   const [isClicked, setIsClicked] = useState<boolean>(false);
@@ -33,8 +37,8 @@ function MainIcon({
     addWindow({
       title: windowTitle ?? title,
       initialPath: path,
-      width: 300,
-      height: 300,
+      width: width,
+      height: height,
       position: { x: 50, y: 50 },
       zIndex: 1,
     });
