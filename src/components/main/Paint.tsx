@@ -5,7 +5,7 @@ function Paint() {
     <MainIcon
       title="그림판"
       path="Paint"
-      imgUrl="/main/paint.png"
+      imgUrl="/main/Paint.png"
       width={500}
       height={500}
     />
