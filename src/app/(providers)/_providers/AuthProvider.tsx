@@ -1,32 +1,27 @@
 'use client';
 
-import { useProfileQuery } from '@/hooks/user/useProfileQuery';
-import { userInfo } from '@/service/auth';
+import useUserDataQuery from '@/hooks/user/useUserDataQuery';
+import useUserProfileQuery from '@/hooks/user/useUserProfileQuery';
 import useUserInfo from '@/zustand/useUserInfo';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { PropsWithChildren, useEffect } from 'react';
 
 function AuthProvider({ children }: Readonly<PropsWithChildren>) {
   const { saveUser, saveNickname } = useUserInfo();
-  const queryClient = useQueryClient();
-  const { data: userData } = useQuery({
-    queryKey: ['userData'],
-    queryFn: userInfo,
-  });
 
-  const { profileData } = useProfileQuery({ user_id: userData?.id ?? '' });
+  const { userData } = useUserDataQuery();
+  const { profileData } = useUserProfileQuery({ user_id: userData?.id ?? '' });
 
   useEffect(() => {
     if (userData) {
       saveUser(userData);
     }
-  }, [userData, saveUser, saveNickname, queryClient]);
+  }, [userData, saveUser, saveNickname]);
 
   useEffect(() => {
     if (profileData?.nickname) {
       saveNickname(profileData.nickname);
     }
-  }, [profileData, saveNickname, queryClient]);
+  }, [profileData, saveNickname]);
 
   return <>{children}</>;
 }

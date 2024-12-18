@@ -1,8 +1,7 @@
 'use client';
 
-import IE from '@/components/main/IE';
-import IEContent from '@/components/main/IEContent';
-
+import IEContent from '@/components/main/IeContent';
+import InternetExplorer from '@/components/main/InternetExplorer';
 import NotePad from '@/components/main/NotePad';
 import NotePadContent from '@/components/main/NotePadContent';
 
@@ -19,7 +18,7 @@ const MainPage = () => {
 
   return (
     <div className="ml-10 mt-10 w-20">
-      <IE />
+      <InternetExplorer />
       <NotePad />
       <Paint />
       {IEwindow && <IEContent key={IEwindow.id} {...IEwindow} />}

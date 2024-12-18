@@ -41,6 +41,7 @@ const config: Config = {
         'border-blue': '#0831D9',
         'border-beige': '#DCD8C1',
         'url-border': '#D7D7FF',
+        'bg-blue': '#0b61ff',
       },
       fontFamily: {
         gulim: ['굴림', 'Gulim', 'sans-serif'],

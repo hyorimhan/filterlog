@@ -5,7 +5,7 @@ export const handleError = (message: string) => {
 };
 
 export const handleNetworkError = () => {
-  return NextResponse.json('네트워크 오류가 발생했습니다');
+  return NextResponse.json({ error: '네트워크 오류가 발생했습니다' });
 };
 
 export const handleSuccess = (message: string, data?: unknown) => {

@@ -15,14 +15,14 @@ function Login({ showSignUp = true }: Readonly<{ showSignUp: boolean }>) {
   const loginForm = async (data: loginType) => {
     try {
       const response = await login(data);
-
+      console.log('Login response:', response);
       if (response.error) {
         toast.error(response.error);
         reset();
         return;
       }
-      if (response.user) {
-        saveUser(response.user);
+      if (response.data.user) {
+        saveUser(response.data.user);
         await queryClient.invalidateQueries({ queryKey: ['userData'] });
         await queryClient.invalidateQueries({ queryKey: ['user'] });
 
