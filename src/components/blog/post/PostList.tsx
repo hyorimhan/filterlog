@@ -80,7 +80,7 @@ function PostList() {
     if (owner && hasNoPosts && !defaultResults) {
       return (
         <Link
-          href={`blog/write?ownerId=${ownerId}`}
+          href={`/blog/write?ownerId=${ownerId}`}
           className="flex flex-col text-sm mt-10 focus:outline-none items-center justify-center h-full"
         >
           글이 아직 없어요! 첫 글을 써보세요

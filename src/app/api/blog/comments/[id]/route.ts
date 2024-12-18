@@ -50,8 +50,12 @@ export async function DELETE(request: NextRequest, { params }: blogParams) {
   const { error } = await supabase.from('comments').delete().eq('id', id);
 
   if (error) {
-    return NextResponse.json({ message: '댓글을 삭제하지 못했습니다' });
+    return NextResponse.json(
+      { message: '댓글을 삭제하지 못했습니다' },
+      { status: 500 }
+    );
   }
+
   return NextResponse.json({ message: '댓글이 삭제되었습니다' });
 }
 

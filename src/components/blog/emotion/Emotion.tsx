@@ -1,7 +1,7 @@
 import Loading from '@/components/common/Loading';
 import { useEmotionQuery } from '@/hooks/blog/useEmotionQuery';
 import { myEmotion } from '@/service/emotion';
-import Confirm from '@/utils/Confirm';
+import Confirm from '@/components/common/Confirm';
 import useBlogInfo from '@/zustand/useBlogInfo';
 import useUserInfo from '@/zustand/useUserInfo';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
@@ -34,6 +34,9 @@ function Emotion() {
       if (user_id && blog_id) {
         queryClient.invalidateQueries({
           queryKey: ['emotionData', user_id, blog_id, today],
+        });
+        queryClient.invalidateQueries({
+          queryKey: ['total', user_id, blog_id],
         });
       }
       toast.success(data.message);

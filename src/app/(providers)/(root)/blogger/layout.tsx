@@ -8,7 +8,7 @@ function layout({ children }: { children: React.ReactNode }) {
       withBlogHeader={false}
       withFooter={true}
       withHeader={true}
-      mainClassName={`${layoutStyle.main}${layoutStyle.main_bg} border-t-0`}
+      mainClassName={`${layoutStyle.main}${layoutStyle.main_bg} border-t-0 mx-auto`}
       divClassName={layoutStyle.div_container}
     >
       <IELogo />

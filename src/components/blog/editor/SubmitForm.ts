@@ -47,9 +47,10 @@ export default async function handleSubmit(
           post_id,
           title,
           content: processedContent,
-          img_url: imageUrls?.length
-            ? imageUrls.map((url) => url.replace(/[\[\]"]/g, ''))
-            : null,
+          img_url:
+            imageUrls && imageUrls.length > 0
+              ? imageUrls.map((url) => url?.replace(/[\[\]"]/g, '') || '')
+              : null,
         });
       }
       // else if (targetTable === 'official') {

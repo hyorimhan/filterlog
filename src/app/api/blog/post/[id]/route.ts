@@ -3,7 +3,7 @@ import { blogParams } from '@/types/userBlog';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function GET(request: NextRequest, { params }: blogParams) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const post_id = params.id;
 
   const { data: postDetail, error: postDetailError } = await supabase
@@ -32,8 +32,11 @@ export async function DELETE(
   const { error } = await supabase.from('post').delete().eq('id', id);
 
   if (error) {
-    return NextResponse.json({ error: '글을 삭제할 수 없습니다' });
+    return NextResponse.json({
+      message: '게시글 삭제에 실패했습니다',
+    });
   }
+
   return NextResponse.json({ message: '글이 삭제되었습니다' });
 }
 
