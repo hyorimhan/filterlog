@@ -239,10 +239,10 @@ System Ready!
 
 ## ⚡ Links ⚡
 
-<a href="[https://filterlog.notion.site/FilterLog-0275e5635f984d4d92ce4be9cdf1c283](https://unique-tub-287.notion.site/Filter-Log-152d070c588d80bfb715fa9f37278a81?pvs=4)">
+<a href="https://unique-tub-287.notion.site/Filter-Log-152d070c588d80bfb715fa9f37278a81?pvs=4">
 <img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white&scale=2" height="40"/>
 </a>
-<a href="[https://filterlog.vercel.app](https://filterlog.kro.kr/IE)">
+<a href="https://filterlog.kro.kr/">
 <img src="https://img.shields.io/badge/FilterLog-000000?style=flat&logo=vercel&logoColor=white" height="40"/>
 </a>
 
