@@ -31,6 +31,31 @@
   </tr>
 </table>
 
+
+
+
+## ☃️ DEVELOPER
+<table align="center">
+<tr>
+<td align="center">
+<img src="https://avatars.githubusercontent.com/u/151856914?s=400&u=ae6bd59a8e5bbb11ef1b3238760fc2fc42dea0cd&v=4" alt="developer profile" width="120" height="120" style="border-radius: 50%"/>
+
+```
+╭── ⋆⋅☆⋅⋆ ──╮
+   hyorimhan
+╰── ⋆⋅☆⋅⋆ ──╯
+
+💻 Frontend Developer
+
+╰─ github.com/hyorimhan ─╯
+```
+</td>
+</tr>
+</table>
+
+
+</div>
+
 ## ✨ FEATURES
 <table align="center">
 <tr>
