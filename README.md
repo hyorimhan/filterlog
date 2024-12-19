@@ -1,6 +1,5 @@
 <table align="center">
-<tr>
-<td align="center">
+<tr><td align="center">
 
 ```
 ███████╗██╗██╗  ████████╗███████╗██████╗ ██╗      ██████╗  ██████╗ 
@@ -11,6 +10,12 @@
 ╚═╝     ╚═╝╚══════╝╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝ ╚═════╝  ╚═════╝ 
 ```
 
+</td></tr>
+</table>
+
+<table align="center">
+<tr><td align="center">
+
 ```
 ✧･ﾟ: *✧･ﾟ:* 　WELCOME　 *:･ﾟ✧*:･ﾟ✧
 그때 그 시절, 메모장에 끄적이던 일기처럼...
@@ -18,8 +23,16 @@
 ■■■■■■■□□□ 70%
 ```
 
+</td></tr>
+</table>
+
+<div align="center">
+
 ## 🌈 SPECIFICATIONS
-<table>
+
+</div>
+
+<table align="center">
   <tr>
     <td align="center">💻 OS</td>
     <td align="center">🎮 해상도</td>
@@ -32,8 +45,13 @@
   </tr>
 </table>
 
+<div align="center">
+
 ## ☃️ DEVELOPER
-<table>
+
+</div>
+
+<table align="center">
 <tr>
 <td align="center">
 <img src="https://avatars.githubusercontent.com/u/151856914?s=400&u=ae6bd59a8e5bbb11ef1b3238760fc2fc42dea0cd&v=4" alt="developer profile" width="120" height="120" style="border-radius: 50%"/>
@@ -47,14 +65,20 @@
 
 ╰─ github.com/hyorimhan ─╯
 ```
+
 </td>
 </tr>
 </table>
 
+<div align="center">
+
 ## ✨ FEATURES
-<table>
+
+</div>
+
+<table align="center">
 <tr>
-<td align="center">
+<td>
 
 ```
 ⋆｡°✩ XP Style ✩°｡⋆
@@ -65,7 +89,7 @@
 ```
 
 </td>
-<td align="center">
+<td>
 
 ```
 ⋆｡°✩ Contents ✩°｡⋆
@@ -76,7 +100,7 @@
 ```
 
 </td>
-<td align="center">
+<td>
 
 ```
 ⋆｡°✩ Blog ✩°｡⋆
@@ -90,7 +114,15 @@
 </tr>
 </table>
 
+<div align="center">
+
 ## 📊 EMOTION TRACKING
+
+</div>
+
+<table align="center">
+<tr><td align="center">
+
 ```
 ・‥…━━━━ DAILY EMOTION ━━━━…‥・
  
@@ -98,7 +130,10 @@
  [감정 선택] → [기록] → [모아보기]
 ```
 
-<table>
+</td></tr>
+</table>
+
+<table align="center">
 <tr>
 <td align="center">
 
@@ -126,7 +161,15 @@
 </tr>
 </table>
 
+<div align="center">
+
 ## 🎮 START GUIDE
+
+</div>
+
+<table align="center">
+<tr><td align="center">
+
 ```
 Loading FilterLog...
 [■■■■■■■■■■] 100%
@@ -137,10 +180,18 @@ System Ready!
 ⊱ 접속    - FilterLog 시작
 ```
 
+</td></tr>
+</table>
+
+<div align="center">
+
 ## 💾 TECH STACK
-<table>
+
+</div>
+
+<table align="center">
 <tr>
-<td align="center">
+<td>
 
 ```
 ⋆ Frontend ⋆
@@ -155,7 +206,7 @@ System Ready!
 ```
 
 </td>
-<td align="center">
+<td>
 
 ```
 ⋆ Backend ⋆
@@ -164,7 +215,7 @@ System Ready!
 ```
 
 </td>
-<td align="center">
+<td>
 
 ```
 ⋆ Libraries ⋆
@@ -179,12 +230,12 @@ System Ready!
 </tr>
 </table>
 
-```
+<div align="center">
+
+
 ✧･ﾟ: *✧･ﾟ:*
 Copyright © 2024 FilterLog
 *:･ﾟ✧*:･ﾟ✧
-```
 
-</td>
-</tr>
-</table>
+
+</div>
