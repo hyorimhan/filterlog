@@ -1,4 +1,6 @@
-<div align="center">
+<table align="center">
+<tr>
+<td align="center">
 
 ```
 ███████╗██╗██╗  ████████╗███████╗██████╗ ██╗      ██████╗  ██████╗ 
@@ -16,9 +18,8 @@
 ■■■■■■■□□□ 70%
 ```
 
-<h2>🌈 SPECIFICATIONS</h2>
-
-<table align="center">
+## 🌈 SPECIFICATIONS
+<table>
   <tr>
     <td align="center">💻 OS</td>
     <td align="center">🎮 해상도</td>
@@ -31,9 +32,8 @@
   </tr>
 </table>
 
-<h2>☃️ DEVELOPER</h2>
-
-<table align="center">
+## ☃️ DEVELOPER
+<table>
 <tr>
 <td align="center">
 <img src="https://avatars.githubusercontent.com/u/151856914?s=400&u=ae6bd59a8e5bbb11ef1b3238760fc2fc42dea0cd&v=4" alt="developer profile" width="120" height="120" style="border-radius: 50%"/>
@@ -51,11 +51,10 @@
 </tr>
 </table>
 
-<h2>✨ FEATURES</h2>
-
-<table align="center">
+## ✨ FEATURES
+<table>
 <tr>
-<td>
+<td align="center">
 
 ```
 ⋆｡°✩ XP Style ✩°｡⋆
@@ -66,7 +65,7 @@
 ```
 
 </td>
-<td>
+<td align="center">
 
 ```
 ⋆｡°✩ Contents ✩°｡⋆
@@ -77,7 +76,7 @@
 ```
 
 </td>
-<td>
+<td align="center">
 
 ```
 ⋆｡°✩ Blog ✩°｡⋆
@@ -91,8 +90,7 @@
 </tr>
 </table>
 
-<h2>📊 EMOTION TRACKING</h2>
-
+## 📊 EMOTION TRACKING
 ```
 ・‥…━━━━ DAILY EMOTION ━━━━…‥・
  
@@ -100,7 +98,7 @@
  [감정 선택] → [기록] → [모아보기]
 ```
 
-<table align="center">
+<table>
 <tr>
 <td align="center">
 
@@ -128,8 +126,7 @@
 </tr>
 </table>
 
-<h2>🎮 START GUIDE</h2>
-
+## 🎮 START GUIDE
 ```
 Loading FilterLog...
 [■■■■■■■■■■] 100%
@@ -140,11 +137,10 @@ System Ready!
 ⊱ 접속    - FilterLog 시작
 ```
 
-<h2>💾 TECH STACK</h2>
-
-<table align="center">
+## 💾 TECH STACK
+<table>
 <tr>
-<td>
+<td align="center">
 
 ```
 ⋆ Frontend ⋆
@@ -159,7 +155,7 @@ System Ready!
 ```
 
 </td>
-<td>
+<td align="center">
 
 ```
 ⋆ Backend ⋆
@@ -168,7 +164,7 @@ System Ready!
 ```
 
 </td>
-<td>
+<td align="center">
 
 ```
 ⋆ Libraries ⋆
@@ -189,4 +185,6 @@ Copyright © 2024 FilterLog
 *:･ﾟ✧*:･ﾟ✧
 ```
 
-</div>
+</td>
+</tr>
+</table>
