@@ -11,13 +11,13 @@
 
 ```
 ✧･ﾟ: *✧･ﾟ:* 　WELCOME　 *:･ﾟ✧*:･ﾟ✧
-
 그때 그 시절, 메모장에 끄적이던 일기처럼...
 당신의 이야기를 기록하고 공유하세요.
 ■■■■■■■□□□ 70%
 ```
 
-## 🌈 SPECIFICATIONS
+<h2>🌈 SPECIFICATIONS</h2>
+
 <table align="center">
   <tr>
     <td align="center">💻 OS</td>
@@ -31,10 +31,8 @@
   </tr>
 </table>
 
+<h2>☃️ DEVELOPER</h2>
 
-
-
-## ☃️ DEVELOPER
 <table align="center">
 <tr>
 <td align="center">
@@ -53,10 +51,8 @@
 </tr>
 </table>
 
+<h2>✨ FEATURES</h2>
 
-</div>
-
-## ✨ FEATURES
 <table align="center">
 <tr>
 <td>
@@ -95,13 +91,15 @@
 </tr>
 </table>
 
-## 📊 EMOTION TRACKING
+<h2>📊 EMOTION TRACKING</h2>
+
 ```
 ・‥…━━━━ DAILY EMOTION ━━━━…‥・
  
  😊 → 📝 → 🗓️
  [감정 선택] → [기록] → [모아보기]
 ```
+
 <table align="center">
 <tr>
 <td align="center">
@@ -130,23 +128,20 @@
 </tr>
 </table>
 
+<h2>🎮 START GUIDE</h2>
 
-
-## 🎮 START GUIDE
 ```
 Loading FilterLog...
 [■■■■■■■■■■] 100%
 System Ready!
-
 ⊱ 전원 ON  - Windows XP 부팅
 ⊱ 바탕화면 - 시스템 로드
 ⊱ IE 실행  - 브라우저 시작
 ⊱ 접속    - FilterLog 시작
 ```
 
+<h2>💾 TECH STACK</h2>
 
-
-## 💾 TECH STACK
 <table align="center">
 <tr>
 <td>
@@ -188,22 +183,10 @@ System Ready!
 </tr>
 </table>
 
-
-
-
-
-</div>
-
-
-
-<div align="center">
-  
 ```
 ✧･ﾟ: *✧･ﾟ:*
 Copyright © 2024 FilterLog
 *:･ﾟ✧*:･ﾟ✧
 ```
-
-</div>
 
 </div>
