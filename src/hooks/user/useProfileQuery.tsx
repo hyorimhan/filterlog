@@ -10,7 +10,7 @@ export const useProfileQuery = ({ user_id }: { user_id: string }) => {
     },
     enabled: !!user_id,
   });
-  // 블로그 테이블
+  
   return {
     profileImg,
     isLoading,

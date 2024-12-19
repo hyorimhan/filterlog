@@ -27,6 +27,7 @@ const HomePage = () => {
           <ThreeBlogger />
         </section>
       </div>
+
       <div className=" grid-cols-[2fr_6fr_2fr]  grid ">
         <section className=" h-[280px] w-[280px]  border-r-custom-green-700 border-2 border-y-custom-green-700 border-t-0 border-l-0 ">
           <Ad />
@@ -43,6 +44,7 @@ const HomePage = () => {
           <RecentPosts />
         </section>
       </div>
+      
       <div className=" grid-cols-[2fr_6fr_2fr]  grid  overflow-hidden">
         <section className=" text-center h-[280px] w-[280px]  border-r-custom-green-700 border-2 border-b-custom-green-700 border-t-0 border-l-0 border-r-0">
           <YoutubePlayList />
