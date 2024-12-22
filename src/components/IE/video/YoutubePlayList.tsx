@@ -2,6 +2,7 @@
 import Loading from '@/components/common/Loading';
 import { youtubePlayLIst } from '@/service/video';
 import { useQuery } from '@tanstack/react-query';
+import { memo } from 'react';
 import Youtube from 'react-youtube';
 
 interface VideoItem {
@@ -65,4 +66,4 @@ function YoutubePlayList() {
   );
 }
 
-export default YoutubePlayList;
+export default memo(YoutubePlayList);

@@ -1,43 +1,26 @@
-import { useProfileQuery } from '@/hooks/user/useProfileQuery';
 import useUserInfo from '@/zustand/useUserInfo';
-import Image from 'next/image';
 import Link from 'next/link';
 import Loading from '../common/Loading';
 import Logout from './Logout';
 import useUserProfileQuery from '@/hooks/user/useUserProfileQuery';
+import { PAGES } from '@/constants/myInfoUrl';
+import ProfileImg from '../common/ProfileImg';
 
 function MyInfo() {
-  const user = useUserInfo((state) => state.user);
-  const { profileImg, isLoading } = useProfileQuery({
-    user_id: user?.id ?? '',
-  });
-  const { profileData } = useUserProfileQuery({ user_id: user?.id ?? '' });
+  const user_id = useUserInfo((state) => state.user?.id ?? '');
+  const { profileData, isLoading } = useUserProfileQuery({ user_id });
 
   if (isLoading) {
     return <Loading />;
   }
 
-  const pages = [
-    { href: '/blog/myPage', text: '마이페이지' },
-    { href: '/blog', text: '마이블로그' },
-  ];
-
   return (
     <>
-      <div className="flex flex-col items-center justify-center mt-[20%] ">
-        <Image
-          src={profileImg ?? '/profile/profile.svg'}
-          alt="profileImg"
-          width={100}
-          height={100}
-          className="w-[100px] h-[100px] rounded-full border-2 border-custom-green-600"
-        />
-      </div>
-
+      <ProfileImg user_id={user_id} />
       <div className="justify-center flex flex-col items-center my-3  py-2 bg-yellow-200">
         <div> {profileData?.nickname}님 행복한 하루 보내세요!</div>
         <div className="my-3 space-x-5 flex items-center">
-          {pages.map((page) => (
+          {PAGES.map((page) => (
             <Link href={page.href} key={page.href}>
               <div className=" bg-custom-green-300 hover:brightness-105 shadow-md rounded-md p-1 text-black">
                 {page.text}

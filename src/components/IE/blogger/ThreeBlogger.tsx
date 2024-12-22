@@ -5,6 +5,7 @@ import useSearch from '@/zustand/useSearch';
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { memo } from 'react';
 
 function ThreeBlogger() {
   const { currentPage } = useSearch();
@@ -51,4 +52,4 @@ function ThreeBlogger() {
   );
 }
 
-export default ThreeBlogger;
+export default memo(ThreeBlogger);

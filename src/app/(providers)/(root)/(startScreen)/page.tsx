@@ -41,7 +41,7 @@ const StartScreen = () => {
           >
             <Image
               src={'/profile/profile.jpg'}
-              alt="profile"
+              alt="사용자 프로필 이미지"
               width={70}
               height={70}
               className="w-[70px] h-[70px] object-cover border-2 border-blue-200 rounded-md"

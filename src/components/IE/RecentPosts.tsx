@@ -1,7 +1,7 @@
 import { allPosts } from '@/service/post';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
-import React from 'react';
+import React, { memo } from 'react';
 import Loading from '../common/Loading';
 
 function RecentPosts() {
@@ -29,4 +29,4 @@ function RecentPosts() {
   );
 }
 
-export default RecentPosts;
+export default memo(RecentPosts);
