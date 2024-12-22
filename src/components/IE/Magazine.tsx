@@ -2,6 +2,7 @@ import { useCategoryPost } from '@/hooks/blog/usePostQuery';
 import Image from 'next/image';
 import Link from 'next/link';
 import Loading from '../common/Loading';
+import { memo } from 'react';
 
 function Magazine() {
   const category = 'magazine';
@@ -59,4 +60,4 @@ function Magazine() {
   );
 }
 
-export default Magazine;
+export default memo(Magazine);
