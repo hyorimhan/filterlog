@@ -17,13 +17,13 @@ export interface BaseWindowType extends windowType {
   children: React.ReactNode;
   className: string;
 }
+
 function BaseWindow({
   children,
   className,
   ...props
 }: Readonly<BaseWindowType>) {
   const nodeRef = useRef(null);
-
   const focusWindow = useWindowStore((state) => state.focusWindow);
   const zIndex = useWindowStore(
     (state) => state.windows[props.id]?.zIndex || 1
@@ -45,7 +45,9 @@ function BaseWindow({
           width: props.width,
           height: props.height,
           zIndex,
-          position: 'relative',
+          position: 'fixed',
+          top: 0,
+          left: 0,
         }}
       >
         <div className="title-bar" onMouseDown={() => focusWindow(props.id)}>

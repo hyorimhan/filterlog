@@ -6,11 +6,11 @@ import Link from 'next/link';
 const StartScreen = () => {
   return (
     <div className="flex flex-col h-screen">
-      <div className="relative bg-custom-blue-1000 w-full h-[110px] flex-shrink-0">
+      <header className="relative bg-custom-blue-1000 w-full h-[110px] flex-shrink-0">
         <div className="absolute bottom-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-custom-blue-500 to-transparent"></div>
-      </div>
+      </header>
 
-      <div className="bg-gradient-to-br from-blue-300 via-custom-blue-600 to-custom-blue-600 w-full flex-grow  flex justify-center items-center ">
+      <main className="bg-gradient-to-br from-blue-300 via-custom-blue-600 to-custom-blue-600 w-full flex-grow  flex justify-center items-center ">
         <div className="grid grid-cols-2 w-[1120px] h-full ">
           <div className="flex flex-col items-end  justify-center relative h-full">
             <div className="absolute top-0 right-0 bottom-0  w-px bg-gradient-to-b from-transparent via-white to-transparent"></div>
@@ -60,11 +60,11 @@ const StartScreen = () => {
             </span>
           </div>
         </div>
-      </div>
+      </main>
 
-      <div className="relative bg-custom-blue-1000 w-full h-[110px] flex-shrink-0">
+      <footer className="relative bg-custom-blue-1000 w-full h-[110px] flex-shrink-0">
         <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-custom-orange-2 to-transparent"></div>
-      </div>
+      </footer>
     </div>
   );
 };
