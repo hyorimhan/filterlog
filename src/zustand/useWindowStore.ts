@@ -21,50 +21,64 @@ type windowStore = {
 const useWindowStore = create<windowStore>((set) => ({
   windows: {},
 
-  // 창 추가 함수
   addWindow: (newWindow) =>
     set((state) => {
-      const id = Date.now().toString(); // 고유한 id 생성
-      const offset = Object.keys(state.windows).length * 30; // 창이 겹치지 않게 위치 조정
+      const id = Date.now().toString();
+      const windowCount = Object.keys(state.windows).length;
 
-      // 창 추가
+      // 각 창의 위치를 오른쪽으로 조금씩 이동
+      const position = {
+        x: 200 + windowCount * 30, // 30px씩 우측으로
+        y: 100, // y축은 고정
+      };
+
+      // 최대 zIndex 계산
+      const maxZIndex = Math.max(
+        ...Object.values(state.windows).map((w) => w.zIndex || 0),
+        0
+      );
+
       return {
         windows: {
           ...state.windows,
           [id]: {
             ...newWindow,
             id,
-            position: { x: offset, y: offset },
+            position,
             isFocused: true,
-            zIndex: 10,
+            zIndex: maxZIndex + 1,
           },
         },
       };
     }),
 
-  // 창을 클릭했을 때 맨 앞으로 가져오는 함수
   focusWindow: (id: string) =>
     set((state) => {
       const maxZIndex = Math.max(
-        ...Object.values(state.windows).map((w) => w.zIndex),
+        ...Object.values(state.windows).map((w) => w.zIndex || 0),
         0
-      ); // 가장 큰 zIndex 찾기
+      );
 
-      // 창의 상태 업데이트: 클릭된 창만 포커스와 zIndex 업데이트
-      const updatedWindows = {
-        ...state.windows,
-        [id]: { ...state.windows[id], isFocused: true, zIndex: maxZIndex + 1 },
+      return {
+        windows: Object.fromEntries(
+          Object.entries(state.windows).map(([windowId, window]) => [
+            windowId,
+            {
+              ...window,
+              isFocused: windowId === id,
+              zIndex: windowId === id ? maxZIndex + 1 : window.zIndex,
+            },
+          ])
+        ),
       };
-
-      return { windows: updatedWindows };
     }),
 
   deleteWindow: (id: string) =>
-    set((state) => {
-      const newWindow = { ...state.windows };
-      delete newWindow[id];
-      return { windows: newWindow };
-    }),
+    set((state) => ({
+      windows: Object.fromEntries(
+        Object.entries(state.windows).filter(([windowId]) => windowId !== id)
+      ),
+    })),
 }));
 
 export default useWindowStore;

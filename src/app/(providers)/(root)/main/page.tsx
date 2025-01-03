@@ -26,7 +26,7 @@ const MainPage = () => {
   );
 
   return (
-    <div className="ml-10 mt-10 w-20">
+    <div className="ml-10 mt-10 w-20  h-[calc(100vh-30px)]">
       <InternetExplorer />
       <NotePad />
       <Paint />
