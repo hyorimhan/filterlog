@@ -28,11 +28,11 @@ function Magazine() {
               className="focus:outline-none text-black"
             >
               <div className="text-sm font-semibold  ">💌 {post.title}</div>
-              <div className="space-y-2 mt-2">
+              {/* <div className="space-y-2 mt-2">
                 <p className="indent-7 truncate">
                   {post.description?.replace(/<\/?[^>]+(>|$)/g, '')}
                 </p>
-              </div>
+              </div> */}
             </Link>
           </div>
         ))}
